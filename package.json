@@ -1,0 +1,19 @@
+{
+  "name": "13-go-live",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build"
+  },
+  "author": "Ahmet Acar",
+  "license": "MIT License",
+  "description": "Self portrait",
+  "devDependencies": {
+    "vite": "^7.2.6",
+    "vite-plugin-restart": "^2.0.0"
+  },
+  "dependencies": {
+    "three": "^0.181.2"
+  }
+}
