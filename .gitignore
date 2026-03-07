@@ -147,6 +147,3 @@ vite.config.ts.timestamp-*
 # Build directories (covers some Vite setups)
 build/
 out/
-
-# Reference images
-**/reference-images/
