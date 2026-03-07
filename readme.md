@@ -2,7 +2,7 @@
 
 This repository contains _my own implementations and experiments_ of the exercises from the **Three.js Journey** course by Bruno Simon.<br>
 Each lesson is developed as a new branch and is auto-deployed as an individual project with Vercel.<br>
-Deployment is handled with GitHub Actions.<br>
+Deployment is handled by GitHub Actions.<br>
 
 > ⚠️ To follow the original course, visit [Bruno Simon's official website](https://threejs-journey.com).
 
