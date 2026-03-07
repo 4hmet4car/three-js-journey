@@ -1,8 +1,8 @@
 # Three.js Journey
 
-This repository contains _my own implementations and experiments_ of the exercises from the **Three.js Journey** course by Bruno Simon.  
-Each lesson is developed as a new branch and is auto-deployed as an individual project with Vercel.
-Deployment is handled with GitHub Actions.
+This repository contains _my own implementations and experiments_ of the exercises from the **Three.js Journey** course by Bruno Simon.<br>
+Each lesson is developed as a new branch and is auto-deployed as an individual project with Vercel.<br>
+Deployment is handled with GitHub Actions.<br>
 
 > ⚠️ To follow the original course, visit [Bruno Simon's official website](https://threejs-journey.com).
 
@@ -11,16 +11,16 @@ Deployment is handled with GitHub Actions.
 ## 🌲 Structure
 
 three-js-journey/<br>
-├── batch-cwebp
-├── LICENSE
-└── readme.md
+├── batch-cwebp<br>
+├── LICENSE<br>
+└── readme.md<br>
 
 ## Course Content
 
 ### Chapter 01 - Basics
 
-01- Introduction
-02- What is WebGL and why use Three.js
+01- Introduction<br>
+02- What is WebGL and why use Three.js<br>
 [03- First Three.js Project](https://4hmet4car-03-first-threejs-project.vercel.app/)<br>
 [04- Transform objects](https://4hmet4car-04-transform-objects.vercel.app/)<br>
 [05- Animations](https://4hmet4car-05-animations.vercel.app/)<br>
@@ -40,4 +40,4 @@ three-js-journey/<br>
 [16- Haunted House](https://4hmet4car-16-haunted-house.vercel.app/)<br>
 
 ---
-> ⚠️ batch_cwebp.sh allows you to batch convert images from a specified input directory.
+> ⚠️ [batch_cwebp.sh](https://github.com/4hmet4car/three-js-journey/tree/main/batch-cwebp) allows you to batch convert images to .webp format.
