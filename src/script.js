@@ -199,7 +199,7 @@ const leavesMaterial = new THREE.MeshStandardMaterial()
 
 for(let i=0;i<30;i++){
     const angle = Math.random() * Math.PI * 2
-    const radius = 7 + Math.random() * 4
+    const radius = 9 + Math.random() * 4
     const x = Math.sin(angle)*radius * 0.5
     const z = Math.cos(angle)*radius
 
@@ -214,7 +214,7 @@ for(let i=0;i<30;i++){
 
     tree.position.y = -Math.random()*0.1
     tree.position.x=x+2
-    tree.position.z=z-5
+    tree.position.z=z-7
     tree.rotation.x = (Math.random()-0.5)*0.2
     tree.rotation.y = (Math.random()-0.5)*0.2
     tree.rotation.z = (Math.random()-0.5)*0.2
