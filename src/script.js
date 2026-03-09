@@ -161,6 +161,42 @@ inStairsFloor.position.y=-inStairsFloor.geometry.parameters.height*0.5
 inStairsFloor.position.x=1.8
 inStairsFloor.position.z=-inStairsFloor.geometry.parameters.depth*0.5-1.5
 
+const stairSideVertices = [
+    new THREE.Vector2(-2, 0),
+    new THREE.Vector2(0, 0),
+    new THREE.Vector2(0, 1)
+]
+const stairSideExtrudeSettings = {
+	depth: 0.15,
+	bevelEnabled: false,
+}
+const stairSideShape = new THREE.Shape(stairSideVertices)
+const stairSideGeometry = new THREE.ExtrudeGeometry(stairSideShape,stairSideExtrudeSettings)
+
+const stairSide = new THREE.Mesh(stairSideGeometry,gray)
+stairSide.position.x = inStairsFloor.position.x+inStairsFloor.geometry.parameters.width/2-stairSide.geometry.parameters.options.depth
+stairSide.position.y = -1
+stairSide.position.z = -1.5
+stairSide.rotation.y = Math.PI * 0.5
+
+const stairVertices = [
+    new THREE.Vector2(-2, 0),
+    new THREE.Vector2(0, 0),
+    new THREE.Vector2(0, 1)
+]
+const stairExtrudeSettings = {
+	depth: 0.15,
+	bevelEnabled: false,
+}
+const stairShape = new THREE.Shape(stairVertices)
+const stairGeometry = new THREE.ExtrudeGeometry(stairShape,stairExtrudeSettings)
+
+const stairs = new THREE.Mesh(stairGeometry,new THREE.MeshBasicMaterial({color:'red'}))
+stairs.position.x = inStairsFloor.position.x-inStairsFloor.geometry.parameters.width/2
+stairs.position.y = -1
+stairs.position.z = -1.5
+stairs.rotation.y = Math.PI * 0.5
+
 const closet = new THREE.Mesh(
     new THREE.BoxGeometry(1,3,10,1,1,1),
     black
@@ -209,7 +245,7 @@ rightBalconyTop.position.y=rightBalconyTop.geometry.parameters.height*0.5+1
 rightBalconyTop.position.x=2.9+0.75
 rightBalconyTop.position.z=-rightBalconyTop.geometry.parameters.depth*0.5-3
 
-house.add(atelier,living,enterance,middleBalcony,middleBalconyRight,middleBalconyTop,inStairs,inStairsFloor,closet,closetFloor,bedroom,rightBalcony,rightBalconyRight,rightBalconyTop)
+house.add(stairSide, atelier,living,enterance,middleBalcony,middleBalconyRight,middleBalconyTop,inStairs,inStairsFloor,closet,closetFloor,bedroom,rightBalcony,rightBalconyRight,rightBalconyTop)
 
 // Trees container
 const trees = new THREE.Group()
