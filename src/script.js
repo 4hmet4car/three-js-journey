@@ -29,6 +29,8 @@ const floor = new THREE.Mesh(
     new THREE.MeshStandardMaterial()
 )
 floor.rotation.x=-Math.PI*0.5
+floor.rotation.y=-Math.PI*0.015
+floor.position.y=-0.75
 floor.position.z=-8
 scene.add(floor)
 
@@ -83,7 +85,15 @@ atelierTop.position.y=atelierTop.geometry.parameters.height*0.5+0.9
 atelierTop.position.z=-atelierTop.geometry.parameters.depth*0.5-0.5
 atelierTop.position.x=0.45
 
-atelier.add(atelierLeft,atelierFront,atelierBack,atelierBottom,atelierTop)
+const atelierFloor = new THREE.Mesh(
+    new THREE.BoxGeometry(2.3,1,10,1,1,1),
+    gray
+)
+atelierFloor.position.y=-atelierFloor.geometry.parameters.height*0.5
+atelierFloor.position.z=-atelierFloor.geometry.parameters.depth*0.5 + 0.5
+atelierFloor.position.x=0.3
+
+atelier.add(atelierFloor, atelierLeft,atelierFront,atelierBack,atelierBottom,atelierTop)
 
 const livingTop = new THREE.Mesh(
     new THREE.BoxGeometry(1,3.05,10,1,1,1),
@@ -143,6 +153,14 @@ inStairs.position.y=inStairs.geometry.parameters.height*0.5
 inStairs.position.x=1.8
 inStairs.position.z=-inStairs.geometry.parameters.depth*0.5-4
 
+const inStairsFloor = new THREE.Mesh(
+    new THREE.BoxGeometry(0.8,1,10,1,1,1),
+    gray
+)
+inStairsFloor.position.y=-inStairsFloor.geometry.parameters.height*0.5
+inStairsFloor.position.x=1.8
+inStairsFloor.position.z=-inStairsFloor.geometry.parameters.depth*0.5-1.5
+
 const closet = new THREE.Mesh(
     new THREE.BoxGeometry(1,3,10,1,1,1),
     black
@@ -150,6 +168,14 @@ const closet = new THREE.Mesh(
 closet.position.y=closet.geometry.parameters.height*0.5
 closet.position.x=2.7
 closet.position.z=-closet.geometry.parameters.depth*0.5-3.5
+
+const closetFloor = new THREE.Mesh(
+    new THREE.BoxGeometry(2.8,1,10,1,1,1),
+    gray
+)
+closetFloor.position.y=-closetFloor.geometry.parameters.height*0.5
+closetFloor.position.x=3.6
+closetFloor.position.z=-closetFloor.geometry.parameters.depth*0.5-2.8
 
 const bedroom = new THREE.Mesh(
     new THREE.BoxGeometry(1,1.5,0.5,1,1,1),
@@ -183,7 +209,7 @@ rightBalconyTop.position.y=rightBalconyTop.geometry.parameters.height*0.5+1
 rightBalconyTop.position.x=2.9+0.75
 rightBalconyTop.position.z=-rightBalconyTop.geometry.parameters.depth*0.5-3
 
-house.add(atelier,living,enterance,middleBalcony,middleBalconyRight,middleBalconyTop,inStairs,closet,bedroom,rightBalcony,rightBalconyRight,rightBalconyTop)
+house.add(atelier,living,enterance,middleBalcony,middleBalconyRight,middleBalconyTop,inStairs,inStairsFloor,closet,closetFloor,bedroom,rightBalcony,rightBalconyRight,rightBalconyTop)
 
 // Trees container
 const trees = new THREE.Group()
@@ -212,7 +238,7 @@ for(let i=0;i<30;i++){
     const tree = new THREE.Group()
     tree.add(trunk,leaves)
 
-    tree.position.y = -Math.random()*0.1
+    tree.position.y = -Math.random()*0.1 -0.6
     tree.position.x=x+2
     tree.position.z=z-7
     tree.rotation.x = (Math.random()-0.5)*0.2
