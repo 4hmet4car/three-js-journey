@@ -93,7 +93,16 @@ atelierFloor.position.y=-atelierFloor.geometry.parameters.height*0.5
 atelierFloor.position.z=-atelierFloor.geometry.parameters.depth*0.5 + 0.5
 atelierFloor.position.x=0.3
 
-atelier.add(atelierFloor, atelierLeft,atelierFront,atelierBack,atelierBottom,atelierTop)
+const atelierBlackFloor = new THREE.Mesh(
+    new THREE.PlaneGeometry(2.1,2.3,1,1),
+    black
+)
+atelierBlackFloor.position.y=0.005
+atelierBlackFloor.position.z=-atelierBlackFloor.geometry.parameters.height*0.5 + 0.4
+atelierBlackFloor.position.x=0.3
+atelierBlackFloor.rotation.x=-Math.PI*0.5
+
+atelier.add(atelierFloor, atelierBlackFloor, atelierLeft,atelierFront,atelierBack,atelierBottom,atelierTop)
 
 const livingTop = new THREE.Mesh(
     new THREE.BoxGeometry(1,3.05,10,1,1,1),
@@ -180,18 +189,30 @@ stairSide.position.z = -1.5
 stairSide.rotation.y = Math.PI * 0.5
 
 const stairVertices = [
-    new THREE.Vector2(-2, 0),
-    new THREE.Vector2(0, 0),
-    new THREE.Vector2(0, 1)
+    new THREE.Vector2(-1.75, 0),
+    new THREE.Vector2(-1.75, 0.125),
+    new THREE.Vector2(-1.5, 0.125),
+    new THREE.Vector2(-1.5, 0.25),
+    new THREE.Vector2(-1.25, 0.25),
+    new THREE.Vector2(-1.25, 0.375),
+    new THREE.Vector2(-1, 0.375),
+    new THREE.Vector2(-1, 0.5),
+    new THREE.Vector2(-0.75, 0.5),
+    new THREE.Vector2(-0.75, 0.625),
+    new THREE.Vector2(-0.5, 0.625),
+    new THREE.Vector2(-0.5, 0.75),
+    new THREE.Vector2(-0.25, 0.75),
+    new THREE.Vector2(-0.25, 0.875),
+    new THREE.Vector2(-0, 0.875),
 ]
 const stairExtrudeSettings = {
-	depth: 0.15,
+	depth: 0.7,
 	bevelEnabled: false,
 }
 const stairShape = new THREE.Shape(stairVertices)
 const stairGeometry = new THREE.ExtrudeGeometry(stairShape,stairExtrudeSettings)
 
-const stairs = new THREE.Mesh(stairGeometry,new THREE.MeshBasicMaterial({color:'red'}))
+const stairs = new THREE.Mesh(stairGeometry,gray)
 stairs.position.x = inStairsFloor.position.x-inStairsFloor.geometry.parameters.width/2
 stairs.position.y = -1
 stairs.position.z = -1.5
@@ -245,7 +266,7 @@ rightBalconyTop.position.y=rightBalconyTop.geometry.parameters.height*0.5+1
 rightBalconyTop.position.x=2.9+0.75
 rightBalconyTop.position.z=-rightBalconyTop.geometry.parameters.depth*0.5-3
 
-house.add(stairSide, atelier,living,enterance,middleBalcony,middleBalconyRight,middleBalconyTop,inStairs,inStairsFloor,closet,closetFloor,bedroom,rightBalcony,rightBalconyRight,rightBalconyTop)
+house.add(stairs, stairSide, atelier,living,enterance,middleBalcony,middleBalconyRight,middleBalconyTop,inStairs,inStairsFloor,closet,closetFloor,bedroom,rightBalcony,rightBalconyRight,rightBalconyTop)
 
 // Trees container
 const trees = new THREE.Group()
