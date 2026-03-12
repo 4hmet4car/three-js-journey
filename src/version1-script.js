@@ -9,7 +9,8 @@ import { Sky } from 'three/examples/jsm/Addons.js'
  */
 // Debug
 const gui = new GUI({
-    width: 300
+    width: 300,
+    closeFolders: true
 })
 const viewportControls = gui.addFolder('Viewport Controls')
 const floorControls = gui.addFolder('Floor Controls')
