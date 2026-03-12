@@ -15,8 +15,8 @@ export default {
         sourcemap: true, // Add sourcemap
         rollupOptions: {
             input: {
-                main: resolve(import.meta.dirname, 'index.html'),
-                version1: resolve(import.meta.dirname, 'version1.html'),
+                main: resolve(import.meta.dirname, 'src/index.html'),
+                version1: resolve(import.meta.dirname, 'src/version1.html'),
             }
         }
     },
