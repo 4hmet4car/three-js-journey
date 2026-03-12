@@ -1,5 +1,5 @@
-import resolve from 'path'
 import restart from 'vite-plugin-restart'
+import { resolve } from 'node:path'
 
 export default {
     root: 'src/', // Sources files (typically where index.html is)
@@ -16,8 +16,8 @@ export default {
         sourcemap: true, // Add sourcemap
         rollupOptions: {
             input: {
-                main: resolve(__dirname, 'src/index.html'),
-                version1: resolve(__dirname, 'src/version1.html'),
+                main: resolve(import.meta.dirname, 'src/index.html'),
+                version1: resolve(import.meta.dirname, 'src/version1.html'),
             }
         }
     },
