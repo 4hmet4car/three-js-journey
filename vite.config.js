@@ -12,7 +12,13 @@ export default {
     {
         outDir: '../dist', // Output in the dist/ folder
         emptyOutDir: true, // Empty the folder first
-        sourcemap: true // Add sourcemap
+        sourcemap: true, // Add sourcemap
+        rollupOptions: {
+            input: {
+                main: resolve(import.meta.dirname, 'index.html'),
+                version1: resolve(import.meta.dirname, 'version1.html'),
+            }
+        }
     },
     plugins:
         [
