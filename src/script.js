@@ -8,7 +8,9 @@ import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHel
  * Base
  */
 // Debug
-const gui = new GUI()
+const gui = new GUI({
+    width: 300
+})
 gui.close()
 
 // Canvas
