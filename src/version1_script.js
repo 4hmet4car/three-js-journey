@@ -4,26 +4,28 @@ import gsap from 'gsap'
 import GUI from 'lil-gui'
 
 /**
- * Debug GUI
+ * Debug UI
  */
 const gui = new GUI({
     width: 300,
-    title: 'Debug Interface',
+    title: 'Debug UI',
     closeFolders: false
 })
-gui.close()
-// gui.close()
-// gui.hide()
-const sphereTweaks = gui.addFolder('Sphere Tweaks')//.close()
-const debugObject = {}
-debugObject.widthSegments = 32
-debugObject.heightSegments = 32
 
-window.addEventListener('keydown',(event)=>{
-    if(event.key=='h'){
+gui.close()
+
+//gui.hide()
+
+window.addEventListener('keydown', (event) =>
+{
+    if(event.key == 'h'){
         gui.show(gui._hidden)
     }
 })
+
+const debugObject = {}
+
+const tweaks = gui.addFolder('Tweaks')
 
 /**
  * Base
@@ -37,58 +39,82 @@ const scene = new THREE.Scene()
 /**
  * Object
  */
-debugObject.color = '#ff0000'
 
-const geometry = new THREE.SphereGeometry( 1, debugObject.widthSegments, debugObject.heightSegments )
-const material = new THREE.MeshBasicMaterial({ color: debugObject.color, wireframe:false })
+debugObject.color = '#555555'
+
+const geometry = new THREE.BoxGeometry(1, 1, 1, 2, 2, 2)
+const material = new THREE.MeshBasicMaterial({
+    color: debugObject.color,
+    wireframe: true
+})
 const mesh = new THREE.Mesh(geometry, material)
 scene.add(mesh)
 
-sphereTweaks
-    .add(mesh.position,'y')
-    .min(-3)
-    .max(3)
+tweaks
+    .add(mesh.position, 'y')
+    .min(-1)
+    .max(1)
     .step(0.01)
     .name('elevation')
 
-sphereTweaks
-    .add(mesh,'visible')
+tweaks
+    .add(material, 'wireframe')
 
-sphereTweaks
-    .add(material,'wireframe')
+tweaks
+    .add(mesh, 'visible')
 
-sphereTweaks
-    .addColor(debugObject,'color')
-    .onChange((value)=>{
-        material.color.set(value)
+tweaks
+    .addColor(debugObject, 'color')
+    .onChange(() =>
+    {
+        material.color.set(debugObject.color)
     })
 
-debugObject.spin = ()=>{
-    gsap.to(mesh.rotation,{y:mesh.rotation.y+Math.PI,duration:2})
+debugObject.spin = () =>
+{
+    gsap.to(mesh.rotation, {duration: 1, y: mesh.rotation.y + Math.PI * 2})
 }
 
-sphereTweaks
-    .add(debugObject,'spin')
+tweaks
+    .add(debugObject, 'spin')
 
-sphereTweaks
-    .add(debugObject,'heightSegments')
-    .min(2)
-    .max(72)
+debugObject.subdivision = 2
+
+tweaks
+    .add(debugObject, 'subdivision')
+    .min(1)
+    .max(20)
     .step(1)
-    .onFinishChange((value)=>{
+    .onFinishChange(() =>
+    {
         mesh.geometry.dispose()
-        mesh.geometry = new THREE.SphereGeometry( 1, debugObject.widthSegments, value )
+        mesh.geometry = new THREE.BoxGeometry(
+            1, 1, 1,
+            debugObject.subdivision, debugObject.subdivision, debugObject.subdivision)
     })
 
-sphereTweaks
-    .add(debugObject,'widthSegments')
-    .min(3)
-    .max(72)
-    .step(1)
-    .onFinishChange((value)=>{
-        mesh.geometry.dispose()
-        mesh.geometry = new THREE.SphereGeometry( 1, value, debugObject.heightSegments )
+debugObject.slide = true
+
+    let slide = gsap.fromTo(mesh.position, {x: 1}, {x: -1, repeat: -1, yoyoEase: true})
+
+console.log(slide.paused())
+
+tweaks
+    .add(debugObject, 'slide')
+    .onChange((event) =>
+    {
+        if(!event){
+            slide.pause()
+        }else{
+            slide.resume()
+        }
     })
+
+tweaks
+    .add(slide, 'pause')
+
+tweaks
+    .add(slide, 'resume')
 
 /**
  * Sizes
@@ -118,9 +144,9 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 1 * 3
-camera.position.y = 1 * 3
-camera.position.z = 2 * 3
+camera.position.x = 1
+camera.position.y = 1
+camera.position.z = 2
 scene.add(camera)
 
 // Controls
@@ -135,7 +161,6 @@ const renderer = new THREE.WebGLRenderer({
 })
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-renderer.setClearColor('white')
 
 /**
  * Animate
