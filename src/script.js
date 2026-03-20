@@ -118,9 +118,9 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 1 * 3
-camera.position.y = 1 * 3
-camera.position.z = 2 * 3
+camera.position.x = 1 * 2
+camera.position.y = 1 * 2
+camera.position.z = 2 * 2
 scene.add(camera)
 
 // Controls
