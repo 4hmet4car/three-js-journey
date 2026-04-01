@@ -8,7 +8,12 @@ import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHel
  * Base
  */
 // Debug
-const gui = new GUI()
+const gui = new GUI(
+    {
+        width: 350,
+        closeFolders: true
+    })
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -148,9 +153,9 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 2
-camera.position.y = 2
-camera.position.z = 4
+camera.position.x = 2 * 2.3
+camera.position.y = 2 * 2.3
+camera.position.z = 4 * 2.3
 scene.add(camera)
 
 // Controls
