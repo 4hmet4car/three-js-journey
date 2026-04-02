@@ -37,6 +37,7 @@ basicShadow.colorSpace = THREE.SRGBColorSpace
  */
 // Debug
 const gui = new GUI({width:300})
+gui.close(0)
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
