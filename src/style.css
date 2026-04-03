@@ -15,12 +15,8 @@ body {
     outline: none;
 }
 
-.button-class {
+.button {
     position: fixed;
-    background-color: #ffffff;
-    /* Green */
-    border: none;
-    color: black;
     padding: 1vmin 2vmin;
     text-align: center;
     text-decoration: none;
@@ -32,4 +28,16 @@ body {
     transform: translateX(-50%);
     cursor: pointer;
     border-radius: 0.5vmin;
+}
+
+.version1 {
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+.version2 {
+    background-color: black;
+    border: 1px solid white;
+    color: white;
 }

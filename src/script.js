@@ -4,9 +4,30 @@ import { Timer } from 'three/addons/misc/Timer.js'
 import GUI from 'lil-gui'
 import { RectAreaLightHelper } from 'three/examples/jsm/helpers/RectAreaLightHelper.js'
 
+//TRY TRIPLANAR MAPPING
+
 /**
  * Base
  */
+
+// Loading manager
+const loadingManager = new THREE.LoadingManager()
+loadingManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
+}
+
+loadingManager.onLoad = function ( ) {
+    console.log( 'Loading complete!')
+}
+
+loadingManager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
+}
+
+loadingManager.onError = function ( url ) {
+    console.log( 'There was an error loading ' + url )
+}
+
 // Debug
 const gui = new GUI({
     width: 300
@@ -19,6 +40,59 @@ const canvas = document.querySelector('canvas.webgl')
 // Scene
 const scene = new THREE.Scene()
 
+/**
+ * Textures
+ */
+
+// Texture loader
+const textureLoader = new THREE.TextureLoader(loadingManager)
+
+// Floor
+const floorAlphaTexture = textureLoader.load('./floor/alpha.jpg')
+const floorColorTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_field_aerial_col_1k.webp')
+const floorARMTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_field_aerial_arm_1k.webp')
+const floorNormalTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_field_aerial_nor_gl_1k.webp')
+const floorDisplacementTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_field_aerial_height_1k.webp')
+
+floorColorTexture.repeat.set(4,4)
+floorColorTexture.rotation = Math.PI * 0.5
+floorColorTexture.wrapS = THREE.RepeatWrapping
+floorColorTexture.wrapT = THREE.RepeatWrapping
+floorColorTexture.colorSpace = THREE.SRGBColorSpace
+
+floorARMTexture.repeat.set(4,4)
+floorARMTexture.rotation = Math.PI * 0.5
+floorARMTexture.wrapS = THREE.RepeatWrapping
+floorARMTexture.wrapT = THREE.RepeatWrapping
+
+floorNormalTexture.repeat.set(4,4)
+floorNormalTexture.rotation = Math.PI * 0.5
+floorNormalTexture.wrapS = THREE.RepeatWrapping
+floorNormalTexture.wrapT = THREE.RepeatWrapping
+
+floorDisplacementTexture.repeat.set(4,4)
+floorDisplacementTexture.rotation = Math.PI * 0.5
+floorDisplacementTexture.wrapS = THREE.RepeatWrapping
+floorDisplacementTexture.wrapT = THREE.RepeatWrapping
+
+// Walls
+const wallColorTexture = textureLoader.load('./walls/corrugated_iron_02_1k/corrugated_iron_02_diff_1k.webp')
+const wallARMTexture = textureLoader.load('./walls/corrugated_iron_02_1k/corrugated_iron_02_arm_1k.webp')
+const wallNormalTexture = textureLoader.load('./walls/corrugated_iron_02_1k/corrugated_iron_02_nor_gl_1k.webp')
+
+wallColorTexture.repeat.set(10,1)
+wallColorTexture.wrapS = THREE.RepeatWrapping
+wallColorTexture.wrapT = THREE.RepeatWrapping
+wallColorTexture.colorSpace = THREE.SRGBColorSpace
+
+wallARMTexture.repeat.set(10,1)
+wallARMTexture.wrapS = THREE.RepeatWrapping
+wallARMTexture.wrapT = THREE.RepeatWrapping
+
+wallNormalTexture.repeat.set(10,1)
+wallNormalTexture.wrapS = THREE.RepeatWrapping
+wallNormalTexture.wrapT = THREE.RepeatWrapping
+
 // Materials
 const black = new THREE.MeshStandardMaterial({ color: '#3f3e3d' })
 const gray = new THREE.MeshStandardMaterial({ color: '#e0dddb' })
@@ -28,14 +102,41 @@ const gray = new THREE.MeshStandardMaterial({ color: '#e0dddb' })
  */
 // Floor
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(20, 30),
-    new THREE.MeshStandardMaterial()
+    new THREE.PlaneGeometry(30, 40, 100, 100),
+    new THREE.MeshStandardMaterial({
+        // side: THREE.DoubleSide,
+        transparent: true,
+        alphaMap: floorAlphaTexture,
+        map: floorColorTexture,
+        aoMap: floorARMTexture,
+        roughnessMap: floorARMTexture,
+        metalnessMap: floorARMTexture,
+        normalMap: floorNormalTexture,
+        displacementMap: floorDisplacementTexture,
+        displacementScale: 0.3,
+        displacementBias: -0.084,
+    })
 )
 floor.rotation.x = -Math.PI * 0.5
 floor.rotation.y = -Math.PI * 0.015
+floor.position.x = 2
 floor.position.y = -0.75
-floor.position.z = -8
+floor.position.z = -7
 scene.add(floor)
+
+gui
+    .add(floor.material,'displacementScale')
+    .min(0)
+    .max(1)
+    .step(0.001)
+    .name('Floor Displacement Scale')
+
+gui
+    .add(floor.material,'displacementBias')
+    .min(-1)
+    .max(1)
+    .step(0.001)
+    .name('Floor Displacement Mid Level')
 
 // House container
 const house = new THREE.Group()
@@ -109,7 +210,15 @@ atelier.add(atelierFloor, atelierBlackFloor, atelierLeft, atelierFront, atelierB
 
 const livingTop = new THREE.Mesh(
     new THREE.BoxGeometry(1, 3.05, 10, 1, 1, 1),
-    black
+    new THREE.MeshStandardMaterial({
+        // side: THREE.DoubleSide,
+        transparent: true,
+        map: wallColorTexture,
+        aoMap: wallARMTexture,
+        roughnessMap: wallARMTexture,
+        metalnessMap: wallARMTexture,
+        normalMap: wallNormalTexture,
+    })
 )
 livingTop.position.y = livingTop.geometry.parameters.height * 0.5 + 0.95
 livingTop.position.x = 0.9
@@ -386,9 +495,9 @@ window.addEventListener('resize', () => {
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.x = 4.4 * 1
-camera.position.y = 3.1 * 1
-camera.position.z = 4.9 * 1
+camera.position.x = 2 * 2
+camera.position.y = 2 * 2
+camera.position.z = 4.9 * 2
 scene.add(camera)
 
 // window.addEventListener('mousedown',()=>{
