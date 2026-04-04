@@ -54,23 +54,23 @@ const floorARMTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_fi
 const floorNormalTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_field_aerial_nor_gl_1k.webp')
 const floorDisplacementTexture = textureLoader.load('./floor/snow_field_aerial_1k/snow_field_aerial_height_1k.webp')
 
-floorColorTexture.repeat.set(4,4)
+floorColorTexture.repeat.set(8,8)
 floorColorTexture.rotation = Math.PI * 0.5
 floorColorTexture.wrapS = THREE.RepeatWrapping
 floorColorTexture.wrapT = THREE.RepeatWrapping
 floorColorTexture.colorSpace = THREE.SRGBColorSpace
 
-floorARMTexture.repeat.set(4,4)
+floorARMTexture.repeat.set(8,8)
 floorARMTexture.rotation = Math.PI * 0.5
 floorARMTexture.wrapS = THREE.RepeatWrapping
 floorARMTexture.wrapT = THREE.RepeatWrapping
 
-floorNormalTexture.repeat.set(4,4)
+floorNormalTexture.repeat.set(8,8)
 floorNormalTexture.rotation = Math.PI * 0.5
 floorNormalTexture.wrapS = THREE.RepeatWrapping
 floorNormalTexture.wrapT = THREE.RepeatWrapping
 
-floorDisplacementTexture.repeat.set(4,4)
+floorDisplacementTexture.repeat.set(8,8)
 floorDisplacementTexture.rotation = Math.PI * 0.5
 floorDisplacementTexture.wrapS = THREE.RepeatWrapping
 floorDisplacementTexture.wrapT = THREE.RepeatWrapping
@@ -80,18 +80,69 @@ const wallColorTexture = textureLoader.load('./walls/corrugated_iron_02_1k/corru
 const wallARMTexture = textureLoader.load('./walls/corrugated_iron_02_1k/corrugated_iron_02_arm_1k.webp')
 const wallNormalTexture = textureLoader.load('./walls/corrugated_iron_02_1k/corrugated_iron_02_nor_gl_1k.webp')
 
-wallColorTexture.repeat.set(10,1)
-wallColorTexture.wrapS = THREE.RepeatWrapping
-wallColorTexture.wrapT = THREE.RepeatWrapping
-wallColorTexture.colorSpace = THREE.SRGBColorSpace
+// wallColorTexture.repeat.set(10,1)
+// wallColorTexture.wrapS = THREE.RepeatWrapping
+// wallColorTexture.wrapT = THREE.RepeatWrapping
+// wallColorTexture.colorSpace = THREE.SRGBColorSpace
 
-wallARMTexture.repeat.set(10,1)
-wallARMTexture.wrapS = THREE.RepeatWrapping
-wallARMTexture.wrapT = THREE.RepeatWrapping
+// wallARMTexture.repeat.set(10,1)
+// wallARMTexture.wrapS = THREE.RepeatWrapping
+// wallARMTexture.wrapT = THREE.RepeatWrapping
 
-wallNormalTexture.repeat.set(10,1)
-wallNormalTexture.wrapS = THREE.RepeatWrapping
-wallNormalTexture.wrapT = THREE.RepeatWrapping
+// wallNormalTexture.repeat.set(10,1)
+// wallNormalTexture.wrapS = THREE.RepeatWrapping
+// wallNormalTexture.wrapT = THREE.RepeatWrapping
+
+wallColorTexture.wrapS = wallColorTexture.wrapT = THREE.RepeatWrapping;
+
+const material = new THREE.ShaderMaterial({
+  uniforms: {
+    map: { value: wallColorTexture },
+    scale: { value: 1.0 }
+  },
+  vertexShader: `
+    varying vec3 vWorldPosition;
+    varying vec3 vNormal;
+
+    void main() {
+      vec4 worldPos = modelMatrix * vec4(position, 1.0);
+      vWorldPosition = worldPos.xyz;
+
+      vNormal = normalize(mat3(modelMatrix) * normal);
+
+      gl_Position = projectionMatrix * viewMatrix * worldPos;
+    }
+  `,
+  fragmentShader: `
+    uniform sampler2D map;
+    uniform float scale;
+
+    varying vec3 vWorldPosition;
+    varying vec3 vNormal;
+
+    vec4 triplanarTexture(vec3 pos, vec3 normal) {
+      vec3 blending = abs(normal);
+      blending = normalize(max(blending, 0.00001));
+      blending /= (blending.x + blending.y + blending.z);
+
+      vec2 xUV = pos.yz * scale;
+      vec2 yUV = pos.xz * scale;
+      vec2 zUV = pos.xy * scale;
+
+      vec4 xTex = texture2D(map, xUV);
+      vec4 yTex = texture2D(map, yUV);
+      vec4 zTex = texture2D(map, zUV);
+
+      return xTex * blending.x +
+             yTex * blending.y +
+             zTex * blending.z;
+    }
+
+    void main() {
+      gl_FragColor = triplanarTexture(vWorldPosition, normalize(vNormal));
+    }
+  `
+});
 
 // Materials
 const black = new THREE.MeshStandardMaterial({ color: '#3f3e3d' })
@@ -210,15 +261,7 @@ atelier.add(atelierFloor, atelierBlackFloor, atelierLeft, atelierFront, atelierB
 
 const livingTop = new THREE.Mesh(
     new THREE.BoxGeometry(1, 3.05, 10, 1, 1, 1),
-    new THREE.MeshStandardMaterial({
-        // side: THREE.DoubleSide,
-        transparent: true,
-        map: wallColorTexture,
-        aoMap: wallARMTexture,
-        roughnessMap: wallARMTexture,
-        metalnessMap: wallARMTexture,
-        normalMap: wallNormalTexture,
-    })
+    black
 )
 livingTop.position.y = livingTop.geometry.parameters.height * 0.5 + 0.95
 livingTop.position.x = 0.9

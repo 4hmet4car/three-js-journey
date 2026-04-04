@@ -14,3 +14,6 @@ npm run dev
 # Build for production in the dist/ directory
 npm run build
 ```
+
+## TO-DO
+Implement Triplanar mapping with shader material.
