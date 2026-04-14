@@ -1,19 +1,43 @@
-*
-{
+* {
     margin: 0;
     padding: 0;
 }
 
 html,
-body
-{
+body {
     overflow: hidden;
 }
 
-.webgl
-{
+.webgl {
     position: fixed;
     top: 0;
     left: 0;
     outline: none;
+}
+
+.button {
+    position: fixed;
+    padding: 1vmin 2vmin;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 3vmin;
+    font-family: Helvetica, Arial, sans-serif;
+    bottom: 4vmin;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    border-radius: 0.5vmin;
+}
+
+.version1 {
+    background-color: black;
+    border: 1px solid white;
+    color: white;
+}
+
+.version2 {
+    color: white;
+    background-color: black;
+    border: 1px solid white;
 }
