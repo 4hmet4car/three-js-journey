@@ -134,7 +134,8 @@ function createParticleGeometry(count) {
 }
 
 // Button color randomizer
-const versionButtonColor = '#'+(Math.random() * 0xFFFFFF << 0).toString(16).padStart(6, '0')
+const rand = () => Math.floor(Math.random() * (255-100)) + 100
+const versionButtonColor = `rgb(${rand()}, ${rand()}, ${rand()})`
 const versionButton = document.querySelector(".version2")
 versionButton.style.color = versionButtonColor
 versionButton.style.borderColor = versionButtonColor
