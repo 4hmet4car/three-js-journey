@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
+import { texture } from 'three/tsl'
 
 /**
  * Base
@@ -18,7 +19,21 @@ const scene = new THREE.Scene()
  * Textures
  */
 const textureLoader = new THREE.TextureLoader()
-const particleTexture = textureLoader.load('/textures/doge_alpha.png')
+const textures = []
+
+textures[0] = textureLoader.load('/textures/doge.png')
+textures[1] = textureLoader.load('/textures/1.png')
+textures[2] = textureLoader.load('/textures/2.png')
+textures[3] = textureLoader.load('/textures/3.png')
+textures[4] = textureLoader.load('/textures/4.png')
+textures[5] = textureLoader.load('/textures/5.png')
+textures[6] = textureLoader.load('/textures/6.png')
+
+for(var tex of textures){
+    tex.colorSpace = THREE.SRGBColorSpace
+    tex.generateMipmaps = false
+    tex.minFilter = THREE.LinearFilter
+}
 
 /**
  * Particles
@@ -55,26 +70,50 @@ const epilepsy = (cube)=>{
     cube.geometry.dispose()
 }
 
-const particlesGeometry = cubeBuilder(1000,5,5,5)
+const particles = []
+
+particles[0] = cubeBuilder(400,5,5,5)
+particles[1] = cubeBuilder(100,5,5,5)
+particles[2] = cubeBuilder(100,5,5,5)
+particles[3] = cubeBuilder(100,5,5,5)
+particles[4] = cubeBuilder(100,5,5,5)
+particles[5] = cubeBuilder(100,5,5,5)
+particles[6] = cubeBuilder(100,5,5,5)
 
 // Material
-const particlesMaterial = new THREE.PointsMaterial({
-    transparent:true,
-    map: particleTexture,
-    alphaMap: particleTexture,
-    size: .1,
-    sizeAttenuation: true
-})
+const materials = []
 
-// particlesMaterial.alphaTest = 0.001
-// particlesMaterial.depthTest = false
-particlesMaterial.depthWrite = false
-particlesMaterial.blending = THREE.AdditiveBlending
-// particlesMaterial.vertexColors = true
+for(var i=0;i<particles.length; i++){
+    materials[i] = new THREE.PointsMaterial({
+        transparent:true,
+        map: textures[i],
+        size: 0.3,
+        sizeAttenuation: true,
+        alphaTest: 0.5
+    })
+    const particle = new THREE.Points(particles[i].geometry,materials[i])
+    scene.add(particle)
+}
+
+// const dogesMaterial = new THREE.PointsMaterial({
+//     transparent:true,
+//     map: textures[0],
+//     size: 0.3,
+//     sizeAttenuation: true,
+//     alphaTest: 0.5,
+//     depthWrite: false
+// })
+
+// dogesMaterial.depthTest = false
+// dogesMaterial.blending = THREE.NormalBlending
+// dogesMaterial.vertexColors = true
 
 // Points
-const particles = new THREE.Points(particlesGeometry.geometry, particlesMaterial)
-scene.add(particles)
+// const doges = new THREE.Points(particles[0].geometry, dogesMaterial)
+// scene.add(doges)
+
+// const cube = new THREE.Mesh(new THREE.BoxGeometry(2,2,2),new THREE.MeshBasicMaterial())
+// scene.add(cube)
 
 /**
  * Sizes
@@ -133,8 +172,14 @@ const tick = () =>
 {
     const elapsedTime = clock.getElapsedTime()
 
-    if(!(counter%60)){
-        epilepsy(particlesGeometry)
+    if(!(counter%120)){
+        epilepsy(particles[0])
+        epilepsy(particles[1])
+        epilepsy(particles[2])
+        epilepsy(particles[3])
+        epilepsy(particles[4])
+        epilepsy(particles[5])
+        epilepsy(particles[6])
     }
 
     counter += 1
