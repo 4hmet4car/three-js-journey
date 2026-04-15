@@ -9,6 +9,7 @@ import gsap from 'gsap'
 // Debug
 const gui = new GUI()
 const particlesFolder = gui.addFolder('Particles')
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -134,8 +135,8 @@ function createParticleGeometry(count) {
 }
 
 // Button color randomizer
-const rand = () => Math.floor(Math.random() * (255-100)) + 100
-const versionButtonColor = `rgb(${rand()}, ${rand()}, ${rand()})`
+const colorRand = () => Math.floor(Math.random() * (255-100)) + 100
+const versionButtonColor = `rgb(${colorRand()}, ${colorRand()}, ${colorRand()})`
 const versionButton = document.querySelector(".version2")
 versionButton.style.color = versionButtonColor
 versionButton.style.borderColor = versionButtonColor

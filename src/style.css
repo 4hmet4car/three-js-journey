@@ -32,12 +32,12 @@ body {
 
 .version1 {
     background-color: black;
-    border: 1px solid white;
-    color: white;
+    border: 1px solid #c0bbaa;
+    color: #c0bbaa;
 }
 
 .version2 {
-    color: white;
     background-color: black;
     border: 1px solid white;
+    color: white;
 }
