@@ -64,11 +64,12 @@ const generateBlackHole = () => {
     const particlePositions = new Float32Array(parameters.particleCount * 3)
     for (let i = 0; i < parameters.particleCount; i++) {
         const theta = Math.random() * Math.PI * 2 
-        const particleXPos =  Math.cos(theta)
-        const particleYPos =  Math.random() * 0.1
-        const particleZPos =  Math.sin(theta)
+        const r = 0.75 + Math.random()
+        const particleXPos =  r * Math.cos(theta)
+        const particleYPos =  Math.random() * 0.05
+        const particleZPos =  r * Math.sin(theta)
 
-        const r = Math.hypot(particleXPos,particleYPos)
+        // const r = Math.hypot(particleXPos,particleYPos)
 
         particlePositions[i * 3] = particleXPos
         particlePositions[i * 3 + 1] = particleYPos
@@ -83,6 +84,7 @@ const generateBlackHole = () => {
     })
     particles = new THREE.Points(particleGeometry, particleMaterial)
     
+    // scene.add(particles)
     scene.add(particles, blackHole)
 }
 
@@ -150,6 +152,10 @@ const tick = () => {
 
     // Update controls
     controls.update()
+
+    if(particles !== null){
+        particles.rotation.y += 0.5
+    }
 
     // Render
     renderer.render(scene, camera)
