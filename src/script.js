@@ -63,12 +63,16 @@ const generateBlackHole = () => {
     particleGeometry = new THREE.BufferGeometry()
     const particlePositions = new Float32Array(parameters.particleCount * 3)
     for (let i = 0; i < parameters.particleCount; i++) {
-        const particleXPos =  (Math.random() - 0.5) * parameters.rayLength
-        const particleYPos =  (i % parameters.rayCount - parameters.rayCount * 0.5) * 0.1
+        const theta = Math.random() * Math.PI * 2 
+        const particleXPos =  Math.cos(theta)
+        const particleYPos =  Math.random() * 0.1
+        const particleZPos =  Math.sin(theta)
+
+        const r = Math.hypot(particleXPos,particleYPos)
 
         particlePositions[i * 3] = particleXPos
         particlePositions[i * 3 + 1] = particleYPos
-        particlePositions[i * 3 + 2] = 0
+        particlePositions[i * 3 + 2] = particleZPos
     }
     const particlePositionsAttribute = new THREE.BufferAttribute(particlePositions, 3)
     particleGeometry.setAttribute('position', particlePositionsAttribute)
