@@ -15,6 +15,41 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
+ * Textures
+ */
+// Loading Manager
+const loadingManager = new THREE.LoadingManager();
+loadingManager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+};
+
+loadingManager.onLoad = function ( ) {
+    console.log( 'Loading complete!');
+};
+
+loadingManager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' );
+};
+
+loadingManager.onError = function ( url ) {
+    console.log( 'There was an error loading ' + url );
+};
+
+
+const textureLoader = new THREE.CubeTextureLoader(loadingManager)
+
+const backgroundTextures = textureLoader.load([
+    './textures/background/nx.png',
+    './textures/background/ny.png',
+    './textures/background/nz.png',
+    './textures/background/px.png',
+    './textures/background/py.png',
+    './textures/background/pz.png'
+  ])
+
+scene.background = backgroundTextures
+
+/**
  * Galaxy
  */
 const G = 6.671 * 10^-11 // Gravitional constant [m^3/(kg*s)]
@@ -154,7 +189,7 @@ const tick = () => {
     controls.update()
 
     if(particles !== null){
-        particles.rotation.y += 0.5
+        particles.rotation.y += 0.0001
     }
 
     // Render
