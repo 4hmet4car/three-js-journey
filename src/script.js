@@ -36,61 +36,59 @@ loadingManager.onError = function ( url ) {
 };
 
 
-const textureLoader = new THREE.CubeTextureLoader(loadingManager)
-
-const backgroundTextures = textureLoader.load([
-    './textures/background/px.png',
-    './textures/background/nx.png',
-    './textures/background/py.png',
-    './textures/background/ny.png',
-    './textures/background/pz.png',
-    './textures/background/nz.png'
-  ])
-
-scene.background = backgroundTextures
+const textureLoader = new THREE.TextureLoader(loadingManager)
 
 /**
  * Galaxy
  */
-const G = 6.671 * 10^-11 // Gravitional constant [m^3/(kg*s)]
-const c = 299792458 // Light speed [m/s]
-let M = null// Mass of the black hole [kg]
+
+const milkywayTexture = textureLoader.load('./textures/milkyway.jpg')
+milkywayTexture.colorSpace = THREE.SRGBColorSpace
+milkywayTexture.minFilter = THREE.LinearFilter
+milkywayTexture.generateMipmaps = false
+
+const milkywayGeometry = new THREE.SphereGeometry( 500, 32, 32 )
+milkywayGeometry.scale(-1,1,1)
+const milkywayMaterial = new THREE.MeshBasicMaterial( { map: milkywayTexture } )
+const milkyway = new THREE.Mesh( milkywayGeometry, milkywayMaterial )
+scene.add(milkyway)
+
+const saturnTexture = textureLoader.load('./textures/saturn.jpg')
+saturnTexture.colorSpace = THREE.SRGBColorSpace
+saturnTexture.minFilter = THREE.LinearFilter
+saturnTexture.generateMipmaps = false
 
 const parameters = {}
 parameters.particleCount = 10000
 parameters.size = 0.01
-parameters.rayLength = 5
-parameters.rayCount = 30
-parameters.eventHorizon = 0.5
+parameters.radius = 0.582 //Saturn has a mean radius of approximately 58,232 km
 
 let particleGeometry = null
 let particleMaterial = null
 let particles = null
-let blackHoleGeometry = null
-let blackHoleMaterial = null
-let blackHole = null
+let saturnGeometry = null
+let saturnMaterial = null
+let saturn = null
 
-const generateBlackHole = () => {
+const generatesaturn = () => {
     /**
      * Disposal
      */
-    if (particles !== null && blackHole !== null) {
+    if (particles !== null && saturn !== null) {
         particleGeometry.dispose()
         particleMaterial.dispose()
-        blackHoleGeometry.dispose()
-        blackHoleMaterial.dispose()
-        scene.remove(particles,blackHole)
+        saturnGeometry.dispose()
+        saturnMaterial.dispose()
+        scene.remove(particles,saturn)
     }
 
     /**
      * Black hole
      */
-    M = parameters.eventHorizon * c^2 / (2 * G)
-    console.log(M)
 
-    blackHoleGeometry = new THREE.SphereGeometry( parameters.eventHorizon, 32, 16 )
-    blackHoleMaterial = new THREE.MeshBasicMaterial( { color: 0xff0000 } )
-    blackHole = new THREE.Mesh( blackHoleGeometry, blackHoleMaterial )
+    saturnGeometry = new THREE.SphereGeometry( parameters.radius, 64, 64 )
+    saturnMaterial = new THREE.MeshBasicMaterial( { map: saturnTexture } )
+    saturn = new THREE.Mesh( saturnGeometry, saturnMaterial )
 
     /**
      * Light Rays
@@ -120,16 +118,14 @@ const generateBlackHole = () => {
     particles = new THREE.Points(particleGeometry, particleMaterial)
     
     // scene.add(particles)
-    scene.add(particles, blackHole)
+    scene.add(particles, saturn)
 }
 
-generateBlackHole()
+generatesaturn()
 
-gui.add(parameters, 'particleCount').min(100).max(1000000).step(100).onFinishChange(generateBlackHole)
-gui.add(parameters, 'rayCount').min(10).max(50).step(10).onFinishChange(generateBlackHole)
-gui.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generateBlackHole)
-gui.add(parameters, 'rayLength').min(0.01).max(20).step(0.01).onFinishChange(generateBlackHole)
-gui.add(parameters, 'eventHorizon').min(0.1).max(2).step(0.1).onFinishChange(generateBlackHole)
+gui.add(parameters, 'particleCount').min(100).max(1000000).step(100).onFinishChange(generatesaturn)
+gui.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generatesaturn)
+gui.add(parameters, 'radius').min(0.1).max(2).step(0.1).onFinishChange(generatesaturn)
 
 /**
  * Sizes
@@ -157,7 +153,7 @@ window.addEventListener('resize', () => {
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
 camera.position.x = 3
 camera.position.y = 3
 camera.position.z = 3
@@ -166,6 +162,10 @@ scene.add(camera)
 // Controls
 const controls = new OrbitControls(camera, canvas)
 controls.enableDamping = true
+controls.minDistance = 1
+controls.maxDistance = 30
+// controls.enableZoom = false
+controls.enablePan = false
 
 /**
  * Renderer
