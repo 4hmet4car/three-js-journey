@@ -39,12 +39,12 @@ loadingManager.onError = function ( url ) {
 const textureLoader = new THREE.CubeTextureLoader(loadingManager)
 
 const backgroundTextures = textureLoader.load([
-    './textures/background/nx.png',
-    './textures/background/ny.png',
-    './textures/background/nz.png',
     './textures/background/px.png',
+    './textures/background/nx.png',
     './textures/background/py.png',
-    './textures/background/pz.png'
+    './textures/background/ny.png',
+    './textures/background/pz.png',
+    './textures/background/nz.png'
   ])
 
 scene.background = backgroundTextures
