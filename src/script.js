@@ -72,7 +72,7 @@ let ringParticleGeometries = []
 let ringParticleMaterials = []
 let rings = []
 
-const generateRing = (distanceFromCenter, width, thickness, particleCount) => {
+const generateRing = (distanceFromCenter, width, thickness, particleCount, particleDarkness) => {
     const ringParticleGeometry = new THREE.BufferGeometry()
     ringParticleGeometries.push(ringParticleGeometry)
     const ringParticlePositions = new Float32Array(particleCount * 3)
@@ -90,9 +90,10 @@ const generateRing = (distanceFromCenter, width, thickness, particleCount) => {
     const ringParticlePositionsAttribute = new THREE.BufferAttribute(ringParticlePositions, 3)
     ringParticleGeometry.setAttribute('position', ringParticlePositionsAttribute)
     const ringParticleMaterial = new THREE.PointsMaterial({
-        size: 0.001,
+        color: new THREE.Color(`hsl(40,65%,${particleDarkness}%)`),
+        size: parameters.size,
         sizeAttenuation: true,
-        blending: THREE.AdditiveBlending
+        blending: THREE.NormalBlending
     })
     ringParticleMaterials.push(ringParticleMaterial)
     const ringParticles = new THREE.Points(ringParticleGeometry, ringParticleMaterial)
@@ -105,12 +106,11 @@ const generatesaturn = () => {
     /**
      * Disposal
      */
-    if (rings.length && saturn !== null) {
-        console.log('lol')
+    if (saturn !== null) {
         saturnGeometry.dispose()
         saturnMaterial.dispose()
         scene.remove(saturn)
-        for(let i=0;i<rings.length;i++){
+        for (let i = 0; i < rings.length; i++) {
             ringParticleGeometries[i].dispose()
             ringParticleMaterials[i].dispose()
             scene.remove(rings[i])
@@ -118,6 +118,21 @@ const generatesaturn = () => {
         ringParticleGeometries = []
         ringParticleMaterials = []
         rings = []
+    }
+
+    /**
+     * Rings of Saturn
+     */
+    generateRing(0.669, 0.075, 0.0003, 100, 40) //D ring has a mass of 10^12 kg
+    generateRing(0.746, 0.175, 0.00005, 1.1 * 10000, 80) //C ring has a mass of 1.1 * 10^18 kg
+    generateRing(0.92, 0.255, 0.0001, 24 * 10000, 90) //B ring has a mass of 24 * 10^18 kg
+    generateRing(1.221, 0.146, 0.0003, 5 * 10000, 80) //A ring has a mass of 5* 10^18 kg
+    generateRing(1.401, 0.005, 0.0003, 1000, 40) //F ring has a mass of negligible
+    // generateRing(1.66, 0.09, 0.0003, 1000, 60) //G ring has a mass of negligible
+    // generateRing(1.8, 3, 0.02, 10000, 60) //E ring has a mass of negligible
+
+    for (let ring of rings) {
+        scene.add(ring)
     }
 
     /**
@@ -131,21 +146,6 @@ const generatesaturn = () => {
     saturn.rotation.z = - Math.PI * 0.15 // Saturn is tilted approx. 27 degrees
 
     scene.add(saturn)
-
-    /**
-     * Rings of Saturn
-     */
-    generateRing(0.669,0.075,0.0003,10000) //D ring
-    generateRing(0.746,0.175,0.00005,10000) //C ring
-    generateRing(0.92,0.255,0.0001,10000) //B ring
-    generateRing(1.221,0.146,0.0003,10000) //A ring
-    generateRing(1.401,0.005,0.0003,10000) //F ring
-    generateRing(1.66,0.09,0.0003,10000) //G ring
-    generateRing(1.8,3,0.02,10000) //E ring
-    
-    for(let ring of rings){
-        scene.add(ring)
-    }
 }
 
 generatesaturn()
@@ -216,7 +216,7 @@ const tick = () => {
     controls.update()
 
     if (rings.length) {
-        for(let ring of rings){
+        for (let ring of rings) {
             ring.rotateY((Math.PI * deltaTime / 37980) * parameters.speedMultiplier) // Saturn completes one full rotation in 37980 seconds
         }
         saturn.rotateY((Math.PI * deltaTime / 37980) * parameters.speedMultiplier)
