@@ -89,6 +89,8 @@ const generatesaturn = () => {
     saturnGeometry = new THREE.SphereGeometry( parameters.radius, 64, 64 )
     saturnMaterial = new THREE.MeshBasicMaterial( { map: saturnTexture } )
     saturn = new THREE.Mesh( saturnGeometry, saturnMaterial )
+    saturn.rotation.x = - Math.PI * 0.15
+    saturn.rotation.z = - Math.PI * 0.15
 
     /**
      * Light Rays
@@ -116,6 +118,8 @@ const generatesaturn = () => {
         blending: THREE.AdditiveBlending
     })
     particles = new THREE.Points(particleGeometry, particleMaterial)
+    particles.rotation.x = - Math.PI * 0.15
+    particles.rotation.z = - Math.PI * 0.15
     
     // scene.add(particles)
     scene.add(particles, saturn)
@@ -155,7 +159,7 @@ window.addEventListener('resize', () => {
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 1000)
 camera.position.x = 3
-camera.position.y = 3
+camera.position.y = 2
 camera.position.z = 3
 scene.add(camera)
 
@@ -189,7 +193,8 @@ const tick = () => {
     controls.update()
 
     if(particles !== null){
-        particles.rotation.y += 0.0001
+        particles.rotateY(0.0001)
+        saturn.rotateY(0.0001)
     }
 
     // Render
