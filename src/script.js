@@ -8,6 +8,7 @@ import { Timer } from 'three/examples/jsm/misc/Timer.js'
  */
 // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -90,7 +91,7 @@ const generateRing = (distanceFromCenter, width, thickness, particleCount, parti
     const ringParticlePositionsAttribute = new THREE.BufferAttribute(ringParticlePositions, 3)
     ringParticleGeometry.setAttribute('position', ringParticlePositionsAttribute)
     const ringParticleMaterial = new THREE.PointsMaterial({
-        color: new THREE.Color(`hsl(40,65%,${particleDarkness}%)`),
+        color: new THREE.Color(`hsl(40,35%,${particleDarkness}%)`),
         size: parameters.size,
         sizeAttenuation: true,
         blending: THREE.NormalBlending
