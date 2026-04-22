@@ -74,12 +74,18 @@ let ringParticleMaterials = []
 let rings = []
 
 const generateRing = (distanceFromCenter, width, thickness, particleCount, particleDarkness) => {
+    const insideColor = new THREE.Color(`hsl(40,40%,${particleDarkness}%)`)
+    const outsideColor = new THREE.Color(`hsl(40,40%,${particleDarkness+30}%)`)
+
     const ringParticleGeometry = new THREE.BufferGeometry()
     ringParticleGeometries.push(ringParticleGeometry)
     const ringParticlePositions = new Float32Array(particleCount * 3)
+    const ringParticleColors = new Float32Array(particleCount * 3)
     for (let i = 0; i < particleCount; i++) {
         const theta = Math.random() * Math.PI * 2
-        const r = distanceFromCenter + Math.random() * width
+        const r = distanceFromCenter + (1 - Math.pow(Math.random(),4)) * width
+        
+        //Position
         const particleXPos = r * Math.cos(theta)
         const particleYPos = Math.random() * thickness
         const particleZPos = r * Math.sin(theta)
@@ -87,11 +93,21 @@ const generateRing = (distanceFromCenter, width, thickness, particleCount, parti
         ringParticlePositions[i * 3] = particleXPos
         ringParticlePositions[i * 3 + 1] = particleYPos
         ringParticlePositions[i * 3 + 2] = particleZPos
+
+        //Color
+        const mixedColor = insideColor.clone()
+        mixedColor.lerp(outsideColor, (r - distanceFromCenter)/width)
+
+        ringParticleColors[i * 3] = mixedColor.r
+        ringParticleColors[i * 3 + 1] = mixedColor.g
+        ringParticleColors[i * 3 + 2] = mixedColor.b
     }
     const ringParticlePositionsAttribute = new THREE.BufferAttribute(ringParticlePositions, 3)
+    const ringParticleColorsAttribute = new THREE.BufferAttribute(ringParticleColors, 3)
     ringParticleGeometry.setAttribute('position', ringParticlePositionsAttribute)
+    ringParticleGeometry.setAttribute('color', ringParticleColorsAttribute)
     const ringParticleMaterial = new THREE.PointsMaterial({
-        color: new THREE.Color(`hsl(40,35%,${particleDarkness}%)`),
+        vertexColors: true,
         size: parameters.size,
         sizeAttenuation: true,
         blending: THREE.NormalBlending
@@ -124,11 +140,11 @@ const generatesaturn = () => {
     /**
      * Rings of Saturn
      */
-    generateRing(0.669, 0.075, 0.0003, 100, 40) //D ring has a mass of 10^12 kg
-    generateRing(0.746, 0.175, 0.00005, 1.1 * 10000, 80) //C ring has a mass of 1.1 * 10^18 kg
-    generateRing(0.92, 0.255, 0.0001, 24 * 10000, 90) //B ring has a mass of 24 * 10^18 kg
-    generateRing(1.221, 0.146, 0.0003, 5 * 10000, 80) //A ring has a mass of 5* 10^18 kg
-    generateRing(1.401, 0.005, 0.0003, 1000, 40) //F ring has a mass of negligible
+    generateRing(0.669, 0.075, 0.0003, 100, 50) //D ring has a mass of 10^12 kg
+    generateRing(0.746, 0.175, 0.00005, 1.1 * 10000, 50) //C ring has a mass of 1.1 * 10^18 kg
+    generateRing(0.92, 0.255, 0.0001, 24 * 10000, 60) //B ring has a mass of 24 * 10^18 kg
+    generateRing(1.221, 0.146, 0.0003, 5 * 10000, 50) //A ring has a mass of 5* 10^18 kg
+    generateRing(1.401, 0.005, 0.0003, 1000, 10) //F ring has a mass of negligible
     // generateRing(1.66, 0.09, 0.0003, 1000, 60) //G ring has a mass of negligible
     // generateRing(1.8, 3, 0.02, 10000, 60) //E ring has a mass of negligible
 
