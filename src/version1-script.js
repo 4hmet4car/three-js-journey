@@ -46,6 +46,7 @@ for(let i = 1; i < 14; i++)
  * Debug
  */
 const gui = new GUI()
+gui.close()
 
 const parameters = {
     materialColor: '#ffeded',
@@ -121,7 +122,7 @@ const toonMaterial = new THREE.MeshToonMaterial({
 })
 
 // Meshes
-const objectDistance = 4
+const objectDistance = 8
 
 const geometries = {}
 geometries[0] = new THREE.TorusGeometry(1,0.4,16,60)
@@ -286,14 +287,24 @@ const sizes = {
     height: window.innerHeight
 }
 
+const defaultFOV = 35 
+
 window.addEventListener('resize', () =>
 {
+    
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
 
     // Update camera
     camera.aspect = sizes.width / sizes.height
+    
+    if (camera.aspect < 1) {
+        camera.fov = defaultFOV / camera.aspect 
+    } else {
+        camera.fov = defaultFOV
+    }
+
     camera.updateProjectionMatrix()
 
     // Update renderer
@@ -308,7 +319,7 @@ const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(35, sizes.width / sizes.height, 0.1, 100)
+const camera = new THREE.PerspectiveCamera(defaultFOV, sizes.width / sizes.height, 0.1, 100)
 camera.position.z = 6
 cameraGroup.add(camera)
 
@@ -357,7 +368,7 @@ window.addEventListener('scroll', ()=>
                 y: '+=1.5',
             }
         )
-        console.log(toonMaterial.color)
+        // console.log(toonMaterial.color)
 
         gsap.to(
             [toonMaterial.color,particleMaterial.color],
