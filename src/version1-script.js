@@ -122,7 +122,7 @@ const toonMaterial = new THREE.MeshToonMaterial({
 })
 
 // Meshes
-const objectDistance = 8
+const objectDistance = 9.453
 
 const geometries = {}
 geometries[0] = new THREE.TorusGeometry(1,0.4,16,60)
@@ -287,7 +287,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-const defaultFOV = 35 
+const defaultFOV = 35
 
 window.addEventListener('resize', () =>
 {
@@ -319,7 +319,9 @@ const cameraGroup = new THREE.Group()
 scene.add(cameraGroup)
 
 // Base camera
-const camera = new THREE.PerspectiveCamera(defaultFOV, sizes.width / sizes.height, 0.1, 100)
+const initialAspect = sizes.width / sizes.height
+const initialFOV = initialAspect < 1 ? defaultFOV/initialAspect : defaultFOV
+const camera = new THREE.PerspectiveCamera(initialFOV, initialAspect, 0.1, 100)
 camera.position.z = 6
 cameraGroup.add(camera)
 
