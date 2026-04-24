@@ -55,7 +55,7 @@ const parameters = {
     gradient: gradientTextures[0],
     speed: 0.1,
     particleCount: 200,
-    particleSize: 0.2,
+    particleSize: 0.05,
     texture: null,
 }
 
@@ -289,9 +289,9 @@ const sizes = {
 
 const defaultFOV = 35
 
-window.addEventListener('resize', () =>
+const resizer = () =>
 {
-    
+    // console.log('resize')
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -310,7 +310,9 @@ window.addEventListener('resize', () =>
     // Update renderer
     renderer.setSize(sizes.width, sizes.height)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-})
+}
+
+window.addEventListener('resize', resizer)
 
 /**
  * Camera
@@ -348,6 +350,8 @@ let textIndex = [0,0]
 
 window.addEventListener('scroll', ()=>
 {
+    console.log('scroll')
+    console.log(window.innerHeight)
     scrollY = window.scrollY
     const newSection = Math.round(scrollY / sizes.height)
     
