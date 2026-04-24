@@ -122,7 +122,7 @@ const toonMaterial = new THREE.MeshToonMaterial({
 })
 
 // Meshes
-const objectDistance = 9.453
+const objectDistance = 4
 
 const geometries = {}
 geometries[0] = new THREE.TorusGeometry(1,0.4,16,60)
