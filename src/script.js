@@ -2,6 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import { Timer } from 'three/examples/jsm/misc/Timer.js'
+// import { TransformControls } from 'three/addons/controls/TransformControls.js'
 
 /**
  * Base
@@ -40,6 +41,13 @@ loadingManager.onError = function (url) {
 
 const textureLoader = new THREE.TextureLoader(loadingManager)
 
+// const particleTextures = {}
+// for(let i = 1; i < 14; i++)
+// {
+//     particleTextures[i-1] = textureLoader.load('./textures/particles/' + i + '.png' )
+// }
+ const particleTexture = textureLoader.load('./textures/particles/8.png' )
+
 /**
  * Galaxy
  */
@@ -62,7 +70,7 @@ saturnTexture.generateMipmaps = false
 
 const parameters = {}
 parameters.particleCount = 10000
-parameters.size = 0.001
+parameters.size = 0.015
 parameters.speedMultiplier = 200
 
 let saturnGeometry = null
@@ -107,10 +115,15 @@ const generateRing = (distanceFromCenter, width, thickness, particleCount, parti
     ringParticleGeometry.setAttribute('position', ringParticlePositionsAttribute)
     ringParticleGeometry.setAttribute('color', ringParticleColorsAttribute)
     const ringParticleMaterial = new THREE.PointsMaterial({
+        alphaMap: particleTexture,
+        transparent: true,
         vertexColors: true,
         size: parameters.size,
         sizeAttenuation: true,
-        blending: THREE.NormalBlending
+        blending: THREE.NormalBlending,
+        // alphaTest: 0.1
+        // depthTest: false
+        depthWrite: false
     })
     ringParticleMaterials.push(ringParticleMaterial)
     const ringParticles = new THREE.Points(ringParticleGeometry, ringParticleMaterial)
@@ -140,11 +153,11 @@ const generatesaturn = () => {
     /**
      * Rings of Saturn
      */
-    generateRing(0.669, 0.075, 0.0003, 100, 50) //D ring has a mass of 10^12 kg
-    generateRing(0.746, 0.175, 0.00005, 1.1 * 10000, 50) //C ring has a mass of 1.1 * 10^18 kg
-    generateRing(0.92, 0.255, 0.0001, 24 * 10000, 60) //B ring has a mass of 24 * 10^18 kg
-    generateRing(1.221, 0.146, 0.0003, 5 * 10000, 50) //A ring has a mass of 5* 10^18 kg
-    generateRing(1.401, 0.005, 0.0003, 1000, 10) //F ring has a mass of negligible
+    generateRing(0.669, 0.075, 0.0003, 100*2, 50) //D ring has a mass of 10^12 kg
+    generateRing(0.746, 0.175, 0.00005, 1.1 * 10000*2, 50) //C ring has a mass of 1.1 * 10^18 kg
+    generateRing(0.92, 0.255, 0.0001, 24 * 10000*2, 60) //B ring has a mass of 24 * 10^18 kg
+    generateRing(1.221, 0.146, 0.0003, 5 * 10000*2, 50) //A ring has a mass of 5* 10^18 kg
+    generateRing(1.401, 0.005, 0.0003, 1000*2, 10) //F ring has a mass of negligible
     // generateRing(1.66, 0.09, 0.0003, 1000, 60) //G ring has a mass of negligible
     // generateRing(1.8, 3, 0.02, 10000, 60) //E ring has a mass of negligible
 
@@ -157,7 +170,7 @@ const generatesaturn = () => {
      */
 
     saturnGeometry = new THREE.SphereGeometry(0.582, 64, 64) //Saturn has a mean radius of approximately 58,232 km
-    saturnMaterial = new THREE.MeshBasicMaterial({ map: saturnTexture })
+    saturnMaterial = new THREE.MeshStandardMaterial({ map: saturnTexture })
     saturn = new THREE.Mesh(saturnGeometry, saturnMaterial)
     saturn.rotation.x = - Math.PI * 0.15 // Saturn is tilted approx. 27 degrees
     saturn.rotation.z = - Math.PI * 0.15 // Saturn is tilted approx. 27 degrees
@@ -169,6 +182,16 @@ generatesaturn()
 
 gui.add(parameters, 'size').min(0.001).max(0.1).step(0.001).onFinishChange(generatesaturn).name('Particle Size')
 gui.add(parameters, 'speedMultiplier').min(1).max(200).step(0.001).name('Speed Multiplier')
+
+/**
+ * Light
+ */
+const spotLight = new THREE.SpotLight('#fff6e7',45,15,Math.PI*0.1,1,4)
+spotLight.position.set(1.4,2,-0.1)
+scene.add(spotLight)
+
+// const spotLightHelper = new THREE.SpotLightHelper(spotLight)
+// scene.add(spotLightHelper)
 
 /**
  * Sizes
@@ -219,6 +242,20 @@ const renderer = new THREE.WebGLRenderer({
 // renderer.setClearColor(THREE)
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+/**
+ * Light Controls
+ */
+// const transformControls = new TransformControls(camera,canvas)
+// transformControls.addEventListener( 'dragging-changed', function ( event ) {
+//     transformControls._gizmo.object.lookAt(new THREE.Vector3(0,0,0))
+//     spotLightHelper.update()
+//     controls.enabled = ! event.value
+//     console.log(spotLight.position)
+// } )
+// transformControls.attach(spotLight)
+// const gizmo = transformControls.getHelper()
+// scene.add(gizmo)
 
 /**
  * Animate
