@@ -17,7 +17,7 @@ export default {
         rollupOptions: {
             input: {
                 main: resolve(import.meta.dirname, 'src/index.html'),
-                version1: resolve(import.meta.dirname, 'src/version1.html'),
+                version1: resolve(import.meta.dirname, 'src/version1.html'), //version1 is the name of the page, change it according to your need
             }
         }
     },
