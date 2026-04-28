@@ -14,6 +14,10 @@ gui.close()
 
 const parameters = {}
 parameters.environment = true
+parameters.changePage = () =>{
+    window.location.href = 'version1.html'
+}
+gui.add(parameters,'changePage').name('Go to Version 1')
 
 /**
  * Base
@@ -320,6 +324,43 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Utils
  */
+// Buttons
+const colors = ['#171a4a','#6cb0ba','#f6d532','#e78b0f']
+let sphereColorSelector = Math.round(Math.random() * 3)
+let boxColorSelector = Math.round(Math.random() * 3)
+
+const addSphereButton = document.getElementById("sphere")
+addSphereButton.style.backgroundColor = colors[sphereColorSelector]
+addSphereButton.addEventListener('click',()=>{
+    createSphere(
+            Math.random() * 0.5 + 0.05,
+            new THREE.Vector3(
+                (Math.random() - 0.5) * 3,
+                Math.random() + 2,
+                (Math.random() - 0.5) * 3
+            )
+        )
+
+    addSphereButton.style.backgroundColor = colors[sphereColorSelector]
+})
+
+const addBoxButton = document.getElementById("box")
+addBoxButton.style.backgroundColor = colors[boxColorSelector]
+addBoxButton.addEventListener('click',()=>{
+    createBox(
+            Math.random() * 0.5 + 0.05,
+            Math.random() * 0.5 + 0.05,
+            Math.random() * 0.5 + 0.05,
+            new THREE.Vector3(
+                (Math.random() - 0.5) * 3,
+                Math.random() + 2,
+                (Math.random() - 0.5) * 3
+            )
+        )
+
+    addBoxButton.style.backgroundColor = colors[boxColorSelector]
+})
+
 const objectsToUpdate = []
 
 const sphereGeometry = new THREE.SphereGeometry(1,20,20)
@@ -327,25 +368,25 @@ const objectMaterials =[
     new THREE.MeshStandardMaterial({
         metalness: 0.5,
         roughness: 0.2,
-        color: '#171a4a',
+        color: colors[0],
         envMap: environmentMapTexture
     }),
     new THREE.MeshStandardMaterial({
         metalness: 0.5,
         roughness: 0.2,
-        color: '#6cb0ba',
+        color: colors[1],
         envMap: environmentMapTexture
     }),
     new THREE.MeshStandardMaterial({
         metalness: 0.5,
         roughness: 0.2,
-        color: '#f6d532',
+        color: colors[2],
         envMap: environmentMapTexture
     }),
     new THREE.MeshStandardMaterial({
         metalness: 0.5,
         roughness: 0.2,
-        color: '#e78b0f',
+        color: colors[3],
         envMap: environmentMapTexture
     }),
 ]
@@ -355,7 +396,7 @@ const createSphere = (radius, position) =>
     // Three.js mesh
     const mesh = new THREE.Mesh(
         sphereGeometry,
-        objectMaterials[Math.round(Math.random() * 3)]
+        objectMaterials[sphereColorSelector]
     )
     mesh.scale.set(radius,radius,radius)
     mesh.castShadow = true
@@ -377,6 +418,8 @@ const createSphere = (radius, position) =>
         mesh: mesh,
         body: body
     })
+
+    sphereColorSelector = Math.round(Math.random() * 3)
 }
 
 parameters.addSphere = () =>
@@ -389,6 +432,7 @@ parameters.addSphere = () =>
                 (Math.random() - 0.5) * 3
             )
         )
+        addSphereButton.style.backgroundColor = colors[sphereColorSelector]
     }
 
 gui.add(parameters,'addSphere')
@@ -400,7 +444,7 @@ const createBox = (width, height, depth, position) =>
     // Three.js mesh
     const mesh = new THREE.Mesh(
         boxGeometry,
-        objectMaterials[Math.round(Math.random() * 3)]
+        objectMaterials[boxColorSelector]
     )
     mesh.scale.set(width,height,depth)
     mesh.castShadow = true
@@ -424,6 +468,8 @@ const createBox = (width, height, depth, position) =>
         mesh: mesh,
         body: body
     })
+
+    boxColorSelector = Math.round(Math.random() * 3)
 }
 
 parameters.addBox = () =>
@@ -438,6 +484,7 @@ parameters.addBox = () =>
                 (Math.random() - 0.5) * 3
             )
         )
+        addBoxButton.style.backgroundColor = colors[boxColorSelector]
     }
 
 gui.add(parameters,'addBox')

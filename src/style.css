@@ -31,13 +31,56 @@ body {
 }
 
 .version1 {
-    background-color: black;
-    border: 1px solid #ffefd5;
-    color: #ffefd5;
+    visibility: hidden;
+    /* position: fixed;
+    top: 4vmin;
+    left: 4vmin;
+    color: #ffefd5; */
 }
 
 .version2 {
     background-color: black;
     border: 1px solid #ffe5ff;
     color: #ffe5ff;
+}
+
+#sphere {
+    position: fixed;
+    bottom: 4vmin;
+    left: 4vmin;
+    background-color: white;
+    cursor: pointer;
+    height:6vmin;
+    width:6vmin;
+    border-radius: 3vmin;
+}
+
+#box {
+    position: fixed;
+    bottom: 4vmin;
+    right: 4vmin;
+    background-color: white;
+    cursor: pointer;
+    height:6vmin;
+    width:6vmin;
+}
+
+.lil-gui {
+    --font-family: Helvetica, Arial, sans-serif;
+    --widget-border-radius: 5px;
+    
+    /* Colori principali */
+    --title-background-color: #171a4a3b; /* Sfondo del titolo */
+    --background-color: #ffffff00; /* Sfondo dei pannelli */
+    --widget-color: #272740;       /* Sfondo dei widget (slider, input) */
+    --focus-color: #e78b0f;      /* Colore quando un elemento è selezionato */
+    --hover-color: #8a868b;        /* Colore al passaggio del mouse */
+    
+    /* Colori del testo */
+    --text-color: #eee;
+    --number-color: #00ffaf;    /* Colore dei numeri negli slider */
+    --string-color: #ffdd00;    /* Colore del testo negli input stringa */
+    
+    /* Dimensioni */
+    --width: 250px;
 }
