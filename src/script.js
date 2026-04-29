@@ -196,7 +196,7 @@ world.addBody(floorBody)
  * Floor
  */
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(20, 20),
+    new THREE.PlaneGeometry(25, 25),
     new THREE.MeshStandardMaterial({
         color: '#d2cbc5',
         metalness: 0.3,
