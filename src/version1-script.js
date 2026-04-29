@@ -61,6 +61,10 @@ gltfLoader.setDRACOLoader(dracoLoader)
 //     }
 // )
 
+/**
+ * Fox
+ */
+
 // This is how you load animations
 // and how you create gui for animation
 let mixer = null
@@ -80,6 +84,7 @@ gltfLoader.load(
         activeAction.play()
         createGui()
         gltf.scene.scale.set(0.025,0.025,0.025)
+        gltf.scene.position.set(0,6,0)
         scene.add(gltf.scene)
     }
 )
@@ -110,24 +115,42 @@ const createGui = () =>
 }
 
 /**
+ * Apple
+ */
+let tyre = null
+
+gltfLoader.load(
+    './models/Tyre/old_tyre_1k.gltf',
+    (gltf) =>
+    {
+        console.log(gltf.scene.children[0])
+        tyre = gltf.scene.children[0]
+        tyre.scale.set(20,20,20)
+        tyre.rotation.y = -Math.PI * 0.5
+        scene.add(tyre)
+        // console.log(gltf.scene.children[0])
+    }
+)
+
+/**
  * Floor
  */
-const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(10, 10),
-    new THREE.MeshStandardMaterial({
-        color: '#444444',
-        metalness: 0,
-        roughness: 0.5
-    })
-)
-floor.receiveShadow = true
-floor.rotation.x = - Math.PI * 0.5
-scene.add(floor)
+// const floor = new THREE.Mesh(
+//     new THREE.PlaneGeometry(10, 10),
+//     new THREE.MeshStandardMaterial({
+//         color: '#444444',
+//         metalness: 0,
+//         roughness: 0.5
+//     })
+// )
+// floor.receiveShadow = true
+// floor.rotation.x = - Math.PI * 0.5
+// scene.add(floor)
 
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 2.4)
+const ambientLight = new THREE.AmbientLight(0xffffff, 1)
 scene.add(ambientLight)
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
@@ -149,6 +172,12 @@ const sizes = {
     height: window.innerHeight
 }
 
+let zoom = 13
+
+let aspect = sizes.width / sizes.height
+let left = -aspect * zoom
+let right = aspect * zoom
+
 window.addEventListener('resize', () =>
 {
     // Update sizes
@@ -156,7 +185,11 @@ window.addEventListener('resize', () =>
     sizes.height = window.innerHeight
 
     // Update camera
-    camera.aspect = sizes.width / sizes.height
+    aspect = sizes.width / sizes.height
+    left = -aspect * zoom
+    right = aspect * zoom
+    camera.left = left
+    camera.right = right
     camera.updateProjectionMatrix()
 
     // Update renderer
@@ -168,8 +201,10 @@ window.addEventListener('resize', () =>
  * Camera
  */
 // Base camera
-const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(2, 2, 2)
+const camera = new THREE.OrthographicCamera(left , right, 1 * zoom , -1 * zoom , 0.1, 100)
+camera.position.x = 4
+camera.position.y = 4
+camera.position.z = 4
 scene.add(camera)
 
 // Controls
@@ -204,6 +239,10 @@ const tick = () =>
     if(mixer)
     {
         mixer.update(deltaTime)
+    }
+
+    if(tyre){
+        tyre.rotation.x -= 0.008
     }
 
     // Update controls

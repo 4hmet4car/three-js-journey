@@ -1,18 +1,76 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { Timer } from 'three/examples/jsm/misc/Timer.js'
 
 /**
  * Base
  */
 // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
 
 // Scene
 const scene = new THREE.Scene()
+
+/**
+ * Loading Manager
+ */
+const manager = new THREE.LoadingManager()
+manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
+}
+
+manager.onLoad = function ( ) {
+    console.log( 'Loading complete!')
+}
+
+manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
+    console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
+}
+
+manager.onError = function ( url ) {
+    console.log( 'There was an error loading ' + url )
+}
+
+// Models
+const dracoLoader = new DRACOLoader(manager)
+dracoLoader.setDecoderPath('/draco/')
+const gltfLoader = new GLTFLoader(manager)
+gltfLoader.setDRACOLoader(dracoLoader)
+
+let mixer = null
+
+gltfLoader.load(
+    '/models/Fox/glTF-Binary/Fox.glb',
+    (gltf) => { 
+        // const children = [...gltf.scene.children]
+
+        // for (const child of children) {
+        //     scene.add(child)
+        // }
+
+        mixer = new THREE.AnimationMixer(gltf.scene)
+        const action1 = mixer.clipAction(gltf.animations[0])
+
+        action1.play()
+
+        gltf.scene.scale.set(0.025,0.025,0.025)
+        scene.add(gltf.scene)
+
+    },
+    // () => {
+    //     console.log('progress')
+    // },
+    // () => {
+    //     console.log('error')
+    // }
+)
 
 /**
  * Floor
@@ -96,14 +154,20 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
-const clock = new THREE.Clock()
+const timer = new Timer()
 let previousTime = 0
 
 const tick = () =>
 {
-    const elapsedTime = clock.getElapsedTime()
+    const elapsedTime = timer.getElapsed()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
+    timer.update()
+
+    // Update mixer
+    if (mixer) {
+        mixer.update(deltaTime)
+    }
 
     // Update controls
     controls.update()
