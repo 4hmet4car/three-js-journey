@@ -1,16 +1,16 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
-import GUI from 'lil-gui'
+// import GUI from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+// import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { Timer } from 'three/examples/jsm/misc/Timer.js'
 
 /**
  * Base
  */
 // Debug
-const gui = new GUI()
-const properties = {}
-properties.action = 'Walk'
+// const gui = new GUI()
+// gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -19,138 +19,78 @@ const canvas = document.querySelector('canvas.webgl')
 const scene = new THREE.Scene()
 
 /**
- * Models
+ * Loading Manager
  */
 const manager = new THREE.LoadingManager()
 manager.onStart = function ( url, itemsLoaded, itemsTotal ) {
-	console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
+    console.log( 'Started loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
 }
 
 manager.onLoad = function ( ) {
-	console.log( 'Loading complete!')
+    console.log( 'Loading complete!')
 }
 
 manager.onProgress = function ( url, itemsLoaded, itemsTotal ) {
-	console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
+    console.log( 'Loading file: ' + url + '.\nLoaded ' + itemsLoaded + ' of ' + itemsTotal + ' files.' )
 }
 
 manager.onError = function ( url ) {
-	console.log( 'There was an error loading ' + url )
+    console.log( 'There was an error loading ' + url )
 }
 
-const dracoLoader = new DRACOLoader(manager)
-dracoLoader.setDecoderPath('./draco/')
+// Models
+// const dracoLoader = new DRACOLoader(manager)
+// dracoLoader.setDecoderPath('/draco/')
 const gltfLoader = new GLTFLoader(manager)
-gltfLoader.setDRACOLoader(dracoLoader)
+// gltfLoader.setDRACOLoader(dracoLoader)
 
-// // This can be used for loading gltf, gltf-binary, gltf-embedded, gltf-Draco(only if you supplied draco loader)
-// gltfLoader.load(
-//     '/models/Duck/glTF/Duck.gltf',
-//     (gltf) =>
-//     {
-//         // console.log(gltf.scene.children)
-//         // while(gltf.scene.children.length)
-//         // {
-//         //     scene.add(gltf.scene.children[0])
-//         // }
-//         const children = [...gltf.scene.children]
-//         for( const child of children)
-//         {
-//             scene.add(child)
-//         }
-//     }
-// )
-
-/**
- * Fox
- */
-
-// This is how you load animations
-// and how you create gui for animation
 let mixer = null
-let activeAction = null
-let previousAction = null
-const actions = {}
+
 gltfLoader.load(
-    './models/Fox/glTF/Fox.gltf',
-    (gltf) =>
-    {
+    '/models/Fox/glTF-Binary/Fox.glb',
+    (gltf) => { 
+        // const children = [...gltf.scene.children]
+
+        // for (const child of children) {
+        //     scene.add(child)
+        // }
+
         mixer = new THREE.AnimationMixer(gltf.scene)
-        for(const action of gltf.animations)
-        {
-            actions[action.name] = mixer.clipAction(action)
-        }
-        activeAction = actions.Walk
-        activeAction.play()
-        createGui()
+        const action1 = mixer.clipAction(gltf.animations[0])
+
+        action1.play()
+
         gltf.scene.scale.set(0.025,0.025,0.025)
-        gltf.scene.position.set(0,6,0)
         scene.add(gltf.scene)
-    }
-)
 
-const createGui = () =>
-{
-    const actionCtrl = gui.add(properties,'action',['Run','Walk','Survey']).name('Active action')
-    actionCtrl.onChange(
-        ()=>
-        {
-            previousAction = activeAction;
-            activeAction = actions[ properties.action ];
-
-            if ( previousAction !== activeAction ) {
-
-                previousAction.fadeOut( 0.5 );
-
-            }
-
-            activeAction
-                .reset()
-                .setEffectiveTimeScale( 1 )
-                .setEffectiveWeight( 1 )
-                .fadeIn( 0.5 )
-                .play();
-        }
-    )
-}
-
-/**
- * Apple
- */
-let tyre = null
-
-gltfLoader.load(
-    './models/Tyre/old_tyre_1k.gltf',
-    (gltf) =>
-    {
-        console.log(gltf.scene.children[0])
-        tyre = gltf.scene.children[0]
-        tyre.scale.set(20,20,20)
-        tyre.rotation.y = -Math.PI * 0.5
-        scene.add(tyre)
-        // console.log(gltf.scene.children[0])
-    }
+    },
+    // () => {
+    //     console.log('progress')
+    // },
+    // () => {
+    //     console.log('error')
+    // }
 )
 
 /**
  * Floor
  */
-// const floor = new THREE.Mesh(
-//     new THREE.PlaneGeometry(10, 10),
-//     new THREE.MeshStandardMaterial({
-//         color: '#444444',
-//         metalness: 0,
-//         roughness: 0.5
-//     })
-// )
-// floor.receiveShadow = true
-// floor.rotation.x = - Math.PI * 0.5
-// scene.add(floor)
+const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(10, 10),
+    new THREE.MeshStandardMaterial({
+        color: '#444444',
+        metalness: 0,
+        roughness: 0.5
+    })
+)
+floor.receiveShadow = true
+floor.rotation.x = - Math.PI * 0.5
+scene.add(floor)
 
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 1)
+const ambientLight = new THREE.AmbientLight(0xffffff, 2.4)
 scene.add(ambientLight)
 
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
@@ -172,12 +112,6 @@ const sizes = {
     height: window.innerHeight
 }
 
-let zoom = 13
-
-let aspect = sizes.width / sizes.height
-let left = -aspect * zoom
-let right = aspect * zoom
-
 window.addEventListener('resize', () =>
 {
     // Update sizes
@@ -185,11 +119,7 @@ window.addEventListener('resize', () =>
     sizes.height = window.innerHeight
 
     // Update camera
-    aspect = sizes.width / sizes.height
-    left = -aspect * zoom
-    right = aspect * zoom
-    camera.left = left
-    camera.right = right
+    camera.aspect = sizes.width / sizes.height
     camera.updateProjectionMatrix()
 
     // Update renderer
@@ -201,10 +131,8 @@ window.addEventListener('resize', () =>
  * Camera
  */
 // Base camera
-const camera = new THREE.OrthographicCamera(left , right, 1 * zoom , -1 * zoom , 0.1, 100)
-camera.position.x = 4
-camera.position.y = 4
-camera.position.z = 4
+const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
+camera.position.set(2, 2, 2)
 scene.add(camera)
 
 // Controls
@@ -226,23 +154,19 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 /**
  * Animate
  */
-const clock = new THREE.Clock()
+const timer = new Timer()
 let previousTime = 0
 
 const tick = () =>
 {
-    const elapsedTime = clock.getElapsedTime()
+    const elapsedTime = timer.getElapsed()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
+    timer.update()
 
-    // Play animation
-    if(mixer)
-    {
+    // Update mixer
+    if (mixer) {
         mixer.update(deltaTime)
-    }
-
-    if(tyre){
-        tyre.rotation.x -= 0.008
     }
 
     // Update controls
