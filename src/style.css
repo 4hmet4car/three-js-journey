@@ -43,20 +43,34 @@ body {
     color: #ffe5ff;
 }
 
+#fox {
+    position: fixed;
+    bottom: 4vmin;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: pointer;
+    width: 40vmin;
+}
+
 .lil-gui {
     --font-family: Helvetica, Arial, sans-serif;
     --widget-border-radius: 5px;
-    
+
     /* Colori principali */
-    --title-background-color: #ffffff17; /* Sfondo del titolo */
-    --background-color: #ffffff00; /* Sfondo dei pannelli */
-    --widget-color: #711c1a;       /* Sfondo dei widget (slider, input) */
-    --focus-color: #ca3735;      /* Colore quando un elemento è selezionato */
-    --hover-color: #ca3735;        /* Colore al passaggio del mouse */
-    
+    --title-background-color: #ffffff17;
+    /* Sfondo del titolo */
+    --background-color: #ffffff00;
+    /* Sfondo dei pannelli */
+    --widget-color: #711c1a;
+    /* Sfondo dei widget (slider, input) */
+    --focus-color: #ca3735;
+    /* Colore quando un elemento è selezionato */
+    --hover-color: #ca3735;
+    /* Colore al passaggio del mouse */
+
     /* Colori del testo */
     --text-color: #eee;
-    
+
     /* Dimensioni */
     --width: 250px;
 }

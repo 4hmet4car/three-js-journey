@@ -13,7 +13,7 @@ const gui = new GUI()
 gui.close()
 const properties = {}
 properties.action = 'Walk'
-properties.changePage = () =>{
+properties.changePage = () => {
     window.location.href = 'version1.html'
 }
 
@@ -97,14 +97,14 @@ const createGui = () => {
     const actionCtrl = gui.add(properties, 'action', ['Run', 'Walk', 'Survey']).name('Active action')
     actionCtrl.onChange(
         (event) => {
-            if(event == 'Survey'){
+            if (event == 'Survey') {
                 rotationMultiplierTarget = 0
-            }else{
+            } else {
                 rotationMultiplierTarget = 0.5
             }
 
             previousAction = activeAction;
-            activeAction = actions[properties.action];
+            activeAction = actions[event];
 
             if (previousAction !== activeAction) {
 
@@ -118,12 +118,52 @@ const createGui = () => {
                 .setEffectiveWeight(1)
                 .fadeIn(0.5)
                 .play();
+
+            currentChangeActionImageIndex = changeActionImageKeys.indexOf(activeAction._clip.name)
+            changeActionImage.src = changeActionImages[activeAction._clip.name]
         }
     )
-    gui.add(properties,'changePage').name('Go to Version 1')
+    gui.add(properties, 'changePage').name('Go to Version 1')
 }
 
+// Interface
+const changeActionImages = { Run: "Run.svg", Survey: "Survey.svg", Walk: "Walk.svg" }
+const changeActionButton = document.getElementById("fox")
+const changeActionImage = changeActionButton.querySelector("img")
+changeActionImage.src = changeActionImages.Run
+changeActionImage.src = changeActionImages.Survey
+changeActionImage.src = changeActionImages.Walk
+let currentChangeActionImageIndex = 2
+const changeActionImageKeys = Object.keys(changeActionImages)
+changeActionButton.addEventListener('click', () => {
 
+    currentChangeActionImageIndex = (currentChangeActionImageIndex+1)%3
+    changeActionImage.src = changeActionImages[changeActionImageKeys[currentChangeActionImageIndex]]
+
+    let event = changeActionImageKeys[currentChangeActionImageIndex]
+
+    if (event == 'Survey') {
+        rotationMultiplierTarget = 0
+    } else {
+        rotationMultiplierTarget = 0.5
+    }
+
+    previousAction = activeAction;
+    activeAction = actions[event];
+
+    if (previousAction !== activeAction) {
+
+        previousAction.fadeOut(0.5);
+
+    }
+
+    activeAction
+        .reset()
+        .setEffectiveTimeScale(1)
+        .setEffectiveWeight(1)
+        .fadeIn(0.5)
+        .play();
+})
 
 /**
  * Apple
@@ -138,6 +178,7 @@ gltfLoader.load(
         campbell.material.metalness = 0.05
         campbell.material.roughness = 0.5
         campbell.scale.set(1.75, 1.75, 1.75)
+        campbell.rotation.x = Math.PI * 1.3
         campbell.rotation.z = Math.PI * 0.5
         campbell.receiveShadow = true
         scene.add(campbell)
@@ -221,7 +262,7 @@ const camera = new THREE.OrthographicCamera(left, right, 1 * zoom, -1 * zoom, 0.
 camera.position.x = 8
 camera.position.y = 8
 camera.position.z = 8
-camera.lookAt(new THREE.Vector3(0,0,0))
+camera.lookAt(new THREE.Vector3(0, 0, 0))
 scene.add(camera)
 
 // Controls
