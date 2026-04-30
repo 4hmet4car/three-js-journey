@@ -206,7 +206,7 @@ gltfLoader.load(
         campbell.scale.set(1.75, 1.75, 1.75)
         campbell.rotation.x = Math.PI * 1.3
         campbell.rotation.z = Math.PI * 0.5
-        campbell.position.x = 0.4
+        campbell.position.x = 0.3
         campbell.receiveShadow = true
         scene.add(campbell)
         // console.log(gltf.scene.children[0])

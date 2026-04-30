@@ -8,7 +8,7 @@ body {
     overflow: hidden;
     /* background: #892623; */
     background-image: url('/andy.jpg');
-    background-size: 10%;
+    background-size: 20%;
     background-repeat: repeat;
 }
 
@@ -60,11 +60,12 @@ body {
     --widget-border-radius: 5px;
 
     /* Colori principali */
-    --title-background-color: #ffffff17;
+    --title-background-color: #c70000;
+    --title-text-color: #f4db03;
     /* Sfondo del titolo */
-    --background-color: #ffffff00;
+    --background-color: #c70000;
     /* Sfondo dei pannelli */
-    --widget-color: #711c1a;
+    --widget-color: #f4db03;
     /* Sfondo dei widget (slider, input) */
     --focus-color: #ca3735;
     /* Colore quando un elemento è selezionato */
@@ -72,7 +73,7 @@ body {
     /* Colore al passaggio del mouse */
 
     /* Colori del testo */
-    --text-color: #eee;
+    --text-color: #029779;
 
     /* Dimensioni */
     --width: 250px;
