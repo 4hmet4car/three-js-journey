@@ -3,7 +3,7 @@ import { Timer } from 'three/examples/jsm/misc/Timer.js'
 // import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-// import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 /**
  * Base
@@ -43,10 +43,10 @@ manager.onError = function (url) {
     console.log('There was an error loading ' + url)
 }
 
-// const dracoLoader = new DRACOLoader(manager)
-// dracoLoader.setDecoderPath('./draco/')
+const dracoLoader = new DRACOLoader(manager)
+dracoLoader.setDecoderPath('./draco/')
 const gltfLoader = new GLTFLoader(manager)
-// gltfLoader.setDRACOLoader(dracoLoader)
+gltfLoader.setDRACOLoader(dracoLoader)
 
 // // This can be used for loading gltf, gltf-binary, gltf-embedded, gltf-Draco(only if you supplied draco loader)
 // gltfLoader.load(
@@ -66,12 +66,15 @@ const gltfLoader = new GLTFLoader(manager)
 //     }
 // )
 
+const textureLoader = new THREE.TextureLoader(manager)
+
 /**
  * Fox
  */
 
 // This is how you load animations
 // and how you create gui for animation
+let fox = null
 let mixer = null
 let activeAction = null
 let previousAction = null
@@ -80,7 +83,17 @@ gltfLoader.load(
     './models/Fox/glTF/Fox.gltf',
     (gltf) => {
         mixer = new THREE.AnimationMixer(gltf.scene)
-        gltf.scene.children[0].children[0].castShadow = true
+        fox = gltf.scene.children[0].children[0]
+        const foxTexture = gltf.scene.children[0].children[0].material.map
+        fox.castShadow = true
+        foxTexture.colorSpace = THREE.SRGBColorSpace
+        foxTexture.generateMipMaps = false
+        foxTexture.minFilter = THREE.NearestFilter
+        foxTexture.magFilter = THREE.NearestFilter
+        fox.material = new THREE.MeshToonMaterial({
+            map:foxTexture,
+            // gradientMap:campbellGradientTexture
+        })
         for (const action of gltf.animations) {
             actions[action.name] = mixer.clipAction(action)
         }
@@ -169,17 +182,31 @@ changeActionButton.addEventListener('click', () => {
  * Apple
  */
 let campbell = null
+const campbellGradientTexture = textureLoader.load('/textures/3.jpg')
+campbellGradientTexture.generateMipMaps = false
+campbellGradientTexture.minFilter = THREE.NearestFilter
+campbellGradientTexture.magFilter = THREE.NearestFilter
 
 gltfLoader.load(
-    './models/Campbell/scene.gltf',
+    './models/Campbell/campbell.gltf',
     (gltf) => {
-        console.log(gltf.scene.children[0].children[0].children[0].children[0].children[0])
-        campbell = gltf.scene.children[0].children[0].children[0].children[0].children[0]
-        campbell.material.metalness = 0.05
-        campbell.material.roughness = 0.5
+        // console.log(gltf.scene.children[0].children[0].children[0].children[0].children[0])
+        campbell = gltf.scene.children[0]
+        const campbellTexture = campbell.material.map
+        campbellTexture.colorSpace = THREE.SRGBColorSpace
+        campbellTexture.generateMipMaps = false
+        campbellTexture.minFilter = THREE.LinearFilter
+        campbellTexture.magFilter = THREE.LinearFilter
+        campbell.material = new THREE.MeshToonMaterial({
+            map:campbellTexture,
+            gradientMap:campbellGradientTexture
+        })
+        // campbell.material.metalness = 0.05
+        // campbell.material.roughness = 0.5
         campbell.scale.set(1.75, 1.75, 1.75)
         campbell.rotation.x = Math.PI * 1.3
         campbell.rotation.z = Math.PI * 0.5
+        campbell.position.x = 0.4
         campbell.receiveShadow = true
         scene.add(campbell)
         // console.log(gltf.scene.children[0])
@@ -210,7 +237,7 @@ scene.add(ambientLight)
 const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
 directionalLight.castShadow = true
 directionalLight.shadow.mapSize.set(512, 512)
-directionalLight.shadow.camera.far = 20
+directionalLight.shadow.camera.far = 10
 directionalLight.shadow.camera.left = - 10
 directionalLight.shadow.camera.top = 10
 directionalLight.shadow.camera.right = 10
@@ -279,7 +306,7 @@ const renderer = new THREE.WebGLRenderer({
     canvas: canvas
 })
 renderer.shadowMap.enabled = true
-renderer.shadowMap.type = THREE.PCFSoftShadowMap
+renderer.shadowMap.type = THREE.BasicShadowMap
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
