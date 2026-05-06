@@ -7,8 +7,9 @@ import GUI from 'lil-gui'
 /**
  * Base
  */
-// Debug
+// // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -31,14 +32,24 @@ let model = null
 
 gltfLoader.load(
     '/models/columbarium.glb',
-    (gltf) =>
-    {
+    (gltf) => {
         model = gltf.scene
         console.log(model.children[0].material)
         model.children[0].material.side = THREE.FrontSide
         scene.add(model)
+        updateAllMaterials()
     }
 )
+
+const updateAllMaterials = () => {
+    scene.traverse((child)=>{
+        if(child.isMesh){
+            console.log(child)
+            child.castShadow = true
+            child.receiveShadow = true
+        }
+    })
+}
 
 /**
  * Floor
@@ -58,19 +69,38 @@ gltfLoader.load(
 /**
  * Lights
  */
-const ambientLight = new THREE.AmbientLight(0xffffff, 2.4)
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.5)
 scene.add(ambientLight)
 
-const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
-directionalLight.castShadow = true
-directionalLight.shadow.mapSize.set(1024, 1024)
-directionalLight.shadow.camera.far = 15
-directionalLight.shadow.camera.left = - 7
-directionalLight.shadow.camera.top = 7
-directionalLight.shadow.camera.right = 7
-directionalLight.shadow.camera.bottom = - 7
-directionalLight.position.set(5, 5, 5)
-scene.add(directionalLight)
+// const directionalLight = new THREE.DirectionalLight(0xffffff, 1.8)
+// directionalLight.castShadow = true
+// directionalLight.shadow.mapSize.set(1024, 1024)
+// directionalLight.shadow.camera.far = 15
+// directionalLight.shadow.camera.left = - 7
+// directionalLight.shadow.camera.top = 7
+// directionalLight.shadow.camera.right = 7
+// directionalLight.shadow.camera.bottom = - 7
+// directionalLight.position.set(5, 5, 5)
+// scene.add(directionalLight)
+
+// const directionalLightHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+// scene.add(directionalLightHelper)
+
+const pointLight = new THREE.PointLight('white',25)
+pointLight.castShadow = true
+pointLight.shadow.mapSize.set(1024,1024)
+pointLight.shadow.camera.far = 7
+pointLight.position.set(0,5.5,0)
+scene.add(pointLight)
+
+// const pointLightHelper = new THREE.CameraHelper(pointLight.shadow.camera)
+// scene.add(pointLightHelper)
+
+pointLight.shadow.bias = 0.001
+pointLight.shadow.normalBias = 0.013
+
+gui.add(pointLight.shadow,'bias').min(-0.05).max(0.05).step(0.001)
+gui.add(pointLight.shadow,'normalBias').min(-0.05).max(0.05).step(0.001)
 
 /**
  * Sizes
@@ -80,8 +110,7 @@ const sizes = {
     height: window.innerHeight
 }
 
-window.addEventListener('resize', () =>
-{
+window.addEventListener('resize', () => {
     // Update sizes
     sizes.width = window.innerWidth
     sizes.height = window.innerHeight
@@ -125,14 +154,12 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 const clock = new THREE.Clock()
 let previousTime = 0
 
-const tick = () =>
-{
+const tick = () => {
     const elapsedTime = clock.getElapsedTime()
     const deltaTime = elapsedTime - previousTime
     previousTime = elapsedTime
 
-    if(mixer)
-    {
+    if (mixer) {
         mixer.update(deltaTime)
     }
 

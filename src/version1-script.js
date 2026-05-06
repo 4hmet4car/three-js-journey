@@ -2,13 +2,13 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
-import GUI from 'lil-gui'
+// import GUI from 'lil-gui'
 
 /**
  * Base
  */
-// Debug
-const gui = new GUI()
+// // Debug
+// const gui = new GUI()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
