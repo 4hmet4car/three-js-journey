@@ -53,15 +53,19 @@ const textureLoader = new THREE.TextureLoader(loadingManager)
  */
 
 const milkywayTexture = textureLoader.load('./textures/milkyway.jpg')
+milkywayTexture.mapping = THREE.EquirectangularReflectionMapping
+scene.background = milkywayTexture
+scene.environment = milkywayTexture
 milkywayTexture.colorSpace = THREE.SRGBColorSpace
-milkywayTexture.minFilter = THREE.LinearFilter
-milkywayTexture.generateMipmaps = false
+milkywayTexture.minFilter = THREE.NearestFilter
+milkywayTexture.magFilter = THREE.NearestFilter
+// milkywayTexture.generateMipmaps = false
 
-const milkywayGeometry = new THREE.SphereGeometry(500, 32, 32)
-milkywayGeometry.scale(-1, 1, 1)
-const milkywayMaterial = new THREE.MeshBasicMaterial({ map: milkywayTexture })
-const milkyway = new THREE.Mesh(milkywayGeometry, milkywayMaterial)
-scene.add(milkyway)
+// const milkywayGeometry = new THREE.SphereGeometry(500, 32, 32)
+// milkywayGeometry.scale(-1, 1, 1)
+// const milkywayMaterial = new THREE.MeshBasicMaterial({ map: milkywayTexture })
+// const milkyway = new THREE.Mesh(milkywayGeometry, milkywayMaterial)
+// scene.add(milkyway)
 
 const saturnTexture = textureLoader.load('./textures/saturn.jpg')
 saturnTexture.colorSpace = THREE.SRGBColorSpace
@@ -274,7 +278,9 @@ const tick = () => {
             ring.rotateY((Math.PI * deltaTime / 37980) * parameters.speedMultiplier) // Saturn completes one full rotation in 37980 seconds
         }
         saturn.rotateY((Math.PI * deltaTime / 37980) * parameters.speedMultiplier)
-        milkyway.rotation.y += 0.00000025 * parameters.speedMultiplier
+        // milkyway.rotation.y += 0.00000025 * parameters.speedMultiplier
+        scene.backgroundRotation.y += 0.00000025 * parameters.speedMultiplier
+        scene.environmentRotation.y += 0.00000025 * parameters.speedMultiplier
     }
 
     // Render
