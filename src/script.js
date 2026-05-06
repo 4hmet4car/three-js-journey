@@ -3,12 +3,17 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 import GUI from 'lil-gui'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader.js'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 
 /**
  * Loaders
  */
+const dracoLoader = new DRACOLoader()
+dracoLoader.setDecoderPath('./draco/')
 const gltfLoader = new GLTFLoader()
+gltfLoader.setDRACOLoader(dracoLoader)
 const rgbeLoader = new RGBELoader()
+const textureLoader = new THREE.TextureLoader()
 
 /**
  * Base
@@ -31,7 +36,8 @@ const updateAllMaterials = () =>
     {
         if(child.isMesh)
         {
-            // Activate shadow here
+            child.castShadow = true
+            child.receiveShadow = true
         }
     })
 }
@@ -57,19 +63,103 @@ rgbeLoader.load('/environmentMaps/0/2k.hdr', (environmentMap) =>
 })
 
 /**
+ * Directional Light
+ */
+const directionalLight = new THREE.DirectionalLight('white',6)
+directionalLight.position.set(-4,6.5,2.5)
+scene.add(directionalLight)
+
+gui.add(directionalLight,'intensity').min(0).max(10).step(0.001).name('lightIntensity')
+gui.add(directionalLight.position, 'x').min(-10).max(10).step(0.001).name('lightX')
+gui.add(directionalLight.position, 'y').min(-10).max(10).step(0.001).name('lightY')
+gui.add(directionalLight.position, 'z').min(-10).max(10).step(0.001).name('lightZ')
+
+//Shadows
+directionalLight.castShadow = true
+directionalLight.shadow.camera.far = 15
+directionalLight.shadow.mapSize.set(512,512)
+gui.add(directionalLight,'castShadow')
+
+//Helper
+const directionalLightHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
+directionalLightHelper.visible = false
+scene.add(directionalLightHelper)
+
+gui.add(directionalLightHelper,'visible').name('directionalLightHelper')
+
+//Target
+directionalLight.target.position.set(0,4,0)
+directionalLight.target.updateWorldMatrix()
+
+/**
  * Models
  */
-// Helmet
-gltfLoader.load(
-    '/models/FlightHelmet/glTF/FlightHelmet.gltf',
-    (gltf) =>
-    {
-        gltf.scene.scale.set(10, 10, 10)
-        scene.add(gltf.scene)
+// // Helmet
+// gltfLoader.load(
+//     '/models/FlightHelmet/glTF/FlightHelmet.gltf',
+//     (gltf) =>
+//     {
+//         gltf.scene.scale.set(10, 10, 10)
+//         scene.add(gltf.scene)
 
-        updateAllMaterials()
-    }
+//         updateAllMaterials()
+//     }
+// )
+
+// Smeg
+gltfLoader.load('/models/smeg.glb',(gltf)=>{
+    gltf.scene.scale.set(3, 3, 3)
+    scene.add(gltf.scene)
+    updateAllMaterials()
+})
+
+/**
+ * Floor
+ */
+const floorDiffuseTexture = textureLoader.load('./textures/wood_cabinet_worn_long/wood_cabinet_worn_long_diff_1k.jpg')
+const floorNormalTexture = textureLoader.load('./textures/wood_cabinet_worn_long/wood_cabinet_worn_long_nor_gl_1k.png')
+const floorARMTexture = textureLoader.load('./textures/wood_cabinet_worn_long/wood_cabinet_worn_long_arm_1k.jpg')
+
+floorDiffuseTexture.colorSpace = THREE.SRGBColorSpace
+
+const floor = new THREE.Mesh(
+    new THREE.PlaneGeometry(10,10),
+    new THREE.MeshStandardMaterial({
+        map: floorDiffuseTexture,
+        normalMap: floorNormalTexture,
+        aoMap: floorARMTexture,
+        roughnessMap: floorARMTexture,
+        metalnessMap: floorARMTexture,
+    })
 )
+
+floor.rotation.x = - Math.PI * 0.5
+
+scene.add(floor)
+
+/**
+ * Wall
+ */
+const wallDiffuseTexture = textureLoader.load('./textures/castle_brick_broken_06/castle_brick_broken_06_diff_1k.jpg')
+const wallNormalTexture = textureLoader.load('./textures/castle_brick_broken_06/castle_brick_broken_06_nor_gl_1k.png')
+const wallARMTexture = textureLoader.load('./textures/castle_brick_broken_06/castle_brick_broken_06_arm_1k.jpg')
+
+wallDiffuseTexture.colorSpace = THREE.SRGBColorSpace
+
+const wall = new THREE.Mesh(
+    new THREE.PlaneGeometry(10,10),
+    new THREE.MeshStandardMaterial({
+        map: wallDiffuseTexture,
+        normalMap: wallNormalTexture,
+        aoMap: wallARMTexture,
+        roughnessMap: wallARMTexture,
+        metalnessMap: wallARMTexture,
+    })
+)
+
+wall.position.set(0,5,-5)
+
+scene.add(wall)
 
 /**
  * Sizes
@@ -111,10 +201,29 @@ controls.enableDamping = true
  * Renderer
  */
 const renderer = new THREE.WebGLRenderer({
-    canvas: canvas
+    canvas: canvas,
+    antialias: window.devicePixelRatio > 1 ? false : true
 })
+// console.log(renderer)
 renderer.setSize(sizes.width, sizes.height)
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
+
+// Tone Mapping
+renderer.toneMapping = THREE.ReinhardToneMapping
+renderer.toneMappingExposure = 3
+
+gui.add(renderer,'toneMapping',{
+    No: THREE.NoToneMapping,
+    Linear: THREE.LinearToneMapping,
+    Reinhard: THREE.ReinhardToneMapping,
+    Cineon: THREE.CineonToneMapping,
+    ACESFilmic: THREE.ACESFilmicToneMapping,
+})
+
+gui.add(renderer, 'toneMappingExposure').min(0).max(10).step(0.001)
+
+renderer.shadowMap.enabled = true
+renderer.shadowMap.type = THREE.PCFSoftShadowMap
 
 /**
  * Animate
