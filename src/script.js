@@ -20,6 +20,7 @@ const textureLoader = new THREE.TextureLoader()
  */
 // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -47,6 +48,7 @@ const updateAllMaterials = () =>
  */
 // Intensity
 scene.environmentIntensity = 1
+// scene.environmentIntensity = 0 // it was for shadow bias fix
 gui
     .add(scene, 'environmentIntensity')
     .min(0)
@@ -77,8 +79,13 @@ gui.add(directionalLight.position, 'z').min(-10).max(10).step(0.001).name('light
 //Shadows
 directionalLight.castShadow = true
 directionalLight.shadow.camera.far = 15
-directionalLight.shadow.mapSize.set(512,512)
+directionalLight.shadow.mapSize.set(1024,1024)
+directionalLight.shadow.normalBias = 0.023
+directionalLight.shadow.bias = -0.007
+
 gui.add(directionalLight,'castShadow')
+gui.add(directionalLight.shadow,'normalBias').min(-0.05).max(0.05).step(0.001)
+gui.add(directionalLight.shadow,'bias').min(-0.05).max(0.05).step(0.001)
 
 //Helper
 const directionalLightHelper = new THREE.CameraHelper(directionalLight.shadow.camera)
@@ -123,7 +130,7 @@ const floorARMTexture = textureLoader.load('./textures/wood_cabinet_worn_long/wo
 floorDiffuseTexture.colorSpace = THREE.SRGBColorSpace
 
 const floor = new THREE.Mesh(
-    new THREE.PlaneGeometry(10,10),
+    new THREE.PlaneGeometry(8,8),
     new THREE.MeshStandardMaterial({
         map: floorDiffuseTexture,
         normalMap: floorNormalTexture,
@@ -147,7 +154,7 @@ const wallARMTexture = textureLoader.load('./textures/castle_brick_broken_06/cas
 wallDiffuseTexture.colorSpace = THREE.SRGBColorSpace
 
 const wall = new THREE.Mesh(
-    new THREE.PlaneGeometry(10,10),
+    new THREE.PlaneGeometry(8,8),
     new THREE.MeshStandardMaterial({
         map: wallDiffuseTexture,
         normalMap: wallNormalTexture,
@@ -157,7 +164,7 @@ const wall = new THREE.Mesh(
     })
 )
 
-wall.position.set(0,5,-5)
+wall.position.set(0,4,-4)
 
 scene.add(wall)
 
@@ -189,12 +196,13 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(4, 5, 4)
+camera.position.set(12, 8, 12)
+// camera.position.set(-2, 6, 4) // it was for shadow bias fix
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.target.y = 3.5
+controls.target.y = 2
 controls.enableDamping = true
 
 /**
@@ -210,7 +218,8 @@ renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 
 // Tone Mapping
 renderer.toneMapping = THREE.ReinhardToneMapping
-renderer.toneMappingExposure = 3
+renderer.toneMappingExposure = 1
+// renderer.toneMappingExposure = 0.5 // it was for shadow bias fix
 
 gui.add(renderer,'toneMapping',{
     No: THREE.NoToneMapping,

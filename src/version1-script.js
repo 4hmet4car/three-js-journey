@@ -47,6 +47,7 @@ wallColorTexture.colorSpace = THREE.SRGBColorSpace
  */
 // Debug
 const gui = new GUI()
+gui.close()
 
 // Canvas
 const canvas = document.querySelector('canvas.webgl')
@@ -219,12 +220,12 @@ window.addEventListener('resize', () =>
  */
 // Base camera
 const camera = new THREE.PerspectiveCamera(75, sizes.width / sizes.height, 0.1, 100)
-camera.position.set(4, 5, 4)
+camera.position.set(12, 8, 12)
 scene.add(camera)
 
 // Controls
 const controls = new OrbitControls(camera, canvas)
-controls.target.y = 3.5
+controls.target.y = 2
 controls.enableDamping = true
 
 /**
