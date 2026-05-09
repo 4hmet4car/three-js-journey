@@ -1,8 +1,10 @@
 /**
  * This class currently uses singleton method to access to the experience
+ * This class is found in it's specific folder /src/Experience
  */
 
 import * as THREE from 'three'
+
 import Experience from "./Experience";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
@@ -10,18 +12,34 @@ export default class Camera
 {
     constructor()
     {
-        this.experience = new Experience()
+        this.experience = new Experience() //Singleton
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
 
-        this.setInstance()
+        this.setPerspectiveCameraInstance()
+        // this.setOrtographicCameraInstance()
         this.setOrbitControls()
     }
 
-    setInstance()
+    // Perspective camera instance
+    setPerspectiveCameraInstance()
     {
-        this.instance = new THREE.PerspectiveCamera(35, this.sizes.width, this.sizes.heigth, 0.1, 100)
+        this.instance = new THREE.PerspectiveCamera(35, this.sizes.width / this.sizes.height, 0.1, 100)
+        this.instance.position.set(6, 4, 8)
+        this.scene.add(this.instance)
+    }
+
+    // Orthographic camera instance
+    setOrtographicCameraInstance()
+    {
+        this.isOrthographic = true
+        this.zoom = 1
+        this.left = -(this.sizes.width / this.sizes.height) * this.zoom
+        this.right = (this.sizes.width / this.sizes.height) * this.zoom
+        this.top = 1 * this.zoom
+        this.bottom = -1 * this.zoom
+        this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, 0.1, 100)
         this.instance.position.set(6, 4, 8)
         this.scene.add(this.instance)
     }
@@ -34,8 +52,16 @@ export default class Camera
 
     resize()
     {
-        this.instance.aspect = this.sizes.width / this.sizes.height
-        this.instance.updateProjectionMatrix()
+        if (this.isOrthographic)
+        {
+            this.left = -(this.sizes.width / this.sizes.height) * this.zoom
+            this.right = (this.sizes.width / this.sizes.height) * this.zoom
+            this.instance.updateProjectionMatrix()
+        } else
+        {
+            this.instance.aspect = this.sizes.width / this.sizes.height
+            this.instance.updateProjectionMatrix()
+        }
     }
 
     update()

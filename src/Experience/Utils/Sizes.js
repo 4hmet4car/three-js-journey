@@ -27,15 +27,19 @@ export default class Sizes extends EventEmitter
         super()
 
         //Setup
+        //This is a full-viewport experience with single canvas
+        //If you want to create experiences that are not utilizing the whole
+        //viewport, you can either pass the canvas as parameter to the constructor, you can
+        //use experience.canvas or use singleton experience class.
         this.width = window.innerWidth
-        this.heigth = window.innerHeight
+        this.height = window.innerHeight
         this.pixelRatio = Math.min(window.devicePixelRatio, 2)
 
         //Resize event
         window.addEventListener('resize', () =>
         {
             this.width = window.innerWidth
-            this.heigth = window.innerHeight
+            this.height = window.innerHeight
             this.pixelRatio = Math.min(window.devicePixelRatio, 2)
 
             // trigger(...) emits whatever you provide as a parameter.

@@ -2,6 +2,8 @@
  * This class holds the current-time, elapsed-time and
  * delta-time values.
  * 
+ * This class is found in /src/Experience/Utils
+ * 
  * This class, extending "EventEmitter.js", triggers an event each frame.
  */
 
@@ -14,6 +16,7 @@ export default class Time extends EventEmitter
         super()
 
         // Setup
+        // These are all initial values, most of them change, some stays the same
         this.start = Date.now() //timestamp when the experience starts and throughout the experience stays the same
         this.current = this.start //current timestamp and changes on each frame
         this.elapsed = 0 //how much time was spent since the start of the experience
