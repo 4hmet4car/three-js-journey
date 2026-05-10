@@ -9,16 +9,21 @@ export default class World
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
+        this.resources = this.experience.resources
 
         // Test mesh
         const testCube = new THREE.Mesh(
-            new THREE.BoxGeometry(1,1,1),
+            new THREE.BoxGeometry(1, 1, 1),
             new THREE.MeshStandardMaterial()
         )
 
         this.scene.add(testCube)
 
-        // Setup
-        this.environment = new Environment()
+        this.resources.on('ready', () =>
+        {
+            // Setup
+            this.environment = new Environment()
+        })
+
     }
 }

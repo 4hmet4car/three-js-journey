@@ -4,9 +4,9 @@
  */
 
 import * as THREE from 'three'
-
-import Experience from "./Experience";
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
+
+import Experience from "./Experience"
 
 export default class Camera
 {
@@ -40,6 +40,8 @@ export default class Camera
         this.top = 1 * this.zoom
         this.bottom = -1 * this.zoom
         this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, 0.1, 100)
+        this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
+        this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
         this.instance.position.set(6, 4, 8)
         this.scene.add(this.instance)
     }
@@ -54,8 +56,8 @@ export default class Camera
     {
         if (this.isOrthographic)
         {
-            this.left = -(this.sizes.width / this.sizes.height) * this.zoom
-            this.right = (this.sizes.width / this.sizes.height) * this.zoom
+            this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
+            this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
             this.instance.updateProjectionMatrix()
         } else
         {
