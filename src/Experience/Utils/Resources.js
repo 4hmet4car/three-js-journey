@@ -45,21 +45,21 @@ export default class Resources extends EventEmitter
                 case 'gltfModel':
                     this.loaders.gltfLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file)
+                        this.sourceLoaded(source, file, "background-color: navy")
                     })
                     break;
 
                 case 'texture':
                     this.loaders.textureLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file)
+                        this.sourceLoaded(source, file, "background-color: maroon")
                     })
                     break;
 
                 case 'cubeTexture':
                     this.loaders.cubeTextureLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file)
+                        this.sourceLoaded(source, file, "background-color: darkgreen")
                     })
                     break;
 
@@ -69,8 +69,10 @@ export default class Resources extends EventEmitter
         }
     }
 
-    sourceLoaded(source, file)
+    sourceLoaded(source, file, logColor)
     {
+        console.log('%cLoaded: ' + source.name, logColor)
+
         this.items[source.name] = file
 
         this.loaded++
