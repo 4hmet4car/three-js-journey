@@ -6,13 +6,6 @@ Deployment is handled by GitHub Actions.<br>
 
 > ⚠️ To follow the original course, visit [Bruno Simon's official website](https://threejs-journey.com).
 
-## 🌲 Structure
-
-three-js-journey/<br>
-├── batch-cwebp<br>
-├── LICENSE<br>
-└── readme.md<br>
-
 ## Course Content
 
 ### Chapter 01 - Basics
