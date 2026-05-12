@@ -56,27 +56,30 @@ export default class Fox
 
         this.animation.play = (name) =>
         {
+            this.scene.remove(this.experience.world.brainStem.model)
+            this.scene.add(this.model)
+            console.log(this.scene)
+            
             const newAction = this.animation.actions[name]
             const oldAction = this.animation.actions.current
 
             newAction.reset()
             newAction.play()
-            newAction.crossFadeFrom(oldAction, 1)
+            newAction.crossFadeFrom(oldAction,1)
 
             this.animation.actions.current = newAction
         }
 
         //Debug
-        if (this.debug.active)
-        {
+        if(this.debug.active){
             const debugObject = {
-                playSurvey: () => { this.animation.play('survey') },
-                playWalk: () => { this.animation.play('walk') },
-                playRun: () => { this.animation.play('run') }
+                playSurvey: ()=>{this.animation.play('survey')},
+                playWalk: ()=>{this.animation.play('walk')},
+                playRun: ()=>{this.animation.play('run')}
             }
-            this.debugFolder.add(debugObject, 'playSurvey')
-            this.debugFolder.add(debugObject, 'playWalk')
-            this.debugFolder.add(debugObject, 'playRun')
+            this.debugFolder.add(debugObject,'playSurvey')
+            this.debugFolder.add(debugObject,'playWalk')
+            this.debugFolder.add(debugObject,'playRun')
         }
     }
 
@@ -86,13 +89,5 @@ export default class Fox
         //delta is in miliseconds
         //so we divide delta by 1000
         this.animation.mixer.update(this.time.delta * 0.001)
-    }
-
-    destroy()
-    {
-        this.resource.traverse((child) =>
-        {
-            console.log(child)
-        })
     }
 }

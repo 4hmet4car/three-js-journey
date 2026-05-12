@@ -4,6 +4,7 @@ import Experience from "../Experience.js";
 import Environment from './Environment.js';
 import Floor from './Floor.js';
 import Fox from './Fox.js';
+import BrainStem from './BrainStem.js';
 
 export default class World
 {
@@ -18,6 +19,7 @@ export default class World
             // Setup
             this.floor = new Floor()
             this.fox = new Fox()
+            this.brainStem = new BrainStem()
             this.environment = new Environment()
         })
 
@@ -25,8 +27,9 @@ export default class World
 
     update()
     {
-        if (this.fox) {
+        if (this.fox && this.brainStem) {
             this.fox.update()
+            this.brainStem.update()
         }
     }
 }

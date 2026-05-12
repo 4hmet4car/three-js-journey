@@ -5,6 +5,7 @@
  */
 
 import * as THREE from 'three'
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader.js'
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader.js"
 
 import EventEmitter from "./EventEmitter.js"
@@ -31,7 +32,10 @@ export default class Resources extends EventEmitter
     {
         this.loaders = {}
         // console.log("%cRosso %cVerde %cBlu", "color: red", "color: green", "background-color: #204bd6")
+        this.loaders.dracoLoader = new DRACOLoader()
+        this.loaders.dracoLoader.setDecoderPath('./draco/')
         this.loaders.gltfLoader = new GLTFLoader()
+        this.loaders.gltfLoader.setDRACOLoader(this.loaders.dracoLoader)
         this.loaders.textureLoader = new THREE.TextureLoader()
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader()
     }
@@ -46,6 +50,13 @@ export default class Resources extends EventEmitter
                     this.loaders.gltfLoader.load(source.path, (file) =>
                     {
                         this.sourceLoaded(source, file, "%cGLTF Loaded: ", "background-color: navy")
+                    })
+                    break;
+
+                case 'dracoModel':
+                    this.loaders.gltfLoader.load(source.path, (file) =>
+                    {
+                        this.sourceLoaded(source, file, "%cDraco Loaded: ", "background-color: navy")
                     })
                     break;
 
