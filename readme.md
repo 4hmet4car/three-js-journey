@@ -6,8 +6,6 @@ Deployment is handled by GitHub Actions.<br>
 
 > ⚠️ To follow the original course, visit [Bruno Simon's official website](https://threejs-journey.com).
 
-> ⚠️ The workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
-
 ## 🌲 Structure
 
 three-js-journey/<br>
@@ -52,5 +50,11 @@ three-js-journey/<br>
 25- [Realistic render](https://4hmet4car-25-realistic-render.vercel.app/)<br>
 26- [Code structuring for bigger projects](https://4hmet4car-26-code-structuring-for-bigger-projects.vercel.app/)<br>
 
+### Chapter 04 - Shaders
+
+27- [Shaders](https://4hmet4car-27-shaders.vercel.app/)<br>
+
 ---
+> ⚠️ The workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
+
 > ⚠️ [batch_cwebp.sh](https://github.com/4hmet4car/three-js-journey/tree/main/batch-cwebp) allows you to batch convert images to .webp format.
