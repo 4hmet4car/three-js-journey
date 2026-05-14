@@ -14,8 +14,8 @@
 
 export default [
     {
-        name: 'frenchFlag',
+        name: 'flag',
         type: 'texture',
-        path: 'textures/flag-french.jpg'
+        path: 'textures/flag.png'
     }
 ]

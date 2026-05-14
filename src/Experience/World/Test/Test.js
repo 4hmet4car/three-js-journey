@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 
-import Experience from "../Experience.js";
+import Experience from "../../Experience.js";
 
-import testVertexShader from './shaders/test/vertex.glsl'
-import testFragmentShader from './shaders/test/fragment.glsl'
+import testVertexShader from './shaders/vertex.glsl'
+import testFragmentShader from './shaders/fragment.glsl'
 
 export default class Test
 {
@@ -30,7 +30,8 @@ export default class Test
     {
         this.material = new THREE.RawShaderMaterial({
             vertexShader: testVertexShader,
-            fragmentShader: testFragmentShader
+            fragmentShader: testFragmentShader,
+            side: THREE.DoubleSide
         })
     }
     setMesh()
