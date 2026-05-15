@@ -14,6 +14,16 @@ import Pattern11 from "./Pattern11/Pattern11.js"
 import Pattern12 from "./Pattern12/Pattern12.js"
 import Pattern13 from "./Pattern13/Pattern13.js"
 import Pattern14 from "./Pattern14/Pattern14.js"
+import Pattern15 from "./Pattern15/Pattern15.js"
+import Pattern16 from "./Pattern16/Pattern16.js"
+import Pattern17 from "./Pattern17/Pattern17.js"
+import Pattern18 from "./Pattern18/Pattern18.js"
+import Pattern19 from "./Pattern19/Pattern19.js"
+import Pattern20 from "./Pattern20/Pattern20.js"
+import Pattern21 from "./Pattern21/Pattern21.js"
+import Pattern22 from "./Pattern22/Pattern22.js"
+import Pattern23 from "./Pattern23/Pattern23.js"
+import Pattern24 from "./Pattern24/Pattern24.js"
 
 export default class Tiles
 {
@@ -29,6 +39,16 @@ export default class Tiles
     setTiles()
     {
         this.tiles = {}
+        this.tiles.pattern24 = new Pattern24()
+        this.tiles.pattern23 = new Pattern23()
+        this.tiles.pattern22 = new Pattern22()
+        this.tiles.pattern21 = new Pattern21()
+        this.tiles.pattern20 = new Pattern20()
+        this.tiles.pattern19 = new Pattern19()
+        this.tiles.pattern18 = new Pattern18()
+        this.tiles.pattern17 = new Pattern17()
+        this.tiles.pattern16 = new Pattern16()
+        this.tiles.pattern15 = new Pattern15()
         this.tiles.pattern14 = new Pattern14()
         this.tiles.pattern13 = new Pattern13()
         this.tiles.pattern12 = new Pattern12()
