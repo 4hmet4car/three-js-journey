@@ -12,8 +12,8 @@ export default class Camera
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
 
-        this.setPerspectiveCameraInstance()
-        // this.setOrtographicCameraInstance()
+        // this.setPerspectiveCameraInstance()
+        this.setOrtographicCameraInstance()
         this.setOrbitControls()
     }
 
@@ -37,7 +37,7 @@ export default class Camera
         this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, 0.1, 100)
         this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
         this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
-        this.instance.position.set(0.25, - 0.25, 1)
+        this.instance.position.set(0, 0, 1)
         this.scene.add(this.instance)
     }
 

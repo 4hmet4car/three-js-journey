@@ -13,8 +13,6 @@ export default class World
 
     update()
     {
-        if (this.flag) {
-            this.flag.update()
-        }
+        
     }
 }

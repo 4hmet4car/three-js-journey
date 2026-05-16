@@ -24,6 +24,32 @@ import Pattern21 from "./Pattern21/Pattern21.js"
 import Pattern22 from "./Pattern22/Pattern22.js"
 import Pattern23 from "./Pattern23/Pattern23.js"
 import Pattern24 from "./Pattern24/Pattern24.js"
+import Pattern25 from "./Pattern25/Pattern25.js"
+import Pattern26 from "./Pattern26/Pattern26.js"
+import Pattern27 from "./Pattern27/Pattern27.js"
+import Pattern28 from "./Pattern28/Pattern28.js"
+import Pattern29 from "./Pattern29/Pattern29.js"
+import Pattern30 from "./Pattern30/Pattern30.js"
+import Pattern31 from "./Pattern31/Pattern31.js"
+import Pattern32 from "./Pattern32/Pattern32.js"
+import Pattern33 from "./Pattern33/Pattern33.js"
+import Pattern34 from "./Pattern34/Pattern34.js"
+import Pattern35 from "./Pattern35/Pattern35.js"
+import Pattern36 from "./Pattern36/Pattern36.js"
+import Pattern37 from "./Pattern37/Pattern37.js"
+import Pattern38 from "./Pattern38/Pattern38.js"
+import Pattern39 from "./Pattern39/Pattern39.js"
+import Pattern40 from "./Pattern40/Pattern40.js"
+import Pattern41 from "./Pattern41/Pattern41.js"
+import Pattern42 from "./Pattern42/Pattern42.js"
+import Pattern43 from "./Pattern43/Pattern43.js"
+import Pattern44 from "./Pattern44/Pattern44.js"
+import Pattern45 from "./Pattern45/Pattern45.js"
+import Pattern46 from "./Pattern46/Pattern46.js"
+import Pattern47 from "./Pattern47/Pattern47.js"
+import Pattern48 from "./Pattern48/Pattern48.js"
+import Pattern49 from "./Pattern49/Pattern49.js"
+import Pattern50 from "./Pattern50/Pattern50.js"
 
 export default class Tiles
 {
@@ -31,6 +57,7 @@ export default class Tiles
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
+        this.camera = this.experience.camera
 
         this.setTiles()
         this.arrangeTiles()
@@ -39,6 +66,32 @@ export default class Tiles
     setTiles()
     {
         this.tiles = {}
+        this.tiles.pattern50 = new Pattern50()
+        this.tiles.pattern49 = new Pattern49()
+        this.tiles.pattern48 = new Pattern48()
+        this.tiles.pattern47 = new Pattern47()
+        this.tiles.pattern46 = new Pattern46()
+        this.tiles.pattern45 = new Pattern45()
+        this.tiles.pattern44 = new Pattern44()
+        this.tiles.pattern43 = new Pattern43()
+        this.tiles.pattern42 = new Pattern42()
+        this.tiles.pattern41 = new Pattern41()
+        this.tiles.pattern40 = new Pattern40()
+        this.tiles.pattern39 = new Pattern39()
+        this.tiles.pattern38 = new Pattern38()
+        this.tiles.pattern37 = new Pattern37()
+        this.tiles.pattern36 = new Pattern36()
+        this.tiles.pattern35 = new Pattern35()
+        this.tiles.pattern34 = new Pattern34()
+        this.tiles.pattern33 = new Pattern33()
+        this.tiles.pattern32 = new Pattern32()
+        this.tiles.pattern31 = new Pattern31()
+        this.tiles.pattern30 = new Pattern30()
+        this.tiles.pattern29 = new Pattern29()
+        this.tiles.pattern28 = new Pattern28()
+        this.tiles.pattern27 = new Pattern27()
+        this.tiles.pattern26 = new Pattern26()
+        this.tiles.pattern25 = new Pattern25()
         this.tiles.pattern24 = new Pattern24()
         this.tiles.pattern23 = new Pattern23()
         this.tiles.pattern22 = new Pattern22()
@@ -63,15 +116,15 @@ export default class Tiles
         this.tiles.pattern3 = new Pattern3()
         this.tiles.pattern2 = new Pattern2()
         this.tiles.pattern1 = new Pattern1()
-        this.tiles.test = new Test()
+        // this.tiles.test = new Test()
     }
 
     arrangeTiles()
     {
         let index = 0
         for (const tile of Object.values(this.tiles)) {
-            tile.mesh.position.x = index % 5
-            tile.mesh.position.y = Math.floor(index / 5)
+            tile.mesh.position.x = index % 5 + this.camera.left + 0.5
+            tile.mesh.position.y = Math.floor(index / 5) - 0.5
             index++
         }
     }
