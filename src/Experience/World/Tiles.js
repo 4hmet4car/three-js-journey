@@ -123,21 +123,21 @@ export default class Tiles
         this.tiles.pattern3 = new Pattern3()
         this.tiles.pattern2 = new Pattern2()
         this.tiles.pattern1 = new Pattern1()
-        // this.tiles.test = new Test()
+        this.tiles.test = new Test()
     }
 
     arrangeTiles()
     {
-        const tilesPerRow = 5
-        const halfSize = (this.sizes.width / this.sizes.height) * this.camera.zoom
-        const tileSize = (halfSize * 2) / tilesPerRow
+        const tilesPerRow = 3
+        const halfWindowSize = (this.sizes.width / this.sizes.height) * this.camera.zoom
+        const tileSize = (halfWindowSize * 2) / tilesPerRow
 
         const halfTile = tileSize / 2
 
         let index = 0
         for (const tile of Object.values(this.tiles)) {
             tile.mesh.scale.set(tileSize,tileSize,1)
-            tile.mesh.position.x = -halfSize + (index % tilesPerRow) * tileSize + halfTile
+            tile.mesh.position.x = -halfWindowSize + (index % tilesPerRow) * tileSize + halfTile
             tile.mesh.position.y = Math.floor(index / tilesPerRow) * tileSize - 1 + halfTile
             index++
         }
