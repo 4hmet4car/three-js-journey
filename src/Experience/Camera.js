@@ -15,6 +15,12 @@ export default class Camera
         // this.setPerspectiveCameraInstance()
         this.setOrtographicCameraInstance()
         // this.setOrbitControls()
+
+        // Move camera vertically
+        this.totalContentLength = 0
+        this.currentCameraPosition = 0
+        this.wheelMoveCamera()
+        this.touchMoveCamera()
     }
 
     // Perspective camera instance
@@ -58,6 +64,58 @@ export default class Camera
         {
             this.instance.aspect = this.sizes.width / this.sizes.height
             this.instance.updateProjectionMatrix()
+        }
+    }
+
+    wheelMoveCamera()
+    {
+        window.addEventListener('wheel', (event) =>
+        {
+            this.moveCamera(event.deltaY / 1000)
+        })
+    }
+
+    touchMoveCamera()
+    {
+        let previousY = 0
+
+        window.addEventListener('touchstart', (event) =>
+        {
+            previousY = event.touches[0].clientY
+        })
+
+        window.addEventListener('touchmove', (event) =>
+        {
+            const currentCameraPosition = event.touches[0].clientY
+            const deltaY = previousY - currentCameraPosition
+
+            this.moveCamera(deltaY / 300)
+
+            previousY = currentCameraPosition
+        }, { passive: false })
+    }
+
+    moveCamera(delta)
+    {
+        const nextY = this.currentCameraPosition + delta
+
+        const spaceBelow = this.totalContentLength - 2 - this.currentCameraPosition
+
+        if (0 <= nextY)
+        {
+            if (nextY < this.totalContentLength - 2)
+            {
+                this.currentCameraPosition = nextY
+                this.instance.position.y -= delta
+            } else
+            {
+                this.instance.position.y -= spaceBelow
+                this.currentCameraPosition = this.totalContentLength - 2
+            }
+        } else
+        {
+            this.instance.position.y += this.currentCameraPosition
+            this.currentCameraPosition = 0
         }
     }
 

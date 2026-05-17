@@ -61,17 +61,12 @@ export default class Tiles
         this.scene = this.experience.scene
         this.camera = this.experience.camera
         this.sizes = this.experience.sizes
+        this.rayCaster = this.experience.rayCaster
 
         this.tileGroup = new THREE.Group()
 
         this.setTiles()
         this.arrangeTiles()
-
-        // Desktop scroll event listener
-        this.desktopScroll()
-
-        // Mobile
-        this.mobileScroll()
     }
 
     setTiles()
@@ -128,6 +123,8 @@ export default class Tiles
         this.tiles.push(new Pattern2().mesh)
         this.tiles.push(new Pattern1().mesh)
         this.tiles.push(new Test().mesh)
+
+        this.rayCaster.objectsToIntersect = this.tiles
     }
 
     arrangeTiles()
@@ -150,59 +147,10 @@ export default class Tiles
         }
 
         this.tilesTotalLength = Math.floor(index / tilesPerRow) * tileSize
-        this.currentY = 0
+        
+        this.camera.totalContentLength = this.tilesTotalLength
 
         this.scene.add(this.tileGroup)
-    }
-
-    desktopScroll(){
-        window.addEventListener('wheel', (event) =>
-        {
-            this.scroll(event.deltaY / 1000)
-        })
-    }
-
-    mobileScroll(){
-        let previousY = 0
-
-        window.addEventListener('touchstart', (event) =>
-        {
-            previousY = event.touches[0].clientY
-        })
-
-        window.addEventListener('touchmove', (event) =>
-        {
-            const currentY = event.touches[0].clientY
-            const deltaY = previousY - currentY
-
-            this.scroll(deltaY / 300)
-
-            previousY = currentY
-        }, { passive: false })
-    }
-
-    scroll(delta)
-    {
-        const nextY = this.currentY + delta
-
-        const spaceBelow = this.tilesTotalLength - 2 - this.currentY
-
-        if (0 <= nextY)
-        {
-            if (nextY < this.tilesTotalLength - 2)
-            {
-                this.currentY = nextY
-                this.tileGroup.position.y += delta
-            } else
-            {
-                this.tileGroup.position.y += spaceBelow
-                this.currentY = this.tilesTotalLength - 2
-            }
-        } else
-        {
-            this.tileGroup.position.y -= this.currentY
-            this.currentY = 0
-        }
     }
 
     resize()
