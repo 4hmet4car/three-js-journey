@@ -2,8 +2,8 @@ import * as THREE from 'three'
 
 import Experience from "../../Experience.js";
 
-import pattern50VertexShader from './shaders/vertex.glsl'
-import pattern50FragmentShader from './shaders/fragment.glsl'
+import vertexShader from './shaders/vertex.glsl'
+import fragmentShader from './shaders/fragment.glsl'
 
 export default class Pattern50
 {
@@ -28,14 +28,13 @@ export default class Pattern50
     setMaterial()
     {
         this.material = new THREE.RawShaderMaterial({
-            vertexShader: pattern50VertexShader,
-            fragmentShader: pattern50FragmentShader,
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
             side: THREE.DoubleSide
         })
     }
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.scene.add(this.mesh)
     }
 }

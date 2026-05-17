@@ -1,3 +1,5 @@
+import * as THREE from 'three'
+
 import Experience from "../Experience.js"
 import Test from './Test/Test.js'
 import Pattern1 from "./Pattern1/Pattern1.js"
@@ -60,74 +62,77 @@ export default class Tiles
         this.camera = this.experience.camera
         this.sizes = this.experience.sizes
 
+        this.tileGroup = new THREE.Group()
+
         this.setTiles()
         this.arrangeTiles()
 
-        window.addEventListener('wheel',(event)=>{
-            for (const value of Object.values(this.tiles)) {
-                value.mesh.position.y += event.deltaY / 1000
-            }
-        })
+        // Desktop scroll event listener
+        this.desktopScroll()
+
+        // Mobile
+        this.mobileScroll()
     }
 
     setTiles()
     {
-        this.tiles = {}
-        this.tiles.pattern50 = new Pattern50()
-        this.tiles.pattern49 = new Pattern49()
-        this.tiles.pattern48 = new Pattern48()
-        this.tiles.pattern47 = new Pattern47()
-        this.tiles.pattern46 = new Pattern46()
-        this.tiles.pattern45 = new Pattern45()
-        this.tiles.pattern44 = new Pattern44()
-        this.tiles.pattern43 = new Pattern43()
-        this.tiles.pattern42 = new Pattern42()
-        this.tiles.pattern41 = new Pattern41()
-        this.tiles.pattern40 = new Pattern40()
-        this.tiles.pattern39 = new Pattern39()
-        this.tiles.pattern38 = new Pattern38()
-        this.tiles.pattern37 = new Pattern37()
-        this.tiles.pattern36 = new Pattern36()
-        this.tiles.pattern35 = new Pattern35()
-        this.tiles.pattern34 = new Pattern34()
-        this.tiles.pattern33 = new Pattern33()
-        this.tiles.pattern32 = new Pattern32()
-        this.tiles.pattern31 = new Pattern31()
-        this.tiles.pattern30 = new Pattern30()
-        this.tiles.pattern29 = new Pattern29()
-        this.tiles.pattern28 = new Pattern28()
-        this.tiles.pattern27 = new Pattern27()
-        this.tiles.pattern26 = new Pattern26()
-        this.tiles.pattern25 = new Pattern25()
-        this.tiles.pattern24 = new Pattern24()
-        this.tiles.pattern23 = new Pattern23()
-        this.tiles.pattern22 = new Pattern22()
-        this.tiles.pattern21 = new Pattern21()
-        this.tiles.pattern20 = new Pattern20()
-        this.tiles.pattern19 = new Pattern19()
-        this.tiles.pattern18 = new Pattern18()
-        this.tiles.pattern17 = new Pattern17()
-        this.tiles.pattern16 = new Pattern16()
-        this.tiles.pattern15 = new Pattern15()
-        this.tiles.pattern14 = new Pattern14()
-        this.tiles.pattern13 = new Pattern13()
-        this.tiles.pattern12 = new Pattern12()
-        this.tiles.pattern11 = new Pattern11()
-        this.tiles.pattern10 = new Pattern10()
-        this.tiles.pattern9 = new Pattern9()
-        this.tiles.pattern8 = new Pattern8()
-        this.tiles.pattern7 = new Pattern7()
-        this.tiles.pattern6 = new Pattern6()
-        this.tiles.pattern5 = new Pattern5()
-        this.tiles.pattern4 = new Pattern4()
-        this.tiles.pattern3 = new Pattern3()
-        this.tiles.pattern2 = new Pattern2()
-        this.tiles.pattern1 = new Pattern1()
-        this.tiles.test = new Test()
+        this.tiles = []
+        this.tiles.push(new Pattern50().mesh)
+        this.tiles.push(new Pattern49().mesh)
+        this.tiles.push(new Pattern48().mesh)
+        this.tiles.push(new Pattern47().mesh)
+        this.tiles.push(new Pattern46().mesh)
+        this.tiles.push(new Pattern45().mesh)
+        this.tiles.push(new Pattern44().mesh)
+        this.tiles.push(new Pattern43().mesh)
+        this.tiles.push(new Pattern42().mesh)
+        this.tiles.push(new Pattern41().mesh)
+        this.tiles.push(new Pattern40().mesh)
+        this.tiles.push(new Pattern39().mesh)
+        this.tiles.push(new Pattern38().mesh)
+        this.tiles.push(new Pattern37().mesh)
+        this.tiles.push(new Pattern36().mesh)
+        this.tiles.push(new Pattern35().mesh)
+        this.tiles.push(new Pattern34().mesh)
+        this.tiles.push(new Pattern33().mesh)
+        this.tiles.push(new Pattern32().mesh)
+        this.tiles.push(new Pattern31().mesh)
+        this.tiles.push(new Pattern30().mesh)
+        this.tiles.push(new Pattern29().mesh)
+        this.tiles.push(new Pattern28().mesh)
+        this.tiles.push(new Pattern27().mesh)
+        this.tiles.push(new Pattern26().mesh)
+        this.tiles.push(new Pattern25().mesh)
+        this.tiles.push(new Pattern24().mesh)
+        this.tiles.push(new Pattern23().mesh)
+        this.tiles.push(new Pattern22().mesh)
+        this.tiles.push(new Pattern21().mesh)
+        this.tiles.push(new Pattern20().mesh)
+        this.tiles.push(new Pattern19().mesh)
+        this.tiles.push(new Pattern18().mesh)
+        this.tiles.push(new Pattern17().mesh)
+        this.tiles.push(new Pattern16().mesh)
+        this.tiles.push(new Pattern15().mesh)
+        this.tiles.push(new Pattern14().mesh)
+        this.tiles.push(new Pattern13().mesh)
+        this.tiles.push(new Pattern12().mesh)
+        this.tiles.push(new Pattern11().mesh)
+        this.tiles.push(new Pattern10().mesh)
+        this.tiles.push(new Pattern9().mesh)
+        this.tiles.push(new Pattern8().mesh)
+        this.tiles.push(new Pattern7().mesh)
+        this.tiles.push(new Pattern6().mesh)
+        this.tiles.push(new Pattern5().mesh)
+        this.tiles.push(new Pattern4().mesh)
+        this.tiles.push(new Pattern3().mesh)
+        this.tiles.push(new Pattern2().mesh)
+        this.tiles.push(new Pattern1().mesh)
+        this.tiles.push(new Test().mesh)
     }
 
     arrangeTiles()
     {
+        this.tileGroup.position.y = 0
         const tilesPerRow = 3
         const halfWindowSize = (this.sizes.width / this.sizes.height) * this.camera.zoom
         const tileSize = (halfWindowSize * 2) / tilesPerRow
@@ -135,15 +140,73 @@ export default class Tiles
         const halfTile = tileSize / 2
 
         let index = 0
-        for (const tile of Object.values(this.tiles)) {
-            tile.mesh.scale.set(tileSize,tileSize,1)
-            tile.mesh.position.x = -halfWindowSize + (index % tilesPerRow) * tileSize + halfTile
-            tile.mesh.position.y = Math.floor(index / tilesPerRow) * tileSize - 1 + halfTile
+        for (let i = 0; i < this.tiles.length; i++) {
+            this.tiles[i].scale.set(tileSize, tileSize, 1)
+            this.tiles[i].position.x = -halfWindowSize + (index % tilesPerRow) * tileSize + halfTile
+            this.tiles[i].position.y = -Math.floor(index / tilesPerRow) * tileSize + 1 - halfTile
+            this.tileGroup.add(this.tiles[i])
+            // tile.material.fragmentShader
             index++
+        }
+
+        this.tilesTotalLength = Math.floor(index / tilesPerRow) * tileSize
+        this.currentY = 0
+
+        this.scene.add(this.tileGroup)
+    }
+
+    desktopScroll(){
+        window.addEventListener('wheel', (event) =>
+        {
+            this.scroll(event.deltaY / 1000)
+        })
+    }
+
+    mobileScroll(){
+        let previousY = 0
+
+        window.addEventListener('touchstart', (event) =>
+        {
+            previousY = event.touches[0].clientY
+        })
+
+        window.addEventListener('touchmove', (event) =>
+        {
+            const currentY = event.touches[0].clientY
+            const deltaY = previousY - currentY
+
+            this.scroll(deltaY / 300)
+
+            previousY = currentY
+        }, { passive: false })
+    }
+
+    scroll(delta)
+    {
+        const nextY = this.currentY + delta
+
+        const spaceBelow = this.tilesTotalLength - 2 - this.currentY
+
+        if (0 <= nextY)
+        {
+            if (nextY < this.tilesTotalLength - 2)
+            {
+                this.currentY = nextY
+                this.tileGroup.position.y += delta
+            } else
+            {
+                this.tileGroup.position.y += spaceBelow
+                this.currentY = this.tilesTotalLength - 2
+            }
+        } else
+        {
+            this.tileGroup.position.y -= this.currentY
+            this.currentY = 0
         }
     }
 
-    resize(){
+    resize()
+    {
         this.arrangeTiles()
     }
 }
