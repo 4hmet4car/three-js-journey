@@ -58,9 +58,16 @@ export default class Tiles
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+        this.sizes = this.experience.sizes
 
         this.setTiles()
         this.arrangeTiles()
+
+        window.addEventListener('wheel',(event)=>{
+            for (const value of Object.values(this.tiles)) {
+                value.mesh.position.y += event.deltaY / 1000
+            }
+        })
     }
 
     setTiles()
@@ -121,11 +128,22 @@ export default class Tiles
 
     arrangeTiles()
     {
+        const tilesPerRow = 5
+        const halfSize = (this.sizes.width / this.sizes.height) * this.camera.zoom
+        const tileSize = (halfSize * 2) / tilesPerRow
+
+        const halfTile = tileSize / 2
+
         let index = 0
         for (const tile of Object.values(this.tiles)) {
-            tile.mesh.position.x = index % 5 + this.camera.left + 0.5
-            tile.mesh.position.y = Math.floor(index / 5) - 0.5
+            tile.mesh.scale.set(tileSize,tileSize,1)
+            tile.mesh.position.x = -halfSize + (index % tilesPerRow) * tileSize + halfTile
+            tile.mesh.position.y = Math.floor(index / tilesPerRow) * tileSize - 1 + halfTile
             index++
         }
+    }
+
+    resize(){
+        this.arrangeTiles()
     }
 }

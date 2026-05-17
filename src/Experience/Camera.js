@@ -14,7 +14,7 @@ export default class Camera
 
         // this.setPerspectiveCameraInstance()
         this.setOrtographicCameraInstance()
-        this.setOrbitControls()
+        // this.setOrbitControls()
     }
 
     // Perspective camera instance
@@ -63,6 +63,6 @@ export default class Camera
 
     update()
     {
-        this.controls.update()
+        // this.controls.update()
     }
 }

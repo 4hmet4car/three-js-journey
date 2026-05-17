@@ -15,4 +15,8 @@ export default class World
     {
         
     }
+
+    resize(){
+        this.tiles.resize()
+    }
 }
