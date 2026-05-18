@@ -24,25 +24,18 @@ export default class RayCaster
     {
         this.mouse = new THREE.Vector2()
 
-        window.addEventListener('mousemove', (event) =>
+        window.addEventListener('click', (event) =>
         {
             this.mouse.x = (event.clientX / this.sizes.width) * 2 - 1
             this.mouse.y = -((event.clientY / this.sizes.height) * 2 - 1)
-            // console.log(this.mouse.x)
-        })
-
-
-        window.addEventListener('click', (event) =>
-        {
+            this.instance.setFromCamera(this.mouse,this.camera.instance)
+            this.intersects = this.instance.intersectObjects(this.objectsToIntersect)
             alert(this.intersects[0].object.material.fragmentShader)
         })
     }
 
     update()
     {
-        if (this.mouse) {
-            this.instance.setFromCamera(this.mouse,this.camera.instance)
-            this.intersects = this.instance.intersectObjects(this.objectsToIntersect)
-        }
+        
     }
 }
