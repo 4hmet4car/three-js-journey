@@ -14,6 +14,6 @@ export default class World
 
     update()
     {
-        
+        this.water.update()
     }
 }
