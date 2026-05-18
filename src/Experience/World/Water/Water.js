@@ -27,7 +27,7 @@ export default class Water
     }
     setGeometry()
     {
-        this.geometry = new THREE.PlaneGeometry(2, 2, 128, 128)
+        this.geometry = new THREE.PlaneGeometry(2, 2, 512, 512)
     }
     setTextures()
     {
@@ -35,14 +35,30 @@ export default class Water
     }
     setMaterial()
     {
+        this.colors = {}
+        this.colors.depthColor = '#186691'
+        this.colors.surfaceColor = '#9bd8ff'
+
         this.material = new THREE.ShaderMaterial({
             side: THREE.DoubleSide,
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
                 uTime: { value: 0 },
-                uBigWavesElevation: { value: 0.1 },
-                uBigWavesFrequency: { value: new THREE.Vector2(3.0, 1.0) },
+
+                uBigWavesElevation: { value: 0.09 },
+                uBigWavesFrequency: { value: new THREE.Vector2(1, 0.5) },
+                uBigWavesSpeed: { value: 0.25 },
+
+                uSmallWavesElevation: { value: 0.03 },
+                uSmallWavesFrequency: { value: 10 },
+                uSmallWavesSpeed: { value: 0.2 },
+                uSmallWavesIterations: { value: 4 },
+
+                uDepthColor: { value: new THREE.Color(this.colors.depthColor) },
+                uSurfaceColor: { value: new THREE.Color(this.colors.surfaceColor) },
+                uColorOffset: { value: 0.09 },
+                uColorMultiplier: { value: 4.8 },
             }
         })
 
@@ -69,6 +85,71 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uBigWavesFrequencyZ')
+
+            this.debugFolder
+                .add(this.material.uniforms.uBigWavesSpeed, 'value')
+                .min(0)
+                .max(4)
+                .step(0.001)
+                .name('uBigWavesSpeed')
+
+            this.debugFolder
+                .addColor(this.colors, 'depthColor')
+                .name('depthColor')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uDepthColor.value.set(this.colors.depthColor)
+                })
+
+            this.debugFolder
+                .addColor(this.colors, 'surfaceColor')
+                .name('surfaceColor')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uSurfaceColor.value.set(this.colors.surfaceColor)
+                })
+
+            this.debugFolder
+                .add(this.material.uniforms.uColorOffset, 'value')
+                .min(-1)
+                .max(1)
+                .step(0.001)
+                .name('uColorOffset')
+
+            this.debugFolder
+                .add(this.material.uniforms.uColorMultiplier, 'value')
+                .min(0)
+                .max(10)
+                .step(0.001)
+                .name('uColorMultiplier')
+
+            this.debugFolder
+                .add(this.material.uniforms.uSmallWavesElevation, 'value')
+                .min(0)
+                .max(0.5)
+                .step(0.001)
+                .name('uSmallWavesElevation')
+
+            this.debugFolder
+                .add(this.material.uniforms.uSmallWavesFrequency, 'value')
+                .min(1)
+                .max(10)
+                .step(0.001)
+                .name('uSmallWavesFrequenct')
+
+            this.debugFolder
+                .add(this.material.uniforms.uSmallWavesIterations, 'value')
+                .min(0)
+                .max(10)
+                .step(1)
+                .name('uSmallWavesIterations')
+
+            this.debugFolder
+                .add(this.material.uniforms.uSmallWavesSpeed, 'value')
+                .min(0)
+                .max(5)
+                .step(0.001)
+                .name('uSmallWavesSpeed')
         }
 
     }
