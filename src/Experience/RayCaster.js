@@ -34,7 +34,7 @@ export default class RayCaster
 
         window.addEventListener('click', (event) =>
         {
-            // console.log(event)
+            alert(this.intersects[0].object.material.fragmentShader)
         })
     }
 
@@ -43,9 +43,6 @@ export default class RayCaster
         if (this.mouse) {
             this.instance.setFromCamera(this.mouse,this.camera.instance)
             this.intersects = this.instance.intersectObjects(this.objectsToIntersect)
-            for (const intersect of this.intersects) {
-                // console.log(intersect.object.material.fragmentShader)
-            }
         }
     }
 }
