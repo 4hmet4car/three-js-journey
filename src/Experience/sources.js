@@ -18,4 +18,9 @@ export default [
         type: 'gltfModel',
         path: '/buoy/scene.gltf'
     },
+    {
+        name: 'seagullModel',
+        type: 'gltfModel',
+        path: '/seagull/scene.gltf'
+    },
 ]
