@@ -8,6 +8,7 @@ html,
 body
 {
     overflow: hidden;
+    background-color: #186691;
 }
 
 .webgl

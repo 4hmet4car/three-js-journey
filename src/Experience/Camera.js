@@ -34,7 +34,7 @@ export default class Camera
         this.right = (this.sizes.width / this.sizes.height) * this.zoom
         this.top = 1 * this.zoom
         this.bottom = -1 * this.zoom
-        this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, 0.1, 100)
+        this.instance = new THREE.OrthographicCamera(this.left, this.right, this.top, this.bottom, -1, 100)
         this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
         this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
         this.instance.position.set(1, 1, 1)
@@ -45,6 +45,10 @@ export default class Camera
     {
         this.controls = new OrbitControls(this.instance, this.canvas)
         this.controls.enableDamping = true
+        this.controls.enablePan = false
+        this.controls.enableZoom = false
+        this.controls.minPolarAngle = 0.9553166181245092
+        this.controls.maxPolarAngle = 0.9553166181245092
     }
 
     resize()

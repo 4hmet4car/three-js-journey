@@ -11,6 +11,7 @@ export default class Time extends EventEmitter
         this.start = Date.now()
         this.current = this.start
         this.elapsed = 0
+        this.secondsElapsed = this.elapsed * 0.001
         this.delta = 16
 
         window.requestAnimationFrame(() =>
@@ -25,6 +26,7 @@ export default class Time extends EventEmitter
         this.delta = currentTime - this.current
         this.current = currentTime
         this.elapsed = this.current - this.start
+        this.secondsElapsed = this.elapsed * 0.001
 
         this.trigger('tick')
 

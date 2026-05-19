@@ -1,5 +1,6 @@
 import Experience from '../Experience.js'
 import Water from './Water/Water.js'
+import Buoy from './Buoy.js'
 
 export default class World
 {
@@ -7,13 +8,22 @@ export default class World
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
+        this.resources = this.experience.resources
 
-        // Setup
-        this.water = new Water()
+        this.resources.on('ready', () =>
+        {
+            // Setup
+            this.water = new Water()
+            this.buoy = new Buoy()
+        })
     }
 
     update()
     {
-        this.water.update()
+        if (this.buoy && this.water)
+        {
+            this.water.update()
+            this.buoy.update()
+        }
     }
 }

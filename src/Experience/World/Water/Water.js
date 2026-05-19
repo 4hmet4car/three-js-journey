@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 
 import Experience from "../../Experience.js";
+import constants from '../../constants.js'
+import parameters from '../../parameters.js';
 
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
@@ -27,7 +29,7 @@ export default class Water
     }
     setGeometry()
     {
-        this.geometry = new THREE.PlaneGeometry(2, 2, 512, 512)
+        this.geometry = new THREE.PlaneGeometry(5, 5, 512, 512)
     }
     setTextures()
     {
@@ -36,29 +38,32 @@ export default class Water
     setMaterial()
     {
         this.colors = {}
-        this.colors.depthColor = '#186691'
-        this.colors.surfaceColor = '#9bd8ff'
+        this.colors.depthColor = parameters.depthColor
+        this.colors.surfaceColor = parameters.surfaceColor
 
         this.material = new THREE.ShaderMaterial({
+            transparent: true,
             side: THREE.DoubleSide,
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
+                uPI: { value: constants.PI },
+
                 uTime: { value: 0 },
 
-                uBigWavesElevation: { value: 0.09 },
-                uBigWavesFrequency: { value: new THREE.Vector2(1, 0.5) },
-                uBigWavesSpeed: { value: 0.25 },
+                uBigWavesElevation: { value: parameters.bigWavesElevation },
+                uBigWavesFrequency: { value: new THREE.Vector2(parameters.bigWavesFrequencyX, parameters.bigWavesFrequencyZ) },
+                uBigWavesSpeed: { value: parameters.bigWavesSpeed },
 
-                uSmallWavesElevation: { value: 0.03 },
-                uSmallWavesFrequency: { value: 10 },
-                uSmallWavesSpeed: { value: 0.2 },
-                uSmallWavesIterations: { value: 4 },
+                uSmallWavesElevation: { value: parameters.smallWavesElevation },
+                uSmallWavesFrequency: { value: parameters.smallWavesFrequency },
+                uSmallWavesSpeed: { value: parameters.smallWavesSpeed },
+                uSmallWavesIterations: { value: parameters.smallWavesIterations },
 
                 uDepthColor: { value: new THREE.Color(this.colors.depthColor) },
                 uSurfaceColor: { value: new THREE.Color(this.colors.surfaceColor) },
-                uColorOffset: { value: 0.09 },
-                uColorMultiplier: { value: 4.8 },
+                uColorOffset: { value: parameters.colorOffset },
+                uColorMultiplier: { value: parameters.colorMultiplier },
             }
         })
 
@@ -71,6 +76,10 @@ export default class Water
                 .max(1)
                 .step(0.001)
                 .name('uBigWavesElevation')
+                .onChange((value) =>
+                {
+                    parameters.bigWavesElevation = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uBigWavesFrequency.value, 'x')
@@ -78,6 +87,10 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uBigWavesFrequencyX')
+                .onChange((value) =>
+                {
+                    parameters.bigWavesFrequencyX = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uBigWavesFrequency.value, 'y')
@@ -85,6 +98,10 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uBigWavesFrequencyZ')
+                .onChange((value) =>
+                {
+                    parameters.bigWavesFrequencyZ = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uBigWavesSpeed, 'value')
@@ -92,21 +109,27 @@ export default class Water
                 .max(4)
                 .step(0.001)
                 .name('uBigWavesSpeed')
+                .onChange((value) =>
+                {
+                    parameters.bigWavesSpeed = value
+                })
 
             this.debugFolder
                 .addColor(this.colors, 'depthColor')
                 .name('depthColor')
-                .onChange(() =>
+                .onChange((value) =>
                 {
                     this.material.uniforms.uDepthColor.value.set(this.colors.depthColor)
+                    parameters.depthColor = value
                 })
 
             this.debugFolder
                 .addColor(this.colors, 'surfaceColor')
                 .name('surfaceColor')
-                .onChange(() =>
+                .onChange((value) =>
                 {
                     this.material.uniforms.uSurfaceColor.value.set(this.colors.surfaceColor)
+                    parameters.surfaceColor = value
                 })
 
             this.debugFolder
@@ -115,6 +138,10 @@ export default class Water
                 .max(1)
                 .step(0.001)
                 .name('uColorOffset')
+                .onChange((value) =>
+                {
+                    parameters.colorOffset = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uColorMultiplier, 'value')
@@ -122,6 +149,10 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uColorMultiplier')
+                .onChange((value) =>
+                {
+                    parameters.colorMultiplier = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uSmallWavesElevation, 'value')
@@ -129,6 +160,10 @@ export default class Water
                 .max(0.5)
                 .step(0.001)
                 .name('uSmallWavesElevation')
+                .onChange((value) =>
+                {
+                    parameters.smallWavesElevation = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uSmallWavesFrequency, 'value')
@@ -136,6 +171,10 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uSmallWavesFrequenct')
+                .onChange((value) =>
+                {
+                    parameters.smallWavesFrequency = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uSmallWavesIterations, 'value')
@@ -143,6 +182,10 @@ export default class Water
                 .max(10)
                 .step(1)
                 .name('uSmallWavesIterations')
+                .onChange((value) =>
+                {
+                    parameters.smallWavesIterations = value
+                })
 
             this.debugFolder
                 .add(this.material.uniforms.uSmallWavesSpeed, 'value')
@@ -150,6 +193,10 @@ export default class Water
                 .max(5)
                 .step(0.001)
                 .name('uSmallWavesSpeed')
+                .onChange((value) =>
+                {
+                    parameters.smallWavesSpeed = value
+                })
         }
 
     }
@@ -162,6 +209,6 @@ export default class Water
 
     update()
     {
-        this.material.uniforms.uTime.value = this.time.elapsed * 0.001
+        this.material.uniforms.uTime.value = this.time.secondsElapsed
     }
 }

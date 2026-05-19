@@ -7,7 +7,7 @@ uniform mat4 modelMatrix;
 attribute vec3 position;
 */
 
-#define PI 3.1415926535897932384626433832795
+uniform float uPI;
 
 uniform float uTime;
 
@@ -21,6 +21,7 @@ uniform float uSmallWavesSpeed;
 uniform float uSmallWavesIterations;
 
 varying float vElevation;
+varying vec2 vUv;
 
 //Perlin noise
 #include ./perlinNoise.glsl
@@ -30,8 +31,8 @@ void main()
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
 
     // Elevation
-    float bigWavesFrequencyX = sin(modelPosition.x * PI * uBigWavesFrequency.x + uTime * uBigWavesSpeed);
-    float bigWavesFrequencyZ = sin(modelPosition.z * PI * uBigWavesFrequency.y + uTime * uBigWavesSpeed);
+    float bigWavesFrequencyX = sin(modelPosition.x * uPI * uBigWavesFrequency.x + uTime * uBigWavesSpeed);
+    float bigWavesFrequencyZ = sin(modelPosition.z * uPI * uBigWavesFrequency.y + uTime * uBigWavesSpeed);
     float bigWavesElevation = bigWavesFrequencyX * bigWavesFrequencyZ * uBigWavesElevation;
 
     for(float i = 1.0; i <= uSmallWavesIterations; i++)
@@ -48,4 +49,5 @@ void main()
 
     // Varyings
     vElevation = bigWavesElevation;
+    vUv = uv;
 }
