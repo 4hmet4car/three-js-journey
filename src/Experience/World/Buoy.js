@@ -13,13 +13,6 @@ export default class Buoy
         this.time = this.experience.time
         this.scene = this.experience.scene
         this.rayCaster = this.experience.rayCaster
-        this.debug = this.experience.debug
-
-        //Debug
-        if (this.debug.active)
-        {
-            this.debugFolder = this.debug.ui.addFolder("Buoy")
-        }
 
         this.resource = this.resources.items.buoyModel
 

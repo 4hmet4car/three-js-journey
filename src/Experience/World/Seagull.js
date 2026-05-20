@@ -11,13 +11,6 @@ export default class Seagull
         this.time = this.experience.time
         this.scene = this.experience.scene
         this.rayCaster = this.experience.rayCaster
-        this.debug = this.experience.debug
-
-        //Debug
-        if (this.debug.active)
-        {
-            this.debugFolder = this.debug.ui.addFolder("Seagull")
-        }
 
         this.resource = this.resources.items.seagullModel
 
