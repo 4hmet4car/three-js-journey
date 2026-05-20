@@ -1,8 +1,8 @@
 import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
-import Experience from "./Experience"
-import constants from './constants'
+import Experience from './Experience.js'
+import { CAMERA } from './constants.js'
 
 export default class Camera
 {
@@ -24,15 +24,15 @@ export default class Camera
     setPerspectiveCameraInstance()
     {
         this.instance = new THREE.PerspectiveCamera(
-            constants.CAMERA.FOV,
+            CAMERA.FOV,
             this.sizes.width / this.sizes.height,
-            constants.CAMERA.NEAR,
-            constants.CAMERA.FAR)
+            CAMERA.NEAR,
+            CAMERA.FAR)
 
         this.instance.position.set(
-            constants.CAMERA.POSITION_X,
-            constants.CAMERA.POSITION_Y,
-            constants.CAMERA.POSITION_Z)
+            CAMERA.POSITION_X,
+            CAMERA.POSITION_Y,
+            CAMERA.POSITION_Z)
 
         this.scene.add(this.instance)
     }
@@ -52,16 +52,16 @@ export default class Camera
             this.right,
             this.top,
             this.bottom,
-            constants.CAMERA.NEAR,
-            constants.CAMERA.FAR)
+            CAMERA.NEAR,
+            CAMERA.FAR)
 
         this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
         this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
         
         this.instance.position.set(
-            constants.CAMERA.POSITION_X,
-            constants.CAMERA.POSITION_Y,
-            constants.CAMERA.POSITION_Z)
+            CAMERA.POSITION_X,
+            CAMERA.POSITION_Y,
+            CAMERA.POSITION_Z)
 
         this.scene.add(this.instance)
     }

@@ -9,11 +9,24 @@ export default class Galaxy
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
+        this.debug = this.experience.debug
+
+        this.generateGalaxy()
+        this.setDebug()
+    }
+
+    generateGalaxy()
+    {
+        if (this.points !== undefined)
+        {
+            this.geometry.dispose()
+            this.material.dispose()
+            this.scene.remove(this.points)
+        }
 
         this.setGeometry()
         this.setMaterial()
         this.setPoints()
-        this.setDebug()
     }
 
     setGeometry()
@@ -74,8 +87,20 @@ export default class Galaxy
         this.scene.add(this.points)
     }
 
-    setDebug(){
-        
+    setDebug()
+    {
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Galaxy")
+
+            this.debugFolder.add(parameters.galaxy, 'particleCount').min(100).max(1000000).step(100).onFinishChange(()=>{this.generateGalaxy()})
+            this.debugFolder.add(parameters.galaxy, 'branchRadius').min(0.01).max(20).step(0.01).onFinishChange(()=>{this.generateGalaxy()})
+            this.debugFolder.add(parameters.galaxy, 'branches').min(2).max(20).step(1).onFinishChange(()=>{this.generateGalaxy()})
+            this.debugFolder.add(parameters.galaxy, 'randomness').min(0).max(2).step(0.001).onFinishChange(()=>{this.generateGalaxy()})
+            this.debugFolder.add(parameters.galaxy, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(()=>{this.generateGalaxy()})
+            this.debugFolder.addColor(parameters.galaxy, 'insideColor').onFinishChange(()=>{this.generateGalaxy()})
+            this.debugFolder.addColor(parameters.galaxy, 'outsideColor').onFinishChange(()=>{this.generateGalaxy()})
+        }
     }
 
     update()
