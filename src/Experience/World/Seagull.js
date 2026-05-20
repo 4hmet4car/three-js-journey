@@ -1,5 +1,6 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
+import parameters from '../parameters.js'
 
 export default class Seagull
 {
@@ -9,6 +10,7 @@ export default class Seagull
         this.resources = this.experience.resources
         this.time = this.experience.time
         this.scene = this.experience.scene
+        this.rayCaster = this.experience.rayCaster
         this.debug = this.experience.debug
 
         //Debug
@@ -21,14 +23,22 @@ export default class Seagull
 
         this.setModel()
         this.setAnimation()
+
+        // RayCaster raycast event
+        this.rayCaster.on('raycast', () =>
+        {
+            this.updatePosition()
+        })
     }
 
     setModel()
     {
         this.pivot = new THREE.Group()
         this.pivot.rotation.x = 0.2
+        this.pivot.position.x = parameters.buoyPositionX
+        this.pivot.position.z = parameters.buoyPositionZ
         this.scene.add(this.pivot)
-        
+
         this.model = this.resource.scene
         this.model.scale.set(0.05, 0.05, 0.05)
         this.model.position.set(0, 0.3, -0.2)
@@ -59,5 +69,12 @@ export default class Seagull
     {
         this.animation.mixer.update(this.time.delta * 0.001)
         this.pivot.rotation.y = this.time.secondsElapsed
+        this.pivot.position.y = parameters.buoyPositionY
+    }
+
+    updatePosition()
+    {
+        this.pivot.position.x = parameters.buoyPositionX
+        this.pivot.position.z = parameters.buoyPositionZ
     }
 }

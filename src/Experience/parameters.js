@@ -13,4 +13,8 @@ export default {
     surfaceColor: '#9bd8ff',
     colorOffset: 0.09,
     colorMultiplier: 4.8,
+
+    buoyPositionX : 0,
+    buoyPositionY : 0,
+    buoyPositionZ : 0,
 }

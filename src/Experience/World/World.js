@@ -3,6 +3,7 @@ import Environment from './Environment.js'
 import Water from './Water/Water.js'
 import Buoy from './Buoy.js'
 import Seagull from './Seagull.js'
+import RayReceiver from './RayReceiver.js'
 
 export default class World
 {
@@ -15,6 +16,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
+            this.rayReceiver = new RayReceiver()
             this.water = new Water()
             this.buoy = new Buoy()
             this.seagull = new Seagull()

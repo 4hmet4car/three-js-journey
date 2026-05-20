@@ -47,6 +47,7 @@ export default class Camera
         this.controls.enableDamping = true
         this.controls.enablePan = false
         this.controls.enableZoom = false
+        this.controls.enableRotate = false
         this.controls.minPolarAngle = 0.9553166181245092
         this.controls.maxPolarAngle = 0.9553166181245092
     }

@@ -6,6 +6,7 @@ import Time from "./Utils/Time.js"
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
+import RayCaster from './World/RayCaster.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
@@ -38,6 +39,7 @@ export default class Experience
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
         this.camera = new Camera()
+        this.rayCaster = new RayCaster()
         this.renderer = new Renderer()
 
         this.world = new World()

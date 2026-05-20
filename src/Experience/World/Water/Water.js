@@ -29,7 +29,7 @@ export default class Water
     }
     setGeometry()
     {
-        this.geometry = new THREE.PlaneGeometry(5, 5, 512, 512)
+        this.geometry = new THREE.PlaneGeometry(constants.WATER_SCALE_X,constants.WATER_SCALE_Z, constants.WATER_SUBDIVISIONS_X, constants.WATER_SUBDIVISIONS_Z)
     }
     setTextures()
     {
