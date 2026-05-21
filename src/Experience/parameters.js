@@ -1,10 +1,10 @@
 export default {
     galaxy: {
-        particleCount : 200000,
-        particleSize : 0.005,
+        particleCount : 500000,
+        particleSize : 30,
         branchRadius : 5,
-        branches : 3,
-        branchSpin : 1,
+        branches : 10,
+        branchSpin : 2,
         randomness : 0.5,
         randomnessPower : 3,
         insideColor : '#ff6030',
