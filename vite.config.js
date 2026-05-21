@@ -1,4 +1,5 @@
 import restart from 'vite-plugin-restart'
+import { resolve } from 'node:path'
 import glsl from 'vite-plugin-glsl'
 
 export default {
@@ -14,7 +15,13 @@ export default {
     {
         outDir: '../dist', // Output in the dist/ folder
         emptyOutDir: true, // Empty the folder first
-        sourcemap: true // Add sourcemap
+        sourcemap: true, // Add sourcemap
+        rollupOptions: {
+            input: {
+                main: resolve(import.meta.dirname, 'src/index.html'),
+                erid: resolve(import.meta.dirname, 'src/erid.html'),
+            }
+        }
     },
     plugins:
     [
