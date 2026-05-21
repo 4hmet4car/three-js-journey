@@ -1,6 +1,7 @@
 import Experience from "../Experience.js"
 import Galaxy from "./Galaxy/Galaxy.js"
 import Environment from './Environment.js';
+import Erid from "./Erid/Erid.js";
 
 export default class World
 {
@@ -13,6 +14,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
+            this.erid = new Erid()
             this.environment = new Environment()
         })
 
