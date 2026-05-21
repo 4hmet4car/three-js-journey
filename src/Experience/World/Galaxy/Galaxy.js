@@ -52,12 +52,12 @@ export default class Galaxy
 
             // Position
             const radius = Math.random() * parameters.galaxy.branchRadius
-
+            const spinAngle = radius * parameters.galaxy.branchSpin
             const branchAngle = (i % parameters.galaxy.branches) / parameters.galaxy.branches * Math.PI * 2
 
-            this.positions[i3] = Math.cos(branchAngle) * radius
+            this.positions[i3] = Math.cos(branchAngle + spinAngle) * radius
             this.positions[i3 + 1] = 0
-            this.positions[i3 + 2] = Math.sin(branchAngle) * radius
+            this.positions[i3 + 2] = Math.sin(branchAngle + spinAngle) * radius
 
             // Randomness
             const randomX = Math.pow(Math.random(), parameters.galaxy.randomnessPower) * (Math.random() < 0.5 ? 1 : - 1) * parameters.galaxy.randomness * radius
@@ -122,6 +122,7 @@ export default class Galaxy
             this.debugFolder.add(parameters.galaxy, 'particleSize').min(0).max(30).step(0.001).onFinishChange(() => { this.generateGalaxy() })
             this.debugFolder.add(parameters.galaxy, 'branchRadius').min(0.01).max(50).step(0.01).onFinishChange(() => { this.generateGalaxy() })
             this.debugFolder.add(parameters.galaxy, 'branches').min(2).max(20).step(1).onFinishChange(() => { this.generateGalaxy() })
+            this.debugFolder.add(parameters.galaxy, 'branchSpin').min(0).max(1).step(0.001).onFinishChange(() => { this.generateGalaxy() })
             this.debugFolder.add(parameters.galaxy, 'randomness').min(0).max(2).step(0.001).onFinishChange(() => { this.generateGalaxy() })
             this.debugFolder.add(parameters.galaxy, 'randomnessPower').min(1).max(10).step(0.001).onFinishChange(() => { this.generateGalaxy() })
             this.debugFolder.addColor(parameters.galaxy, 'insideColor').onFinishChange(() => { this.generateGalaxy() })

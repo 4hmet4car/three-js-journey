@@ -4,7 +4,7 @@ export default {
         particleSize : 30,
         branchRadius : 5,
         branches : 10,
-        branchSpin : 2,
+        branchSpin : 0,
         randomness : 0.5,
         randomnessPower : 3,
         insideColor : '#ff6030',
