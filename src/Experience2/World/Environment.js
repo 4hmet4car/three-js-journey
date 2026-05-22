@@ -67,7 +67,7 @@ export default class Environment
         //Debug
         if (this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('environment')
+            this.debugFolder = this.debug.ui.addFolder('Environment')
             
             this.debugFolder
                 .add(parameters.environment, 'environmentMapIntensity')

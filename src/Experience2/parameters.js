@@ -1,15 +1,4 @@
 export default {
-    galaxy: {
-        particleCount: 500000,
-        particleSize: 30,
-        branchRadius: 5,
-        branches: 10,
-        branchSpin: 0,
-        randomness: 0.5,
-        randomnessPower: 3,
-        insideColor: '#ff6030',
-        outsideColor: '#1b3984',
-    },
     environment: {
         environmentMapIntensity: 0.4,
         backgroundTextureIntensity: 0.1,
@@ -22,5 +11,14 @@ export default {
         rotationX: -1.4,
         rotationY: -0.4,
         rotationZ: 2.9,
+    },
+    ring: {
+        particleCount: 10000,
+        outerRadius: 2,
+        particleSize: 20,
+        // rotationX: 1.15,
+        rotationX: 0,
+        rotationY: 0,
+        rotationZ: 0,
     }
 }

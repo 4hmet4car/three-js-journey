@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../../Experience.js"
 import parameters from '../../parameters.js'
+import { ERID } from '../../constants.js'
 
 export default class Erid
 {
@@ -19,7 +20,7 @@ export default class Erid
 
     setGeometry()
     {
-        this.geometry = new THREE.SphereGeometry(1, 64, 64)
+        this.geometry = new THREE.SphereGeometry(ERID.RADIUS, 64, 64)
     }
 
     setMaterial()
@@ -46,7 +47,7 @@ export default class Erid
     {
         if (this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('erid')
+            this.debugFolder = this.debug.ui.addFolder('Erid')
 
             this.debugFolder
                 .add(this.mesh.rotation, 'x')

@@ -2,6 +2,7 @@ import Experience from "../Experience.js"
 import Galaxy from "./Galaxy/Galaxy.js"
 import Environment from './Environment.js';
 import Erid from "./Erid/Erid.js";
+import Ring from "./Erid/Ring.js";
 
 export default class World
 {
@@ -15,6 +16,7 @@ export default class World
         {
             // Setup
             this.erid = new Erid()
+            this.ring = new Ring()
             this.environment = new Environment()
         })
 

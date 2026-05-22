@@ -6,3 +6,7 @@ export const CAMERA = {
     NEAR: 0.1,
     FAR: 100,
 }
+
+export const ERID = {
+    RADIUS: 1,
+}
