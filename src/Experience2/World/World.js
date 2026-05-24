@@ -25,9 +25,10 @@ export default class World
 
     update()
     {
-        if (this.ring)
+        if (this.ring && this.planet)
         {
             this.ring.update()
+            this.planet.update()
         }
     }
 }

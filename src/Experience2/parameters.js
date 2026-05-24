@@ -8,11 +8,6 @@ export default {
         sunLightPositionZ: -3.2,
     },
     planet: {
-        rotationX: -3.8,
-        rotationY: -1.0,
-        rotationZ: -1.0,
-    },
-    ring: {
         particleCount: 1000,
         outerRadius: 2,
         particleSize: 100,
@@ -23,5 +18,6 @@ export default {
         ringCount: 21,
         root1: 2,
         root2: 5,
-    }
+    },
+        
 }

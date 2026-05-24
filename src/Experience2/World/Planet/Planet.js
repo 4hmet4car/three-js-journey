@@ -8,6 +8,7 @@ export default class Planet
     constructor()
     {
         this.experience = new Experience()
+        this.time = this.experience.time
         this.resources = this.experience.resources
         this.scene = this.experience.scene
         this.debug = this.experience.debug
@@ -37,6 +38,7 @@ export default class Planet
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
+        this.mesh.rotation.order = 'ZYX'
         this.mesh.rotation.x = parameters.planet.rotationX
         this.mesh.rotation.y = parameters.planet.rotationY
         this.mesh.rotation.z = parameters.planet.rotationZ
@@ -70,6 +72,10 @@ export default class Planet
                 .max(4)
                 .step(0.001)
         }
+    }
+
+    update(){
+        this.mesh.rotateY(-this.time.delta * 0.0001)
     }
 
 }

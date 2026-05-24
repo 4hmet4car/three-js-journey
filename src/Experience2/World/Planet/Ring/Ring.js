@@ -29,12 +29,12 @@ export default class Ring
     setRotationMatrix()
     {
         // Tait-Bryan ZYX convention
-        this.cosAlpha = Math.cos(parameters.ring.rotationX)
-        this.sinAlpha = Math.sin(parameters.ring.rotationX)
-        this.cosBeta = Math.cos(parameters.ring.rotationY)
-        this.sinBeta = Math.sin(parameters.ring.rotationY)
-        this.cosTheta = Math.cos(parameters.ring.rotationZ)
-        this.sinTheta = Math.sin(parameters.ring.rotationZ)
+        this.cosAlpha = Math.cos(parameters.planet.rotationX)
+        this.sinAlpha = Math.sin(parameters.planet.rotationX)
+        this.cosBeta = Math.cos(parameters.planet.rotationY)
+        this.sinBeta = Math.sin(parameters.planet.rotationY)
+        this.cosTheta = Math.cos(parameters.planet.rotationZ)
+        this.sinTheta = Math.sin(parameters.planet.rotationZ)
 
         this.rotationMatrix = new THREE.Matrix4()
         this.rotationMatrix.set(
@@ -75,15 +75,15 @@ export default class Ring
     {
         this.particleGeometry = new THREE.BufferGeometry()
 
-        this.positions = new Float32Array(parameters.ring.particleCount * 3)
-        this.scales = new Float32Array(parameters.ring.particleCount)
-        this.angles = new Float32Array(parameters.ring.particleCount)
+        this.positions = new Float32Array(parameters.planet.particleCount * 3)
+        this.scales = new Float32Array(parameters.planet.particleCount)
+        this.angles = new Float32Array(parameters.planet.particleCount)
 
-        for (let i = 0; i < parameters.ring.particleCount; i++)
+        for (let i = 0; i < parameters.planet.particleCount; i++)
         {
             const i3 = i * 3
 
-            const radius = PLANET.RADIUS + PLANET.RING_SPACE + Math.random() * (parameters.ring.outerRadius - PLANET.RADIUS)
+            const radius = PLANET.RADIUS + PLANET.RING_SPACE + Math.random() * (parameters.planet.outerRadius - PLANET.RADIUS)
             const angle = (Math.random() - 0.5) * 2 * Math.PI * 2
 
             this.positions[i3] = radius * Math.cos(angle)
@@ -118,7 +118,7 @@ export default class Ring
                 uPI: { value: PI },
 
                 uTime: { value: 0.0 },
-                uSize: { value: parameters.ring.particleSize * this.renderer.instance.getPixelRatio() }
+                uSize: { value: parameters.planet.particleSize * this.renderer.instance.getPixelRatio() }
             }
         })
     }
@@ -145,7 +145,7 @@ export default class Ring
 
     setRingGeometry()
     {
-        this.ringGeometry = new THREE.PlaneGeometry(parameters.ring.outerRadius * 3,parameters.ring.outerRadius * 3)
+        this.ringGeometry = new THREE.PlaneGeometry(parameters.planet.outerRadius * 3,parameters.planet.outerRadius * 3)
     }
 
     setRingMaterial()
@@ -164,9 +164,9 @@ export default class Ring
             {
                 uRotationMatrix: { value: this.rotationMatrix },
 
-                uRingCount: {value: parameters.ring.ringCount},
-                uRoot1: {value: parameters.ring.root1},
-                uRoot2: {value: parameters.ring.root2},
+                uRingCount: {value: parameters.planet.ringCount},
+                uRoot1: {value: parameters.planet.root1},
+                uRoot2: {value: parameters.planet.root2},
 
                 uPI: { value: PI },
             }
@@ -187,7 +187,7 @@ export default class Ring
             this.debugFolder = this.debug.ui.addFolder('Ring')
 
             this.debugFolder
-                .add(parameters.ring, 'rotationX')
+                .add(parameters.planet, 'rotationX')
                 .min(-4)
                 .max(4)
                 .step(0.001)
@@ -199,7 +199,7 @@ export default class Ring
                 })
 
             this.debugFolder
-                .add(parameters.ring, 'rotationY')
+                .add(parameters.planet, 'rotationY')
                 .min(-4)
                 .max(4)
                 .step(0.001)
@@ -211,7 +211,7 @@ export default class Ring
                 })
 
             this.debugFolder
-                .add(parameters.ring, 'rotationZ')
+                .add(parameters.planet, 'rotationZ')
                 .min(-4)
                 .max(4)
                 .step(0.001)
@@ -223,7 +223,7 @@ export default class Ring
                 })
 
             this.debugFolder
-                .add(parameters.ring, 'ringCount')
+                .add(parameters.planet, 'ringCount')
                 .min(0)
                 .max(500)
                 .step(1)
@@ -235,7 +235,7 @@ export default class Ring
                 })
             
             this.debugFolder
-                .add(parameters.ring, 'root1')
+                .add(parameters.planet, 'root1')
                 .min(0)
                 .max(500)
                 .step(0.01)
@@ -247,7 +247,7 @@ export default class Ring
                 })
 
             this.debugFolder
-                .add(parameters.ring, 'root2')
+                .add(parameters.planet, 'root2')
                 .min(0)
                 .max(500)
                 .step(0.01)
