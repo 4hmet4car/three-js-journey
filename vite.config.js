@@ -19,7 +19,7 @@ export default {
         rollupOptions: {
             input: {
                 main: resolve(import.meta.dirname, 'src/index.html'),
-                erid: resolve(import.meta.dirname, 'src/erid.html'),
+                planet: resolve(import.meta.dirname, 'src/planet.html'),
             }
         }
     },

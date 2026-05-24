@@ -1,8 +1,7 @@
 import Experience from "../Experience.js"
-import Galaxy from "./Galaxy/Galaxy.js"
-import Environment from './Environment.js';
-import Erid from "./Erid/Erid.js";
-import Ring from "./Erid/Ring.js";
+import Environment from "./Environment.js"
+import Planet from "./Planet/Planet.js"
+import Ring from "./Planet/Ring/Ring.js"
 
 export default class World
 {
@@ -15,7 +14,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
-            this.erid = new Erid()
+            this.planet = new Planet()
             this.ring = new Ring()
             this.environment = new Environment()
         })
@@ -26,9 +25,9 @@ export default class World
 
     update()
     {
-        if (this.galaxy)
+        if (this.ring)
         {
-            // this.galaxy.update()
+            this.ring.update()
         }
     }
 }

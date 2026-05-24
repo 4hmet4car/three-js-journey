@@ -1,9 +1,9 @@
 import * as THREE from 'three'
 import Experience from "../../Experience.js"
 import parameters from '../../parameters.js'
-import { ERID } from '../../constants.js'
+import { PLANET } from '../../constants.js'
 
-export default class Erid
+export default class Planet
 {
     constructor()
     {
@@ -20,26 +20,26 @@ export default class Erid
 
     setGeometry()
     {
-        this.geometry = new THREE.SphereGeometry(ERID.RADIUS, 64, 64)
+        this.geometry = new THREE.SphereGeometry(PLANET.RADIUS, 64, 64)
     }
 
     setMaterial()
     {
-        this.eridTexture = this.resources.items.eridTexture
-        this.eridTexture.colorSpace = THREE.SRGBColorSpace
-        this.eridTexture.minFilter = THREE.LinearFilter
-        this.eridTexture.magFilter = THREE.LinearFilter
+        this.planetTexture = this.resources.items.planetTexture
+        this.planetTexture.colorSpace = THREE.SRGBColorSpace
+        this.planetTexture.minFilter = THREE.LinearFilter
+        this.planetTexture.magFilter = THREE.LinearFilter
         this.material = new THREE.MeshStandardMaterial({
-            map: this.eridTexture,
+            map: this.planetTexture,
         })
     }
 
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.rotation.x = parameters.erid.rotationX
-        this.mesh.rotation.y = parameters.erid.rotationY
-        this.mesh.rotation.z = parameters.erid.rotationZ
+        this.mesh.rotation.x = parameters.planet.rotationX
+        this.mesh.rotation.y = parameters.planet.rotationY
+        this.mesh.rotation.z = parameters.planet.rotationZ
         this.scene.add(this.mesh)
     }
 
@@ -47,7 +47,7 @@ export default class Erid
     {
         if (this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder('Erid')
+            this.debugFolder = this.debug.ui.addFolder('Planet')
 
             this.debugFolder
                 .add(this.mesh.rotation, 'x')

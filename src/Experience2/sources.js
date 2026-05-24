@@ -14,9 +14,9 @@
 
 export default [
     {
-        name: 'eridTexture',
+        name: 'planetTexture',
         type: 'texture',
-        path: '/textures/erid.jpg'
+        path: '/textures/planet.jpg'
     },
     {
         name: 'milkyWayTexture',

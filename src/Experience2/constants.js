@@ -7,6 +7,9 @@ export const CAMERA = {
     FAR: 100,
 }
 
-export const ERID = {
+export const PLANET = {
     RADIUS: 1,
+    RING_SPACE: 0.1,
 }
+
+export const PI = 3.1415926535897932384626433832795
