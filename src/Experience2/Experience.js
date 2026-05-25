@@ -9,6 +9,7 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
+import RotationMatrix from './Utils/RotationMatrix.js'
 
 let instance = null
 
@@ -38,6 +39,7 @@ export default class Experience
         this.camera = new Camera()
         this.renderer = new Renderer()
 
+        this.rotationMatrix = new RotationMatrix()
         this.world = new World()
 
         // Sizes resize event
@@ -50,6 +52,10 @@ export default class Experience
         this.time.on('tick', () =>
         {
             this.update()
+        })
+
+        this.rotationMatrix.on('rotation', ()=>{
+            this.rotate()
         })
     }
 
@@ -64,6 +70,11 @@ export default class Experience
         this.camera.update()
         this.world.update()
         this.renderer.update()
+    }
+
+    rotate()
+    {
+        this.world.rotate()
     }
 
     destroy()

@@ -16,7 +16,6 @@ export default class Planet
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
-        this.setDebug()
     }
 
     setGeometry()
@@ -45,37 +44,15 @@ export default class Planet
         this.scene.add(this.mesh)
     }
 
-    setDebug()
-    {
-        if (this.debug.active)
-        {
-            this.debugFolder = this.debug.ui.addFolder('Planet')
-
-            this.debugFolder
-                .add(this.mesh.rotation, 'x')
-                .name('rotationX')
-                .min(-4)
-                .max(4)
-                .step(0.001)
-
-            this.debugFolder
-                .add(this.mesh.rotation, 'y')
-                .name('rotationY')
-                .min(-4)
-                .max(4)
-                .step(0.001)
-
-            this.debugFolder
-                .add(this.mesh.rotation, 'z')
-                .name('rotationZ')
-                .min(-4)
-                .max(4)
-                .step(0.001)
-        }
+    update(){
+        this.mesh.rotateY(-this.time.delta * 0.0001 * parameters.planet.rotationSpeed)
     }
 
-    update(){
-        this.mesh.rotateY(-this.time.delta * 0.0001)
+    rotate()
+    {
+        this.mesh.rotation.x = parameters.planet.rotationX
+        this.mesh.rotation.y = parameters.planet.rotationY
+        this.mesh.rotation.z = parameters.planet.rotationZ
     }
 
 }

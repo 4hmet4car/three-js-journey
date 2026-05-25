@@ -2,7 +2,7 @@ import * as THREE from 'three'
 import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js'
 
 import Experience from './Experience.js'
-import { CAMERA } from './constants.js'
+import { CAMERA, ORBIT_CONTROLS } from './constants.js'
 
 export default class Camera
 {
@@ -18,6 +18,10 @@ export default class Camera
         // this.setOrtographicCameraInstance()
         this.setOrbitControls()
         this.setDebug()
+
+        // window.addEventListener('mousedown',()=>{
+        //     console.log(this.controls.target)
+        // })
     }
 
     // Perspective camera instance
@@ -69,6 +73,9 @@ export default class Camera
     setOrbitControls()
     {
         this.controls = new OrbitControls(this.instance, this.canvas)
+        this.controls.target.x = ORBIT_CONTROLS.TARGET_X
+        this.controls.target.y = ORBIT_CONTROLS.TARGET_Y
+        this.controls.target.z = ORBIT_CONTROLS.TARGET_Z
         this.controls.enableDamping = true
     }
 
