@@ -6,9 +6,9 @@ export default {
         },
         directionalLight: {
             intensity: 3,
-            positionX: 2.1,
-            positionY: 3.1,
-            positionZ: -3.2,
+            positionX: 0.25,
+            positionY: 2,
+            positionZ: -2.25,
         },
     },
 }

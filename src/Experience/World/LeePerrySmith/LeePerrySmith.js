@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 
-import Experience from "../../Experience.js";
+import Experience from "../../Experience.js"
+import vertexChunk1 from './shaderChunks/vertexChunk1.glsl'
 
 export default class LeePerrySmith
 {
@@ -30,12 +31,21 @@ export default class LeePerrySmith
     {
         this.mapTexture = this.resources.items.leePerrySmithColorTexture
         this.mapTexture.colorSpace = THREE.SRGBColorSpace
+
         this.normalTexture = this.resources.items.leePerrySmithNormalTexture
 
-        this.material = new THREE.MeshStandardMaterial( {
+        this.material = new THREE.MeshStandardMaterial({
             map: this.mapTexture,
             normalMap: this.normalTexture
         })
+
+        this.material.onBeforeCompile = (shader) =>
+        {
+            shader.vertexShader = shader.vertexShader.replace(
+                '#include <begin_vertex>',
+                vertexChunk1
+            )
+        }
     }
 
     setModel()

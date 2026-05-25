@@ -29,7 +29,11 @@ export default class Environment
         this.directionalLight.shadow.mapSize.set(DIRECTIONAL_LIGHT.SHADOW_MAP_SIZE, DIRECTIONAL_LIGHT.SHADOW_MAP_SIZE)
         this.directionalLight.shadow.camera.far = DIRECTIONAL_LIGHT.SHADOW_FAR
         this.directionalLight.shadow.normalBias = DIRECTIONAL_LIGHT.SHADOW_NORMAL_BIAS
-        this.directionalLight.position.set(DIRECTIONAL_LIGHT.POSITION_X, DIRECTIONAL_LIGHT.POSITION_Y, DIRECTIONAL_LIGHT.POSITION_Z)
+        this.directionalLight.position.set(
+            parameters.environment.directionalLight.positionX,
+            parameters.environment.directionalLight.positionY,
+            parameters.environment.directionalLight.positionZ
+        )
         this.scene.add(this.directionalLight)
 
     }
