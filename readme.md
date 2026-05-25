@@ -49,6 +49,7 @@ Deployment is handled by GitHub Actions.<br>
 28- [Shader patterns](https://4hmet4car-28-shader-patterns.vercel.app/)<br>
 29- [Raging sea](https://4hmet4car-29-raging-sea.vercel.app/)<br>
 30- [Animated galaxy](https://4hmet4car-30-animated-galaxy.vercel.app/)<br>
+31- [Modified materials](https://4hmet4car-31-modified-materials.vercel.app/)<br>
 
 ---
 > ⚠️ The workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
