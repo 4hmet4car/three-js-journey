@@ -1,8 +1,8 @@
 export const CAMERA = {
     FOV: 75,
-    POSITION_X: 4,
-    POSITION_Y: 1,
-    POSITION_Z: -4,
+    POSITION_X: 12,
+    POSITION_Y: 3,
+    POSITION_Z: -12,
     NEAR: 0.1,
     FAR: 100,
 }

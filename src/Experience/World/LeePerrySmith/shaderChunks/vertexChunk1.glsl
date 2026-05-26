@@ -1,1 +1,0 @@
-#include <begin_vertex>

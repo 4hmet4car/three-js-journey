@@ -21,11 +21,9 @@ export default class World
 
     update()
     {
-        // if (this.ring && this.planet && this.ringParticles)
-        // {
-        //     this.ring.update()
-        //     this.ringParticles.update()
-        //     this.planet.update()
-        // }
+        if (this.leePerrySmith)
+        {
+            this.leePerrySmith.update()
+        }
     }
 }
