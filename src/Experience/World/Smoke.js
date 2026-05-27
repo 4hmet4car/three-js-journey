@@ -28,6 +28,9 @@ export default class Smoke
     setMaterial()
     {
         this.perlinTexture = this.resources.items.perlinTexture
+        // this.perlinTexture.generateMipmaps =false
+        this.perlinTexture.wrapS = THREE.RepeatWrapping
+        this.perlinTexture.wrapT = THREE.RepeatWrapping
 
         this.material = new THREE.ShaderMaterial({
             // wireframe: true,
