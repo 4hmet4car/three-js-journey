@@ -9,7 +9,9 @@ export default class Smoke
     constructor()
     {
         this.experience = new Experience()
+        this.resources = this.experience.resources
         this.scene = this.experience.scene
+        this.time = this.experience.time
 
         this.setGeometry()
         this.setMaterial()
@@ -25,11 +27,18 @@ export default class Smoke
 
     setMaterial()
     {
+        this.perlinTexture = this.resources.items.perlinTexture
+
         this.material = new THREE.ShaderMaterial({
             // wireframe: true,
             side: THREE.DoubleSide,
+            transparent: true,
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
+            uniforms: {
+                uTime: new THREE.Uniform(0),
+                uPerlinTexture: new THREE.Uniform(this.perlinTexture)
+            },
         })
     }
 
@@ -42,6 +51,6 @@ export default class Smoke
 
     update()
     {
-
+        this.material.uniforms.uTime.value = this.time.secondsElapsed
     }
 }

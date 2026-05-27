@@ -3,8 +3,12 @@
 // uniform mat4 projectionMatrix;
 
 // attribute vec3 position;
+// attribute vec2 uv;
 
-void main(){
+varying vec2 vUv;
+
+void main()
+{
     vec4 modelPosition = modelMatrix * vec4(position,1.0);
 
     vec4 modelViewPosition = viewMatrix * modelPosition;
@@ -12,4 +16,7 @@ void main(){
 
     //Final position
     gl_Position = modelViewProjectionPosition;
+
+    //Varyings
+    vUv = uv;
 }
