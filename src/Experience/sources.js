@@ -31,7 +31,7 @@ export default [
     //     path: '/models/LeePerrySmith/color.jpg'
     // },
     {
-        name: 'perlinNoise',
+        name: 'perlinTexture',
         type: 'texture',
         path: '/perlin.png'
     },

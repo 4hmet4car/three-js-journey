@@ -1,5 +1,6 @@
 import Experience from "../Experience.js"
-import Coffee from "./Coffee/Coffee.js"
+import Coffee from "./Coffee.js"
+import Smoke from "./Smoke.js"
 
 export default class World
 {
@@ -12,6 +13,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
+            this.smoke = new Smoke()
             this.coffee = new Coffee()
         })
 
@@ -19,8 +21,9 @@ export default class World
 
     update()
     {
-        if (this.coffee)
+        if (this.coffee && this.smoke)
         {
+            this.smoke.update()
             this.coffee.update()
         }
     }
