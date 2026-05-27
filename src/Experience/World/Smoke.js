@@ -3,6 +3,7 @@ import Experience from "../Experience"
 
 import vertexShader from './shaders/smoke/vertex.glsl'
 import fragmentShader from './shaders/smoke/fragment.glsl'
+import parameters from '../parameters'
 
 export default class Smoke
 {
@@ -12,10 +13,12 @@ export default class Smoke
         this.resources = this.experience.resources
         this.scene = this.experience.scene
         this.time = this.experience.time
+        this.debug = this.experience.debug
 
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
+        this.setDebug()
     }
 
     setGeometry()
@@ -32,14 +35,18 @@ export default class Smoke
         this.perlinTexture.wrapS = THREE.RepeatWrapping
         this.perlinTexture.wrapT = THREE.RepeatWrapping
 
+        this.smokeColor = new THREE.Color(parameters.smoke.color)
+
         this.material = new THREE.ShaderMaterial({
             // wireframe: true,
+            depthWrite: false,
             side: THREE.DoubleSide,
             transparent: true,
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
                 uTime: new THREE.Uniform(0),
+                uSmokeColor: new THREE.Uniform(this.smokeColor),
                 uPerlinTexture: new THREE.Uniform(this.perlinTexture)
             },
         })
@@ -50,6 +57,22 @@ export default class Smoke
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.position.y = 1.83
         this.scene.add(this.mesh)
+    }
+
+    setDebug()
+    {
+        //Debug
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Smoke")
+
+            this.debugFolder
+                .addColor(parameters.smoke, 'color')
+                .onChange((value) =>
+                {
+                    this.smokeColor.set(value)
+                })
+        }
     }
 
     update()
