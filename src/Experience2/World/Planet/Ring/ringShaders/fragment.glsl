@@ -8,13 +8,15 @@ varying vec2 vUv;
 
 void main()
 {   
-    float strength = distance(vUv, vec2(0.5));
+    float radius = distance(vUv, vec2(0.5));
+    radius *= 2.0;
 
-    strength = abs(sin(strength*uRingCount) * (sin(sqrt(uRoot1)*strength*uRingCount)+sin(sqrt(uRoot2)*strength*uRingCount)))/4.0;
+    // Ring formation
+    float strength = abs(sin(radius*uRingCount) * (sin(sqrt(uRoot1)*radius*uRingCount)+sin(sqrt(uRoot2)*radius*uRingCount)))/4.0;
 
-    float mask = 1.0 - step(0.15,abs(distance(vUv, vec2(0.5)) - 0.34));
+    // Mask with soft edges
+    strength *= smoothstep(0.35,0.45,radius);
+    strength *= smoothstep(1.0,0.95,radius);
 
-    strength *= mask;
-    
-    gl_FragColor = vec4(strength*2.0,1.0,1.0,strength);
+    gl_FragColor = vec4(strength,1.0,1.0,strength);
 }
