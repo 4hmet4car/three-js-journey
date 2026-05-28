@@ -1,9 +1,9 @@
 import * as THREE from 'three'
-import Experience from "../Experience"
+import Experience from "../Experience.js"
 
 import vertexShader from './shaders/smoke/vertex.glsl'
 import fragmentShader from './shaders/smoke/fragment.glsl'
-import parameters from '../parameters'
+import parameters from '../parameters.js'
 
 export default class Smoke
 {
@@ -13,6 +13,7 @@ export default class Smoke
         this.resources = this.experience.resources
         this.scene = this.experience.scene
         this.time = this.experience.time
+        this.cursor = this.experience.cursor
         this.debug = this.experience.debug
 
         this.setGeometry()
@@ -34,7 +35,7 @@ export default class Smoke
         // this.perlinTexture.generateMipmaps =false
         this.perlinTexture.wrapS = THREE.RepeatWrapping
         this.perlinTexture.wrapT = THREE.RepeatWrapping
-
+        
         this.smokeColor = new THREE.Color(parameters.smoke.color)
 
         this.material = new THREE.ShaderMaterial({
@@ -46,6 +47,7 @@ export default class Smoke
             fragmentShader: fragmentShader,
             uniforms: {
                 uTime: new THREE.Uniform(0),
+                uCursorPosition: new THREE.Uniform(0),
                 uSmokeColor: new THREE.Uniform(this.smokeColor),
                 uPerlinTexture: new THREE.Uniform(this.perlinTexture)
             },
@@ -78,5 +80,6 @@ export default class Smoke
     update()
     {
         this.material.uniforms.uTime.value = this.time.secondsElapsed
+        this.material.uniforms.uCursorPosition.value = this.cursor.position
     }
 }
