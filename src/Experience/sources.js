@@ -36,10 +36,15 @@ export default [
         path: '/perlin.png'
     },
     {
-        name: 'coffeeModel',
+        name: 'leePerrySmokeModel',
         type: 'gltfModel',
-        path: '/bakedModel.glb'
+        path: '/LeePerrySmoke.glb'
     },
+    // {
+    //     name: 'leePerrySmokeModel',
+    //     type: 'gltfModel',
+    //     path: '/LeePerrySmoke.glb'
+    // },
     // {
     //     name: 'brainStemModel',
     //     type: 'dracoModel',

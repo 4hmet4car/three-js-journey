@@ -1,6 +1,6 @@
 import Experience from "../Experience.js"
 
-export default class Coffee
+export default class LeePerrySmoke
 {
     constructor()
     {
@@ -9,15 +9,15 @@ export default class Coffee
         this.scene = this.experience.scene
 
         // Setup
-        this.resource = this.resources.items.coffeeModel
+        this.resource = this.resources.items.leePerrySmokeModel
 
         this.setModel()
     }
 
     setModel()
     {
-        this.model = this.resource.scene
-        this.model.getObjectByName('baked').material.map.anisotropy = 8
+        this.model = this.resource.scene.children[0]
+        this.model.material.map.anisotropy = 8
         this.scene.add(this.model)
     }
 

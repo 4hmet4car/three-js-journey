@@ -14,14 +14,15 @@ export default class Camera
         this.canvas = this.experience.canvas
         this.debug = this.experience.debug
 
-        this.setPerspectiveCameraInstance()
-        // this.setOrtographicCameraInstance()
+        // this.setPerspectiveCameraInstance()
+        this.setOrtographicCameraInstance()
         this.setOrbitControls()
         this.setDebug()
 
-        // window.addEventListener('mousedown',()=>{
-        //     console.log(this.controls.target)
-        // })
+        window.addEventListener('mousedown',()=>{
+            console.log(this.controls.target)
+            console.log(this.instance.position)
+        })
     }
 
     // Perspective camera instance
@@ -45,11 +46,10 @@ export default class Camera
     setOrtographicCameraInstance()
     {
         this.isOrthographic = true
-        this.zoom = 1
-        this.left = -(this.sizes.width / this.sizes.height) * this.zoom
-        this.right = (this.sizes.width / this.sizes.height) * this.zoom
-        this.top = 1 * this.zoom
-        this.bottom = -1 * this.zoom
+        this.left = -(this.sizes.width / this.sizes.height) * CAMERA.ZOOM
+        this.right = (this.sizes.width / this.sizes.height) * CAMERA.ZOOM
+        this.top = 1 * CAMERA.ZOOM
+        this.bottom = -1 * CAMERA.ZOOM
 
         this.instance = new THREE.OrthographicCamera(
             this.left,
@@ -59,8 +59,8 @@ export default class Camera
             CAMERA.NEAR,
             CAMERA.FAR)
 
-        this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
-        this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
+        this.instance.left = -(this.sizes.width / this.sizes.height) * CAMERA.ZOOM
+        this.instance.right = (this.sizes.width / this.sizes.height) * CAMERA.ZOOM
         
         this.instance.position.set(
             CAMERA.POSITION_X,
@@ -78,6 +78,7 @@ export default class Camera
         this.controls.target.z = ORBIT_CONTROLS.TARGET_Z
         // this.controls.enablePan = false
         // this.controls.enableZoom = false
+        this.controls.enableRotate = false
         this.controls.enableDamping = true
     }
 
@@ -103,8 +104,8 @@ export default class Camera
     {
         if (this.isOrthographic)
         {
-            this.instance.left = -(this.sizes.width / this.sizes.height) * this.zoom
-            this.instance.right = (this.sizes.width / this.sizes.height) * this.zoom
+            this.instance.left = -(this.sizes.width / this.sizes.height) * CAMERA.ZOOM
+            this.instance.right = (this.sizes.width / this.sizes.height) * CAMERA.ZOOM
             this.instance.updateProjectionMatrix()
         } else
         {

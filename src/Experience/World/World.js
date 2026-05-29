@@ -1,5 +1,5 @@
 import Experience from "../Experience.js"
-import Coffee from "./Coffee.js"
+import LeePerrySmoke from "./LeePerrySmoke.js"
 import Smoke from "./Smoke.js"
 
 export default class World
@@ -14,17 +14,17 @@ export default class World
         {
             // Setup
             this.smoke = new Smoke()
-            this.coffee = new Coffee()
+            this.leePerrySmoke = new LeePerrySmoke()
         })
 
     }
 
     update()
     {
-        if (this.coffee && this.smoke)
+        if (this.leePerrySmoke && this.smoke)
         {
             this.smoke.update()
-            this.coffee.update()
+            this.leePerrySmoke.update()
         }
     }
 }

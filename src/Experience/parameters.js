@@ -1,7 +1,5 @@
-
-
 export default {
     smoke: {
-        color: '#cdab8f',
-    }
+        color: '#cb3731',
+    },
 }
