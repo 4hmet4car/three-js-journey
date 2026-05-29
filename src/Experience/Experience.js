@@ -10,6 +10,7 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
+import RayCursor from './RayCursor.js'
 
 let instance = null
 
@@ -38,6 +39,7 @@ export default class Experience
         this.resources = new Resources(sources)
         this.camera = new Camera()
         this.cursor = new Cursor()
+        this.rayCursor = new RayCursor()
         this.renderer = new Renderer()
 
         this.world = new World()
@@ -64,6 +66,8 @@ export default class Experience
     update()
     {
         this.camera.update()
+        this.cursor.update()
+        this.rayCursor.update()
         this.world.update()
         this.renderer.update()
     }

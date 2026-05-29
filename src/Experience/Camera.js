@@ -76,6 +76,8 @@ export default class Camera
         this.controls.target.x = ORBIT_CONTROLS.TARGET_X
         this.controls.target.y = ORBIT_CONTROLS.TARGET_Y
         this.controls.target.z = ORBIT_CONTROLS.TARGET_Z
+        // this.controls.enablePan = false
+        // this.controls.enableZoom = false
         this.controls.enableDamping = true
     }
 

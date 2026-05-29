@@ -2,7 +2,7 @@
 // uniform mat4 viewMatrix;
 // uniform mat4 projectionMatrix;
 uniform float uTime;
-uniform float uCursorPosition;
+uniform float uCursorWind;
 uniform sampler2D uPerlinTexture;
 
 // attribute vec3 position;
@@ -35,8 +35,8 @@ void main()
 
     // Wind
     vec2 windOffset = vec2(
-        texture(uPerlinTexture, vec2(0.25, uTime * 0.01 + uv.y * uCursorPosition)).r - 0.5,
-        texture(uPerlinTexture, vec2(0.75, uTime * 0.01 + uv.y * uCursorPosition)).r - 0.5
+        texture(uPerlinTexture, vec2(0.25, uTime * 0.01 + uv.y * uCursorWind)).r - 0.5,
+        texture(uPerlinTexture, vec2(0.75, uTime * 0.01 + uv.y * uCursorWind)).r - 0.5
     );
 
     windOffset *= pow(uv.y, 2.0) * 10.0;

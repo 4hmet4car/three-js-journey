@@ -4,6 +4,7 @@ import Experience from "../Experience.js"
 import vertexShader from './shaders/smoke/vertex.glsl'
 import fragmentShader from './shaders/smoke/fragment.glsl'
 import parameters from '../parameters.js'
+import { SMOKE } from '../constants.js'
 
 export default class Smoke
 {
@@ -14,11 +15,14 @@ export default class Smoke
         this.scene = this.experience.scene
         this.time = this.experience.time
         this.cursor = this.experience.cursor
+        this.rayCursor = this.experience.rayCursor
         this.debug = this.experience.debug
 
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
+        this.registerToRayCursor()
+        this.setWind()
         this.setDebug()
     }
 
@@ -35,7 +39,7 @@ export default class Smoke
         // this.perlinTexture.generateMipmaps =false
         this.perlinTexture.wrapS = THREE.RepeatWrapping
         this.perlinTexture.wrapT = THREE.RepeatWrapping
-        
+
         this.smokeColor = new THREE.Color(parameters.smoke.color)
 
         this.material = new THREE.ShaderMaterial({
@@ -47,7 +51,7 @@ export default class Smoke
             fragmentShader: fragmentShader,
             uniforms: {
                 uTime: new THREE.Uniform(0),
-                uCursorPosition: new THREE.Uniform(0),
+                uCursorWind: new THREE.Uniform(0),
                 uSmokeColor: new THREE.Uniform(this.smokeColor),
                 uPerlinTexture: new THREE.Uniform(this.perlinTexture)
             },
@@ -57,8 +61,31 @@ export default class Smoke
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.position.y = 1.83
+        this.mesh.position.y = SMOKE.MESH.POSITION_Y
         this.scene.add(this.mesh)
+    }
+
+    registerToRayCursor()
+    {
+        this.rayCursor.intersectObject = this.mesh
+    }
+
+    setWind()
+    {
+        this.cursorWind = 0
+    }
+
+    calculateWind()
+    {
+        if (this.rayCursor.intersect.length)
+        {
+            this.targetWind = this.cursor.speed.x * 3000
+        } else
+        {
+            this.targetWind = 0
+        }
+
+        this.cursorWind += (this.targetWind - this.cursorWind) * 0.05
     }
 
     setDebug()
@@ -79,7 +106,8 @@ export default class Smoke
 
     update()
     {
+        this.calculateWind()
+        this.material.uniforms.uCursorWind.value = this.cursorWind
         this.material.uniforms.uTime.value = this.time.secondsElapsed
-        this.material.uniforms.uCursorPosition.value = this.cursor.position
     }
 }
