@@ -39,7 +39,7 @@ void main()
         texture(uPerlinTexture, vec2(0.75, uTime * 0.01 + uv.y * uCursorWind)).r - 0.5
     );
 
-    windOffset *= pow(uv.y, 2.0) * 10.0;
+    windOffset *= pow(uv.y, 2.0) * 5.0;
 
     modelPosition.xz += windOffset;
 

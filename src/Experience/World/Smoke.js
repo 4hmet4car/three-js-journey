@@ -79,7 +79,7 @@ export default class Smoke
     {
         if (this.rayCursor.intersect.length)
         {
-            this.targetWind = this.cursor.speed.x * 3000
+            this.targetWind = this.cursor.speed.x * 60000         
         } else
         {
             this.targetWind = 0
@@ -108,6 +108,6 @@ export default class Smoke
     {
         this.calculateWind()
         this.material.uniforms.uCursorWind.value = this.cursorWind
-        this.material.uniforms.uTime.value = this.time.secondsElapsed
+        this.material.uniforms.uTime.value = this.time.secondsElapsed * 10
     }
 }
