@@ -46,11 +46,9 @@ export default class Cursor
 
     update()
     {
-        // Set timeout for resetting the cursor speed if no cursormove event occurs
-        if (this.time.elapsed - this.lastMoveTime > 50)
-        {
-            this.speed.x += (0 - this.speed.x) * 0.1
-            this.speed.y += (0 - this.speed.y) * 0.1
-        }
+        // Converge the cursor speed to 0, if not the last speed will stay as the
+        // current speed indefinetely
+        this.speed.x += (0 - this.speed.x) * 0.1
+        this.speed.y += (0 - this.speed.y) * 0.1
     }
 }
