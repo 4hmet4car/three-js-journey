@@ -4,7 +4,7 @@ import Debug from './Utils/Debug.js'
 import Sizes from "./Utils/Sizes.js"
 import Time from "./Utils/Time.js"
 import Camera from './Camera.js'
-import Cursor from './Cursor.js'
+import Cursor from './Utils/Cursor.js'
 import Renderer from './Renderer.js'
 import World from './World/World.js'
 import Resources from './Utils/Resources.js'
@@ -38,7 +38,7 @@ export default class Experience
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
         this.camera = new Camera()
-        this.cursor = new Cursor()
+        this.cursor = new Cursor(this.sizes)
         this.rayCursor = new RayCursor()
         this.renderer = new Renderer()
 
@@ -80,6 +80,7 @@ export default class Experience
         
         //Destroy event listeners
         window.removeEventListener('resize',this.sizes.resize)
+        window.removeEventListener('pointermove',this.cursor.pointerMove)
 
         //Traverse the whole scene
         this.scene.traverse((child) =>
