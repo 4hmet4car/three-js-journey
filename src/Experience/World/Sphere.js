@@ -1,8 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
+import Holographic from './materials/Holographic.js'
 import { SPHERE } from '../constants.js'
-import vertexShader from './shaders/vertex.glsl'
-import fragmentShader from './shaders/fragment.glsl'
 
 export default class Sphere
 {
@@ -24,10 +23,7 @@ export default class Sphere
 
     setMaterial()
     {
-        this.material = new THREE.ShaderMaterial({
-            vertexShader: vertexShader,
-            fragmentShader: fragmentShader
-        })
+        this.material = new Holographic().material
     }
 
     setMesh()

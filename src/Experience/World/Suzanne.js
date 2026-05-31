@@ -1,8 +1,7 @@
 import * as THREE from 'three'
 import Experience from '../Experience'
+import Holographic from './materials/Holographic.js'
 import { SUZANNE } from '../constants.js'
-import vertexShader from './shaders/vertex.glsl'
-import fragmentShader from './shaders/fragment.glsl'
 
 export default class Suzanne
 {
@@ -22,10 +21,7 @@ export default class Suzanne
 
     setMaterial()
     {
-        this.material = new THREE.ShaderMaterial({
-            vertexShader: vertexShader,
-            fragmentShader: fragmentShader
-        })
+        this.material = new Holographic().material
     }
 
     setModel()
