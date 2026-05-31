@@ -1,6 +1,8 @@
 import * as THREE from 'three'
-import Experience from "../Experience";
-import { SUZANNE } from '../constants';
+import Experience from '../Experience'
+import { SUZANNE } from '../constants.js'
+import vertexShader from './shaders/vertex.glsl'
+import fragmentShader from './shaders/fragment.glsl'
 
 export default class Suzanne
 {
@@ -20,7 +22,10 @@ export default class Suzanne
 
     setMaterial()
     {
-        this.material = new THREE.MeshBasicMaterial()
+        this.material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader
+        })
     }
 
     setModel()

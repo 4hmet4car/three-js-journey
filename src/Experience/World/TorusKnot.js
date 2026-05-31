@@ -1,6 +1,8 @@
 import * as THREE from 'three'
-import Experience from "../Experience";
-import { TORUS_KNOT } from '../constants';
+import Experience from '../Experience.js'
+import { TORUS_KNOT } from '../constants.js'
+import vertexShader from './shaders/vertex.glsl'
+import fragmentShader from './shaders/fragment.glsl'
 
 export default class TorusKnot
 {
@@ -18,17 +20,20 @@ export default class TorusKnot
     setGeometry()
     {
         this.geometry = new THREE.TorusKnotGeometry
-        (
-            TORUS_KNOT.GEOMETRY.RADIUS,
-            TORUS_KNOT.GEOMETRY.TUBE_RADIUS,
-            TORUS_KNOT.GEOMETRY.TUBULAR_SEGMENTS,
-            TORUS_KNOT.GEOMETRY.RADIAL_SEGMENTS
-        )
+            (
+                TORUS_KNOT.GEOMETRY.RADIUS,
+                TORUS_KNOT.GEOMETRY.TUBE_RADIUS,
+                TORUS_KNOT.GEOMETRY.TUBULAR_SEGMENTS,
+                TORUS_KNOT.GEOMETRY.RADIAL_SEGMENTS
+            )
     }
 
     setMaterial()
     {
-        this.material = new THREE.MeshBasicMaterial()
+        this.material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader
+        })
     }
 
     setMesh()
