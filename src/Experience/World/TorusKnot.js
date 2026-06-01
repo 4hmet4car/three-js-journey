@@ -1,18 +1,17 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
-import Holographic from './materials/Holographic.js'
 import { TORUS_KNOT } from '../constants.js'
 
 export default class TorusKnot
 {
-    constructor()
+    constructor(material)
     {
         this.experience = new Experience()
+        this.material = material
         this.scene = this.experience.scene
         this.time = this.experience.time
 
         this.setGeometry()
-        this.setMaterial()
         this.setMesh()
     }
 
@@ -25,11 +24,6 @@ export default class TorusKnot
                 TORUS_KNOT.GEOMETRY.TUBULAR_SEGMENTS,
                 TORUS_KNOT.GEOMETRY.RADIAL_SEGMENTS
             )
-    }
-
-    setMaterial()
-    {
-        this.material = new Holographic().material
     }
 
     setMesh()

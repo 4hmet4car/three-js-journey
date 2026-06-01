@@ -1,13 +1,13 @@
 import * as THREE from 'three'
 import Experience from '../Experience'
-import Holographic from './materials/Holographic.js'
 import { SUZANNE } from '../constants.js'
 
 export default class Suzanne
 {
-    constructor()
+    constructor(material)
     {
         this.experience = new Experience()
+        this.material = material
         this.resources = this.experience.resources
         this.scene = this.experience.scene
         this.time = this.experience.time
@@ -15,13 +15,7 @@ export default class Suzanne
         // Setup
         this.resource = this.resources.items.suzanne
 
-        this.setMaterial()
         this.setModel()
-    }
-
-    setMaterial()
-    {
-        this.material = new Holographic().material
     }
 
     setModel()

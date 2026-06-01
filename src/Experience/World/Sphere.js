@@ -1,29 +1,23 @@
 import * as THREE from 'three'
 import Experience from '../Experience.js'
-import Holographic from './materials/Holographic.js'
 import { SPHERE } from '../constants.js'
 
 export default class Sphere
 {
-    constructor()
+    constructor(material)
     {
         this.experience = new Experience()
+        this.material = material
         this.scene = this.experience.scene
         this.time = this.experience.time
 
         this.setGeometry()
-        this.setMaterial()
         this.setMesh()
     }
 
     setGeometry()
     {
         this.geometry = new THREE.SphereGeometry()
-    }
-
-    setMaterial()
-    {
-        this.material = new Holographic().material
     }
 
     setMesh()
