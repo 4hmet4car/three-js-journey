@@ -34,7 +34,7 @@ export default class Suzanne
 
     update()
     {
-        this.model.rotation.x = this.time.secondsElapsed * SUZANNE.ANIMATION.ROTATION_SPEED_X
-        this.model.rotation.y = this.time.secondsElapsed * SUZANNE.ANIMATION.ROTATION_SPEED_Y
+        // this.model.rotation.x = this.time.secondsElapsed * SUZANNE.ANIMATION.ROTATION_SPEED_X
+        // this.model.rotation.y = this.time.secondsElapsed * SUZANNE.ANIMATION.ROTATION_SPEED_Y
     }
 }

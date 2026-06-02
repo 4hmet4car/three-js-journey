@@ -7,7 +7,7 @@ export default class Time extends EventEmitter
         super()
 
         // Setup
-        this.start = Date.now()
+        this.start = performance.now()
         this.current = this.start
         this.elapsed = 0
         this.secondsElapsed = this.elapsed * 0.001
@@ -21,7 +21,7 @@ export default class Time extends EventEmitter
 
     tick()
     {
-        const currentTime = Date.now()
+        const currentTime = performance.now()
         this.delta = currentTime - this.current
         this.current = currentTime
         this.elapsed = this.current - this.start

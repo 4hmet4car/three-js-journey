@@ -30,11 +30,11 @@ export default [
     //     type: 'texture',
     //     path: '/models/LeePerrySmith/color.jpg'
     // },
-    // {
-    //     name: 'perlinTexture',
-    //     type: 'texture',
-    //     path: '/perlin.png'
-    // },
+    {
+        name: 'perlinTexture',
+        type: 'texture',
+        path: '/perlin.png'
+    },
     {
         name: 'suzanne',
         type: 'gltfModel',
