@@ -10,6 +10,6 @@ export default {
     },
 
     holographic: {
-        color: '#ff0000'
+        color: '#70c1ff'
     }
 }

@@ -18,8 +18,12 @@ void main()
 
     // ------Glitch start------
     // Get a random value from perlin noise
-    float randomValue = texture(uPerlinTexture, abs(normal.xy * vec2(cos(uTime),sin(uTime)))).r - 0.5;
-    modelPosition.x += randomValue;
+    float glitchStrength = sin(uTime - modelPosition.y);
+    glitchStrength = smoothstep(0.3,1.0,glitchStrength);
+    glitchStrength *= 0.5;
+    vec2 randomValue = texture(uPerlinTexture, vec2(abs(modelPosition.x),fract(uTime*8.0*abs(modelPosition.z)))).rg - vec2(0.5);
+    modelPosition.x += randomValue.r * glitchStrength;
+    modelPosition.z += randomValue.g * glitchStrength;
     // -------Glitch end-------
 
     vec4 modelViewPosition = viewMatrix * modelPosition;
