@@ -52,6 +52,7 @@ Deployment is handled by GitHub Actions.<br>
 31- [Modified materials](https://4hmet4car-31-modified-materials.vercel.app/)<br>
 32- [Coffee Smoke](https://4hmet4car-32-coffee-smoke-shader.vercel.app/)<br>
 33- [Hologram](https://4hmet4car-33-hologram-shader.vercel.app/)<br>
+34- [Fireworks](https://4hmet4car-34-fireworks-shaders.vercel.app/)<br>
 
 ---
 > ⚠️ The workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
