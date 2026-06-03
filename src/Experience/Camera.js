@@ -31,15 +31,15 @@ export default class Camera
     {
         this.instance = new THREE.PerspectiveCamera(
             CAMERA.FOV,
-            this.sizes.width / this.sizes.height,
+            this.sizes.aspectRatio,
             CAMERA.NEAR,
             CAMERA.FAR)
 
         this.instance.position.set(
-            CAMERA.POSITION_X,
-            CAMERA.POSITION_Y,
-            CAMERA.POSITION_Z)
-
+            CAMERA.POSITION_X / CAMERA.ZOOM,
+            CAMERA.POSITION_Y / CAMERA.ZOOM,
+            CAMERA.POSITION_Z / CAMERA.ZOOM)
+       
         this.scene.add(this.instance)
     }
 
@@ -47,10 +47,10 @@ export default class Camera
     setOrtographicCameraInstance()
     {
         this.isOrthographic = true
-        this.left = -(this.sizes.width / this.sizes.height) * CAMERA.ZOOM
-        this.right = (this.sizes.width / this.sizes.height) * CAMERA.ZOOM
-        this.top = 1 * CAMERA.ZOOM
-        this.bottom = -1 * CAMERA.ZOOM
+        this.left = -this.sizes.aspectRatio
+        this.right = this.sizes.aspectRatio
+        this.top = 1
+        this.bottom = -1
 
         this.instance = new THREE.OrthographicCamera(
             this.left,
@@ -60,13 +60,13 @@ export default class Camera
             CAMERA.NEAR,
             CAMERA.FAR)
 
-        this.instance.left = -(this.sizes.width / this.sizes.height) * CAMERA.ZOOM
-        this.instance.right = (this.sizes.width / this.sizes.height) * CAMERA.ZOOM
-
         this.instance.position.set(
             CAMERA.POSITION_X,
             CAMERA.POSITION_Y,
             CAMERA.POSITION_Z)
+
+        this.instance.zoom = CAMERA.ZOOM
+        this.instance.updateProjectionMatrix()
 
         this.scene.add(this.instance)
     }
@@ -117,12 +117,12 @@ export default class Camera
     {
         if (this.isOrthographic)
         {
-            this.instance.left = -(this.sizes.width / this.sizes.height) * CAMERA.ZOOM
-            this.instance.right = (this.sizes.width / this.sizes.height) * CAMERA.ZOOM
+            this.instance.left = -this.sizes.aspectRatio
+            this.instance.right = this.sizes.aspectRatio
             this.instance.updateProjectionMatrix()
         } else
         {
-            this.instance.aspect = this.sizes.width / this.sizes.height
+            this.instance.aspect = this.sizes.aspectRatio
             this.instance.updateProjectionMatrix()
         }
     }

@@ -2,6 +2,7 @@
 
 uniform float uTime;
 uniform vec3 uColor;
+uniform sampler2D uPerlinTexture;
 
 varying vec3 vPosition;
 varying vec3 vNormal;
