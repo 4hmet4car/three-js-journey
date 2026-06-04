@@ -1,3 +1,4 @@
+import * as THREE from 'three'
 import EventEmitter from "./EventEmitter.js"
 
 export default class Sizes extends EventEmitter
@@ -10,6 +11,8 @@ export default class Sizes extends EventEmitter
         this.width = window.innerWidth
         this.height = window.innerHeight
         this.pixelRatio = Math.min(window.devicePixelRatio, 2)
+        // Multiply resolution with pixel ratio to make it adapt to multiple screens
+        this.resolution = new THREE.Vector2(this.width * this.pixelRatio, this.height * this.pixelRatio)
         this.aspectRatio = this.width / this.height
 
         //Resize event
@@ -22,6 +25,7 @@ export default class Sizes extends EventEmitter
     {
         this.width = window.innerWidth
         this.height = window.innerHeight
+        this.resolution.set(this.width * this.pixelRatio, this.height * this.pixelRatio)
         this.pixelRatio = Math.min(window.devicePixelRatio, 2)
         this.aspectRatio = this.width / this.height
 

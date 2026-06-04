@@ -1,9 +1,12 @@
 import * as THREE from 'three'
+import EventEmitter from './EventEmitter.js'
 
-export default class Cursor
+export default class Cursor extends EventEmitter
 {
     constructor(sizes)
     {
+        super()
+        
         this.sizes = sizes
 
         // Setup
@@ -13,6 +16,7 @@ export default class Cursor
 
         // Cursor move event
         window.addEventListener('pointermove', this.pointerMove)
+        window.addEventListener('pointerdown', this.pointerDown)
     }
 
     pointerMove = (_event) =>
@@ -31,6 +35,10 @@ export default class Cursor
 
         this.speed.x = (this.position.x - previousX) / delta
         this.speed.y = (this.position.y - previousY) / delta
+    }
+
+    pointerDown = (_event) => {
+        this.trigger('pointerdown')
     }
 
     update()

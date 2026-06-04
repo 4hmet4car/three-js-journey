@@ -1,4 +1,5 @@
 import Experience from "../Experience.js"
+import Fireworks from "./Fireworks.js"
 
 export default class World
 {
@@ -11,7 +12,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
-            
+            this.fireworks = new Fireworks()
         })
 
     }

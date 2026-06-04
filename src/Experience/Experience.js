@@ -78,6 +78,7 @@ export default class Experience
         //Destroy event listeners
         window.removeEventListener('resize',this.sizes.resize)
         window.removeEventListener('pointermove',this.cursor.pointerMove)
+        window.removeEventListener('pointerdown',this.cursor.pointerDown)
 
         //Traverse the whole scene
         this.scene.traverse((child) =>
