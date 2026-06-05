@@ -16,34 +16,13 @@ export const ORBIT_CONTROLS = {
 
 export const PI = 3.1415926535897932384626433832795
 
-export const SUZANNE = {
-    ANIMATION: {
-        ROTATION_SPEED_X: -0.1,
-        ROTATION_SPEED_Y: 0.2,
-    },
-}
-
-export const TORUS_KNOT = {
+export const FIREWORKS = {
     GEOMETRY: {
-        RADIUS: 0.6,
-        TUBE_RADIUS: 0.25,
-        TUBULAR_SEGMENTS: 128,
-        RADIAL_SEGMENTS: 32,
+        SPAWN_DEPTH: 0.95 // This must be in between 0-1 but effectively you can have it in between 0.95-1
     },
 
     MESH: {
         POSITION_X: 3,
-    },
-
-    ANIMATION: {
-        ROTATION_SPEED_X: -0.1,
-        ROTATION_SPEED_Y: 0.2,
-    },
-}
-
-export const SPHERE = {
-    MESH: {
-        POSITION_X: -3,
     },
 
     ANIMATION: {

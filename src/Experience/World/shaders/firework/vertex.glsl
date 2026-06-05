@@ -5,6 +5,7 @@ uniform float uParticleSize;
 uniform vec2 uResolution;
 
 // attribute vec3 position;
+attribute float aSize;
 
 void main(){
     vec4 modelPosition = modelMatrix * vec4(position, 1.0);
@@ -16,7 +17,7 @@ void main(){
     gl_Position = modelViewProjectionPosition;
 
     // Final size
-    gl_PointSize = uParticleSize * uResolution.y;
+    gl_PointSize = uParticleSize * uResolution.y * aSize;
     // Size atenuation, taken from /three/src/renderers/shaders/ShaderLib/points.glsl.js
     gl_PointSize *= (1.0 / -modelViewPosition.z);
 }

@@ -10,7 +10,7 @@ export default {
     },
 
     fireworks: {
-        particleCount: 10,
+        particleCount: 5000,
     },
 
     holographic: {
