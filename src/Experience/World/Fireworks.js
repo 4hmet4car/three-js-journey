@@ -87,8 +87,8 @@ export default class Fireworks
             const i3 = i * 3
 
             const radius = 1
-            const theta = Math.random() * PI * 2
             const phi = Math.random() * PI
+            const theta = Math.random() * PI * 2
 
             positionsArray[i3 + 0] = spawnPosition.x + radius * Math.cos(theta) * Math.cos(phi)
             positionsArray[i3 + 1] = spawnPosition.y + radius * Math.cos(theta) * Math.sin(phi)
