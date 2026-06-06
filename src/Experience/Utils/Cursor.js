@@ -6,7 +6,7 @@ export default class Cursor extends EventEmitter
     constructor(sizes)
     {
         super()
-        
+
         this.sizes = sizes
 
         // Setup
@@ -37,7 +37,10 @@ export default class Cursor extends EventEmitter
         this.speed.y = (this.position.y - previousY) / delta
     }
 
-    pointerDown = (_event) => {
+    pointerDown = (_event) =>
+    {
+        this.position.x = (_event.clientX / this.sizes.width) * 2 - 1
+        this.position.y = -((_event.clientY / this.sizes.height) * 2 - 1)
         this.trigger('pointerdown')
     }
 
