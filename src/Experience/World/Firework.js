@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 
 import Experience from "../Experience.js"
-import parameters from "../parameters.js"
 
 import vertexShader from "./shaders/firework/vertex.glsl"
 import fragmentShader from "./shaders/firework/fragment.glsl"
@@ -14,9 +13,7 @@ export default class Firework
     constructor()
     {
         this.experience = new Experience()
-        this.cursor = this.experience.cursor
         this.camera = this.experience.camera
-        this.resources = this.experience.resources
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
     }
@@ -40,6 +37,7 @@ export default class Firework
 
         const positionsArray = new Float32Array(count * 3)
         const sizesArray = new Float32Array(count)
+        const timeMultipliersArray = new Float32Array(count)
 
         for (let i = 0; i < count; i++)
         {
@@ -48,12 +46,13 @@ export default class Firework
             const radiusWithVariation = radius * ((1 - FIREWORKS.GEOMETRY.RADIUS_VARIATION) + Math.random() * FIREWORKS.GEOMETRY.RADIUS_VARIATION)
 
             // This is the manual, rigorous method
-            const phi = Math.random() * PI
-            const theta = Math.random() * PI * 2
+            // const phi = Math.random() * PI // The polar angle in radians from the y (up) axis.
+            const phi = Math.acos(2 * Math.random() - 1) // This phi gives better distribution on the poles.
+            const theta = Math.random() * PI * 2 // The equator/azimuthal angle in radians around the y (up) axis.
 
-            positionsArray[i3 + 0] = spawnPosition.x + radiusWithVariation * Math.cos(theta) * Math.cos(phi)
-            positionsArray[i3 + 1] = spawnPosition.y + radiusWithVariation * Math.cos(theta) * Math.sin(phi)
-            positionsArray[i3 + 2] = spawnPosition.z + radiusWithVariation * Math.sin(theta)
+            positionsArray[i3 + 0] = radiusWithVariation * Math.sin(phi) * Math.sin(theta)
+            positionsArray[i3 + 1] = radiusWithVariation * Math.cos(phi)
+            positionsArray[i3 + 2] = radiusWithVariation * Math.sin(phi) * Math.cos(theta)
 
             // // This is the spherical method
             // const phi = Math.random() * PI
@@ -67,12 +66,17 @@ export default class Firework
             // positionsArray[i3 + 2] = spawnPosition.z + position.z
 
             sizesArray[i] = Math.random()
+
+            // Sice it is a multiplier you add 1 to make sure that it actually increases the number
+            timeMultipliersArray[i] = 1 + Math.random()
         }
 
         const positionAttribute = new THREE.BufferAttribute(positionsArray, 3)
         const sizeAttribute = new THREE.BufferAttribute(sizesArray, 1)
+        const timeMultiplierAttribute = new THREE.BufferAttribute(timeMultipliersArray, 1)
         this.geometry.setAttribute('position', positionAttribute)
         this.geometry.setAttribute('aSize', sizeAttribute)
+        this.geometry.setAttribute('aTimeMultiplier', timeMultiplierAttribute)
     }
 
     setMaterial(size, texture, color)
@@ -112,5 +116,13 @@ export default class Firework
         this.geometry?.dispose() // This is optional chaining, here doesn't make sense but i thought it was a cool syntax
         this.material?.dispose() // This is optional chaining, here doesn't make sense but i thought it was a cool syntax
         this.scene.remove(this.firework)
+
+        this.experience = null
+        this.camera = null
+        this.sizes = null
+        this.scene = null
+        this.geometry = null
+        this.material = null
+        this.firework = null
     }
 }

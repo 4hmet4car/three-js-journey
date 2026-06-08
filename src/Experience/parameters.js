@@ -8,12 +8,4 @@ export default {
     renderer: {
         clearColor: '#000000',
     },
-
-    fireworks: {
-        particleCount: 100,
-    },
-
-    holographic: {
-        color: '#70c1ff'
-    }
 }

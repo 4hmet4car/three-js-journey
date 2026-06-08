@@ -22,13 +22,4 @@ export const FIREWORKS = {
         RADIUS_VARIATION: 0.25 // This must be in between 0-1 but effectively you can have it in between 0.95-1
 
     },
-
-    MESH: {
-        POSITION_X: 3,
-    },
-
-    ANIMATION: {
-        ROTATION_SPEED_X: -0.1,
-        ROTATION_SPEED_Y: 0.2,
-    },
 }

@@ -1,7 +1,6 @@
 import * as THREE from 'three'
 
-import Experience from "../Experience"
-import parameters from "../parameters.js"
+import Experience from "../Experience.js"
 
 import Firework from "./Firework.js"
 
@@ -21,13 +20,20 @@ export default class Fireworks
         {
             const firework = new Firework()
 
+            const count = Math.round(400 + Math.random() * 1000)
+            const size = 0.5 + Math.random() * 0.1
+            const texture = this.textures[Math.floor(Math.random() * this.textures.length)]
+            const radius = 0.5 + Math.random()
+            const color = new THREE.Color()
+            color.setHSL(Math.random(), 1, 0.7)
+
             firework.createFirework(
-                parameters.fireworks.particleCount, // Count
-                this.cursor.position,               // Position
-                0.5,                                // Size
-                this.textures[7],                   // Texture
-                1,                                  // Sphere radius
-                new THREE.Color('#8affff'),       // Particle color
+                count,                      // Count
+                this.cursor.position,       // Position
+                size,                       // Size
+                texture,                    // Texture
+                radius,                     // Sphere radius
+                color,                      // Particle color
             )
         })
 
