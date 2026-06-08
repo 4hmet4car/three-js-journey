@@ -20,17 +20,13 @@ export default class Firework
 
     createFirework(count, position, size, texture, radius, color)
     {
-        this.setGeometry(count, position, radius)
+        this.setGeometry(count, radius)
         this.setMaterial(size, texture, color)
-        this.setPoints()
+        this.setPoints(position)
     }
 
-    setGeometry(count, position, radius)
+    setGeometry(count, radius)
     {
-        const spawnDepth = (1 - FIREWORKS.GEOMETRY.SPAWN_DEPTH_VARIATION) + (Math.random() * FIREWORKS.GEOMETRY.SPAWN_DEPTH_VARIATION)
-        const spawnPosition = new THREE.Vector3(position.x, position.y, spawnDepth)
-        spawnPosition.unproject(this.camera.instance)
-
         // const spawnPosition = new THREE.Vector3(0, 0, 0)
 
         this.geometry = new THREE.BufferGeometry()
@@ -105,9 +101,14 @@ export default class Firework
         )
     }
 
-    setPoints()
+    setPoints(position)
     {
+        const spawnDepth = (1 - FIREWORKS.GEOMETRY.SPAWN_DEPTH_VARIATION) + (Math.random() * FIREWORKS.GEOMETRY.SPAWN_DEPTH_VARIATION)
+        const spawnPosition = new THREE.Vector3(position.x, position.y, spawnDepth)
+        spawnPosition.unproject(this.camera.instance)
+        
         this.firework = new THREE.Points(this.geometry, this.material)
+        this.firework.position.copy(spawnPosition)
         this.scene.add(this.firework)
     }
 

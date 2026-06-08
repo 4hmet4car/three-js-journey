@@ -18,8 +18,7 @@ export const PI = 3.1415926535897932384626433832795
 
 export const FIREWORKS = {
     GEOMETRY: {
-        SPAWN_DEPTH_VARIATION: 0.05, // This must be in between 0-1 but effectively you can have it in between 0.95-1
+        SPAWN_DEPTH_VARIATION: 0.02, // This must be in between 0-1 but effectively you can have it in between 0.95-1
         RADIUS_VARIATION: 0.25 // This must be in between 0-1 but effectively you can have it in between 0.95-1
-
     },
 }
