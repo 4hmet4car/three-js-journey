@@ -7,6 +7,7 @@ import fragmentShader from "./shaders/firework/fragment.glsl"
 import { FIREWORKS, PI } from '../constants.js'
 
 import gsap from 'gsap'
+import parameters from '../parameters.js'
 
 export default class Firework
 {
@@ -91,6 +92,7 @@ export default class Firework
                 uTexture: new THREE.Uniform(texture),
                 uColor: new THREE.Uniform(color),
                 uProgress: new THREE.Uniform(0),
+                uGravity: new THREE.Uniform(parameters.fireworks.gravity),
             }
         })
 

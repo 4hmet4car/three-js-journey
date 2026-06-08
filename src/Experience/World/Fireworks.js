@@ -3,6 +3,7 @@ import * as THREE from 'three'
 import Experience from "../Experience.js"
 
 import Firework from "./Firework.js"
+import parameters from '../parameters.js'
 
 export default class Fireworks
 {
@@ -20,10 +21,10 @@ export default class Fireworks
         {
             const firework = new Firework()
 
-            const count = Math.round(400 + Math.random() * 1000)
-            const size = 0.5 + Math.random() * 0.1
+            const count = Math.round(400 + Math.random() * 5000)
+            const size = 0.2 + Math.random() * 0.1
             const texture = this.textures[Math.floor(Math.random() * this.textures.length)]
-            const radius = 0.5 + Math.random()
+            const radius = 3 + Math.random()
             const color = new THREE.Color()
             color.setHSL(Math.random(), 1, 0.7)
 
@@ -62,6 +63,11 @@ export default class Fireworks
         if (this.debug.active)
         {
             this.debugFolder = this.debug.ui.addFolder("Fireworks")
+
+            this.debugFolder
+                .add(parameters.fireworks, 'gravity')
+                .min(0)
+                .max(20)
         }
     }
 }

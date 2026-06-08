@@ -4,6 +4,7 @@
 uniform float uParticleSize;
 uniform vec2 uResolution;
 uniform float uProgress;
+uniform float uGravity;
 
 // attribute vec3 position;
 attribute float aSize;
@@ -19,12 +20,17 @@ void main(){
     vec3 newPosition = position;
 
     // ----------Exploding start----------
-    // This remaps progress from 0-1 to 0-0.1
-    float explodingProgress = clampedRemap(progress, 0.0, 0.1, 0.0, 1.0);
-    // This applies easing
-    explodingProgress = 1.0 - pow(1.0 - explodingProgress, 3.0);
-    newPosition *= explodingProgress;
+    // // This remaps progress from 0-1 to 0-0.1
+    // float explodingProgress = clampedRemap(progress, 0.0, 0.1, 0.0, 1.0);
+    // // This applies easing
+    // explodingProgress = 1.0 - pow(1.0 - explodingProgress, 3.0);
+    // newPosition *= explodingProgress;
     // -----------Exploding end-----------
+
+    // ----------Projectile start----------
+    newPosition.xz *= progress;
+    newPosition.y = newPosition.y * progress - 0.5 * uGravity * progress * progress;
+    // -----------Projectile end-----------
 
     // -----------Falling start-----------
     float fallingProgress = clampedRemap(progress, 0.1, 1.0, 0.0, 1.0);

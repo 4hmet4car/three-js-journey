@@ -1,4 +1,5 @@
 import Experience from "../Experience.js"
+import Environment from "./Environment.js"
 import Fireworks from "./Fireworks.js"
 
 export default class World
@@ -12,6 +13,7 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
+            this.environment = new Environment()
             this.fireworks = new Fireworks()
         })
 
