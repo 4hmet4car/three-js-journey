@@ -1,8 +1,8 @@
 export default {
     camera: {
-        enablePan: false,
-        enableZoom: false,
-        enableRotate: false,
+        enablePan: true,
+        enableZoom: true,
+        enableRotate: true,
     },
 
     renderer: {
