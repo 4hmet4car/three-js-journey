@@ -9,10 +9,12 @@ export default class Environment
     constructor()
     {
         this.experience = new Experience()
+        this.renderer = this.experience.renderer
         this.scene = this.experience.scene
         this.debug = this.experience.debug
 
         this.setSky()
+        this.guiChanged()
         this.setDebug()
     }
 
@@ -32,25 +34,30 @@ export default class Environment
         {
             this.debugFolder = this.debug.ui.addFolder("Sky")
 
-            this.debugFolder.add(parameters.sky, 'turbidity', 0.0, 20.0, 0.1).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'rayleigh', 0.0, 4, 0.001).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'mieDirectionalG', 0.0, 1, 0.001).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'elevation', 0, 90, 0.1).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'azimuth', - 180, 180, 0.1).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'exposure', 0, 1, 0.0001).onChange(() => { this.guiChanged })
-            this.debugFolder.add(parameters.sky, 'showSunDisc').onChange(() => { this.guiChanged })
-
-
-            this.folderClouds = this.debugFolder.addFolder('Clouds');
-            this.folderClouds.add(parameters.sky, 'cloudCoverage', 0, 1, 0.01).name('coverage').onChange(() => (this.guiChanged))
-            this.folderClouds.add(parameters.sky, 'cloudDensity', 0, 1, 0.01).name('density').onChange(() => (this.guiChanged))
-            this.folderClouds.add(parameters.sky, 'cloudElevation', 0, 1, 0.01).name('elevation').onChange(() => (this.guiChanged))
+            this.debugFolder.add(parameters.sky, 'turbidity', 0.0, 20.0, 0.1).onChange(() => { this.guiChanged() })
+            this.debugFolder.add(parameters.sky, 'rayleigh', 0.0, 4, 0.001).onChange(() => { this.guiChanged() })
+            this.debugFolder.add(parameters.sky, 'mieCoefficient', 0.0, 0.1, 0.001).onChange(() => { this.guiChanged() })
+            this.debugFolder.add(parameters.sky, 'mieDirectionalG', 0.0, 1, 0.001).onChange(() => { this.guiChanged() })
+            this.debugFolder.add(parameters.sky, 'elevation', -3, 90, 0.1).onChange(() => { this.guiChanged() })
+            this.debugFolder.add(parameters.sky, 'azimuth', - 180, 180, 0.1).onChange(() => { this.guiChanged() })
         }
     }
 
     guiChanged()
     {
+        this.uniforms = this.sky.material.uniforms;
+        this.uniforms['turbidity'].value = parameters.sky.turbidity
+        this.uniforms['rayleigh'].value = parameters.sky.rayleigh
+        this.uniforms['mieCoefficient'].value = parameters.sky.mieCoefficient
+        this.uniforms['mieDirectionalG'].value = parameters.sky.mieDirectionalG
 
+        const phi = THREE.MathUtils.degToRad(90 - parameters.sky.elevation)
+        const theta = THREE.MathUtils.degToRad(parameters.sky.azimuth)
+
+        this.sun.setFromSphericalCoords(1, phi, theta);
+
+        this.uniforms['sunPosition'].value.copy(this.sun);
+
+        this.renderer.toneMappingExposure = parameters.sky.exposure
     }
 }
