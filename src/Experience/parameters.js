@@ -9,7 +9,9 @@ export default {
         clearColor: '#000000',
     },
 
-    commonMaterial: {
+    lightMaterial: {
         color: '#ffffff',
+        ambientLightColor: '#ffffff',
+        ambientLightIntensity: 0.03,
     }
 }
