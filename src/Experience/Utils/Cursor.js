@@ -16,7 +16,7 @@ export default class Cursor extends EventEmitter
 
         // Cursor move event
         window.addEventListener('pointermove', this.pointerMove)
-        window.addEventListener('pointerdown', this.pointerDown)
+        // window.addEventListener('pointerdown', this.pointerDown)
     }
 
     pointerMove = (_event) =>

@@ -27,7 +27,7 @@ export default class World
     {
         if (this.suzanne && this.sphere && this.torusKnot && this.lightMaterial)
         {
-            // this.lightMaterial.update()
+            this.lightMaterial.update()
             this.suzanne.update()
             this.sphere.update()
             this.torusKnot.update()
