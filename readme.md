@@ -54,6 +54,7 @@ Deployment is handled by GitHub Actions.<br>
 33- [Hologram](https://4hmet4car-33-hologram-shader.vercel.app/)<br>
 34- [Fireworks](https://4hmet4car-34-fireworks-shaders.vercel.app/)<br>
 35- [Lights Shading](https://4hmet4car-35-lights-shading-shaders.vercel.app/)<br>
+36- [Raging Sea Shading](https://4hmet4car-36-raging-sea-shading-shaders.vercel.app/)<br>
 
 ---
 > ⚠️ The workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
