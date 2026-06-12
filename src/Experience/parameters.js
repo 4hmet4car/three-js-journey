@@ -19,7 +19,7 @@ export default {
         directionalLightTarget: { x: 0, y: 0, z: 0 },
         directionalLightSpecularPower: 20,
         pointLightColor: '#ff1a1a',
-        pointLightIntensity: 0.5,
+        pointLightIntensity: 1,
         pointLightPosition: { x: 0, y: 2.5, z: 0 },
         pointLightTarget: { x: 0, y: 0, z: 0 },
         pointLightSpecularPower: 20,
