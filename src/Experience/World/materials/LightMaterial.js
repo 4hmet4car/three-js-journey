@@ -194,6 +194,18 @@ export default class LightMaterial
                     this.instance.uniforms.uPointLightDecay.value = parameters.lightMaterial.pointLightDecay
                 })
 
+            this.pointLightFolder
+                .add(parameters.lightMaterial.pointLightPosition, 'x')
+                .min(-10)
+                .max(10)
+                .name('positionX')
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.instance.uniforms.uPointLightPosition.value.x = parameters.lightMaterial.pointLightPosition.x
+                    this.pointLightHelper.position.x = parameters.lightMaterial.pointLightPosition.x
+                })
+
             
             this.cursorLightFolder = this.debugFolder.addFolder("Cursor Light")
 
