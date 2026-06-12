@@ -21,6 +21,7 @@ export default class World
             this.torusKnot = new TorusKnot(this.lightMaterial.instance)
         })
 
+        this.resources.startLoading()
     }
 
     update()
