@@ -11,8 +11,8 @@ export default {
     },
 
     water: {
-        depthColor: '#186691',
-        surfaceColor: '#9bd8ff',
+        depthColor: '#ff4000',
+        surfaceColor: '#151c37',
         bigWavesElevation: 0.2,
         bigWavesFrequency: { x: 4, y: 1.5 },
         bigWavesSpeed: 0.75,
@@ -20,7 +20,7 @@ export default {
         smallWavesFrequency: 3,
         smallWavesSpeed: 0.2,
         smallIterations: 4,
-        colorOffset: 0.08,
-        colorMultiplier: 5,
+        colorOffset: 0.925,
+        colorMultiplier: 1,
     },
 }
