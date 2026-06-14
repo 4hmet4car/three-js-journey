@@ -31,13 +31,13 @@ void main()
     
     modelPosition.y += elevation;
 
-    // Final normal
-    vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
-
     // Final position
     vec4 viewPosition = viewMatrix * modelPosition;
     vec4 projectedPosition = projectionMatrix * viewPosition;
     gl_Position = projectedPosition;
+
+    // Final normal
+    vec4 modelNormal = modelMatrix * vec4(normal, 0.0);
 
     // Varyings
     vElevation = elevation;

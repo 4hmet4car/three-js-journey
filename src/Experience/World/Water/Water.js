@@ -103,6 +103,10 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uBigWavesFrequencyX')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uBigWavesFrequency.value = parameters.water.bigWavesFrequency
+                })
 
             this.debugFolder
                 .add(parameters.water.bigWavesFrequency, 'y')
@@ -110,6 +114,10 @@ export default class Water
                 .max(10)
                 .step(0.001)
                 .name('uBigWavesFrequencyY')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uBigWavesFrequency.value = parameters.water.bigWavesFrequency
+                })
 
             this.debugFolder
                 .add(parameters.water, 'bigWavesSpeed')
