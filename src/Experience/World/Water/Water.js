@@ -18,6 +18,7 @@ export default class Water
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
+        this.setAxesHelper()
         this.setDebug()
     }
 
@@ -62,6 +63,13 @@ export default class Water
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.mesh.rotation.x = - PI * 0.5
         this.scene.add(this.mesh)
+    }
+
+    setAxesHelper()
+    {
+        this.axesHelper = new THREE.AxesHelper()
+        this.axesHelper.position.y += 0.25
+        this.scene.add(this.axesHelper)
     }
 
     setDebug()
