@@ -20,7 +20,7 @@ export default {
         smallWavesSpeed: 0.2,
         smallIterations: 4,
 
-        neighbourShift: 0.01,
+        neighbourShift: 0.04,
         
         depthColor: '#ff4000',
         surfaceColor: '#151c37',

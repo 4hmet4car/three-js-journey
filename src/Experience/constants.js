@@ -18,10 +18,10 @@ export const PI = 3.1415926535897932384626433832795
 
 export const WATER = {
     GEOMETRY: {
-        SCALE_X: 5,
-        SCALE_Z: 5,
+        SCALE_X: 6,
+        SCALE_Z: 6,
 
-        SUBDIVISIONS_X: 1024,
-        SUBDIVISIONS_Z: 1024,
+        SUBDIVISIONS_X: 512,
+        SUBDIVISIONS_Z: 512,
     }
 }
