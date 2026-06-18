@@ -30,11 +30,14 @@ export default class Water
             WATER.GEOMETRY.SUBDIVISIONS_X,
             WATER.GEOMETRY.SUBDIVISIONS_Z
         )
+        this.geometry.deleteAttribute('normal')
+        // this.geometry.deleteAttribute('uv')
     }
 
     setMaterial()
     {
         this.material = new THREE.ShaderMaterial({
+            transparent: true,
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms:
@@ -49,6 +52,8 @@ export default class Water
                 uSmallWavesFrequency: new THREE.Uniform(parameters.water.smallWavesFrequency),
                 uSmallWavesSpeed: new THREE.Uniform(parameters.water.smallWavesSpeed),
                 uSmallIterations: new THREE.Uniform(parameters.water.smallIterations),
+                
+                uNeighbourShift: new THREE.Uniform(parameters.water.neighbourShift),
 
                 uDepthColor: new THREE.Uniform(new THREE.Color(parameters.water.depthColor)),
                 uSurfaceColor: new THREE.Uniform(new THREE.Color(parameters.water.surfaceColor)),
@@ -69,6 +74,7 @@ export default class Water
     {
         this.axesHelper = new THREE.AxesHelper()
         this.axesHelper.position.y += 0.25
+        this.axesHelper.visible = parameters.water.axesHelperVisibility
         this.scene.add(this.axesHelper)
     }
 
@@ -183,6 +189,17 @@ export default class Water
                 })
 
             this.debugFolder
+                .add(parameters.water, 'neighbourShift')
+                .min(0)
+                .max(1)
+                .step(0.001)
+                .name('uNeigbourShift')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uNeighbourShift.value = parameters.water.neighbourShift
+                })
+
+            this.debugFolder
                 .add(parameters.water, 'colorOffset')
                 .min(0)
                 .max(1)
@@ -202,6 +219,13 @@ export default class Water
                 .onChange(() =>
                 {
                     this.material.uniforms.uColorMultiplier.value = parameters.water.colorMultiplier
+                })
+
+            
+            this.debugFolder
+                .add(parameters.water, 'axesHelperVisibility')
+                .onChange(()=>{
+                    this.axesHelper.visible = parameters.water.axesHelperVisibility
                 })
         }
     }
