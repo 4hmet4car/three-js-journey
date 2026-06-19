@@ -66,7 +66,7 @@ export default class Water
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.rotation.x = - PI * 0.5
+        this.mesh.rotation.x = WATER.MESH.ROTATION_X
         this.scene.add(this.mesh)
     }
 

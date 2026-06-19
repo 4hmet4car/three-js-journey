@@ -23,5 +23,22 @@ export const WATER = {
 
         SUBDIVISIONS_X: 512,
         SUBDIVISIONS_Z: 512,
+    },
+    MESH: {
+        ROTATION_X: - PI * 0.5,
+    }
+}
+
+export const RAY_RECEIVER = {
+    GEOMETRY: {
+        SCALE_X: WATER.GEOMETRY.SCALE_X,
+        SCALE_Z: WATER.GEOMETRY.SCALE_Z,
+    },
+    MATERIAL: {
+        WIREFRAME: true,
+        VISIBLE: true,
+    },
+    MESH: {
+        ROTATION_X: WATER.MESH.ROTATION_X,
     }
 }

@@ -10,6 +10,7 @@ import World from './World/World.js'
 import Resources from './Utils/Resources.js'
 
 import sources from './sources.js'
+import RayCursor from './Utils/RayCursor.js'
 
 let instance = null
 
@@ -38,6 +39,7 @@ export default class Experience
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
         this.camera = new Camera()
+        this.rayCursor = new RayCursor(this.cursor, this.camera)
         this.renderer = new Renderer()
 
         this.world = new World()

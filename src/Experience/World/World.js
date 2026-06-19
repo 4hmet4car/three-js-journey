@@ -1,5 +1,6 @@
 import Experience from "../Experience.js"
 import Water from "./Water/Water.js"
+import Fish from "./Fish.js"
 
 export default class World
 {
@@ -13,6 +14,7 @@ export default class World
         {
             // Setup
             this.water = new Water()
+            this.fish = new Fish()
         })
 
         this.resources.startLoading()

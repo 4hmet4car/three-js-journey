@@ -35,6 +35,8 @@ export default class Cursor extends EventEmitter
 
         this.speed.x = (this.position.x - previousX) / delta
         this.speed.y = (this.position.y - previousY) / delta
+        
+        this.trigger('pointermove')
     }
 
     pointerDown = (_event) =>
