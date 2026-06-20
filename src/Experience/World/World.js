@@ -22,9 +22,10 @@ export default class World
 
     update()
     {
-        if (this.water)
+        if (this.water && this.fish)
         {
             this.water.update()
+            this.fish.update()
         }
     }
 }

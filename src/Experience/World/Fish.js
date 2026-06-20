@@ -1,6 +1,7 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
 import { RAY_RECEIVER } from '../constants.js'
+import parameters from '../parameters.js'
 
 export default class Fish
 {
@@ -9,6 +10,7 @@ export default class Fish
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.rayCursor = this.experience.rayCursor
+        this.time = this.experience.time
 
         this.setFish()
         this.setRayReceiver()
@@ -17,6 +19,7 @@ export default class Fish
         this.rayCursor.on('intersect', () =>
         {
             this.updatePosition()
+            this.updateRotation()
         })
     }
 
@@ -62,7 +65,25 @@ export default class Fish
 
     updatePosition()
     {
-        this.mesh.position.x =  ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
+        // Update x and z position using the raycaster
+        this.mesh.position.x = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
         this.mesh.position.z = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
+
+        // Update y position by implementing the same wave logic as the shader
+        const bigWavesFrequencyX = Math.sin(
+            this.mesh.position.x * parameters.water.bigWavesFrequency.x +
+            this.time.secondsElapsed * parameters.water.bigWavesSpeed
+        )
+        const bigWavesFrequencyZ = Math.sin(
+            this.mesh.position.z * parameters.water.bigWavesFrequency.y +
+            this.time.secondsElapsed * parameters.water.bigWavesSpeed
+        )
+        const bigWavesElevation = bigWavesFrequencyX * bigWavesFrequencyZ * parameters.water.bigWavesElevation
+        this.mesh.position.y = bigWavesElevation
+    }
+
+    updateRotation()
+    {
+
     }
 }
