@@ -18,14 +18,14 @@ export default class Fish
 
         this.rayCursor.on('intersect', () =>
         {
-            this.updatePosition()
+            this.updatePositionXZ()
             this.updateRotation()
         })
     }
 
     setFish()
     {
-        this.geometry = new THREE.SphereGeometry(0.1)
+        this.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1)
         this.material = new THREE.MeshBasicMaterial()
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.scene.add(this.mesh)
@@ -60,22 +60,25 @@ export default class Fish
 
     update()
     {
-
+        this.updatePositionY(this.mesh.position.x, this.mesh.position.y)
     }
 
-    updatePosition()
+    updatePositionXZ()
     {
         // Update x and z position using the raycaster
         this.mesh.position.x = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
         this.mesh.position.z = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
+    }
 
+    updatePositionY(x, z)
+    {
         // Update y position by implementing the same wave logic as the shader
         const bigWavesFrequencyX = Math.sin(
-            this.mesh.position.x * parameters.water.bigWavesFrequency.x +
+            x * parameters.water.bigWavesFrequency.x +
             this.time.secondsElapsed * parameters.water.bigWavesSpeed
         )
         const bigWavesFrequencyZ = Math.sin(
-            this.mesh.position.z * parameters.water.bigWavesFrequency.y +
+            z * parameters.water.bigWavesFrequency.y +
             this.time.secondsElapsed * parameters.water.bigWavesSpeed
         )
         const bigWavesElevation = bigWavesFrequencyX * bigWavesFrequencyZ * parameters.water.bigWavesElevation
@@ -84,6 +87,6 @@ export default class Fish
 
     updateRotation()
     {
-
+        // Neighbours technique
     }
 }
