@@ -29,6 +29,11 @@ export default class Fish
         this.material = new THREE.MeshBasicMaterial()
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.scene.add(this.mesh)
+
+        // Initialize values for neighbour calculations
+        this.meshPosition = new THREE.Vector3()
+        this.toA = new THREE.Vector3()
+        this.toB = new THREE.Vector3()
     }
 
     setRayReceiver()
@@ -60,7 +65,7 @@ export default class Fish
 
     update()
     {
-        this.updatePositionY(this.mesh.position.x, this.mesh.position.y)
+        this.updatePositionY(this.mesh.position.x, this.mesh.position.z)
     }
 
     updatePositionXZ()
@@ -85,8 +90,9 @@ export default class Fish
         this.mesh.position.y = bigWavesElevation
     }
 
-    updateRotation()
+    updateRotation(x, y, z)
     {
         // Neighbours technique
+        this.meshPosition.set(x, y, z)
     }
 }
