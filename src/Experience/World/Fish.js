@@ -19,7 +19,6 @@ export default class Fish
         this.rayCursor.on('intersect', () =>
         {
             this.updatePositionXZ()
-            this.updateRotation()
         })
     }
 
@@ -32,8 +31,13 @@ export default class Fish
 
         // Initialize values for neighbour calculations
         this.meshPosition = new THREE.Vector3()
+        this.pointAPosition = new THREE.Vector3()
+        this.pointBPosition = new THREE.Vector3()
         this.toA = new THREE.Vector3()
         this.toB = new THREE.Vector3()
+        this.normal = new THREE.Vector3()
+        this.quaternion = new THREE.Quaternion()
+        this.up = new THREE.Vector3(0, 1, 0)
     }
 
     setRayReceiver()
@@ -65,7 +69,8 @@ export default class Fish
 
     update()
     {
-        this.updatePositionY(this.mesh.position.x, this.mesh.position.z)
+        this.mesh.position.y = this.calculatePositionY(this.mesh.position.x, this.mesh.position.z)
+        this.updateRotation()
     }
 
     updatePositionXZ()
@@ -75,7 +80,7 @@ export default class Fish
         this.mesh.position.z = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
     }
 
-    updatePositionY(x, z)
+    calculatePositionY(x, z)
     {
         // Update y position by implementing the same wave logic as the shader
         const bigWavesFrequencyX = Math.sin(
@@ -87,12 +92,26 @@ export default class Fish
             this.time.secondsElapsed * parameters.water.bigWavesSpeed
         )
         const bigWavesElevation = bigWavesFrequencyX * bigWavesFrequencyZ * parameters.water.bigWavesElevation
-        this.mesh.position.y = bigWavesElevation
+        return bigWavesElevation
     }
 
-    updateRotation(x, y, z)
+    updateRotation()
     {
         // Neighbours technique
-        this.meshPosition.set(x, y, z)
+        const meshPosition = this.mesh.position
+        this.pointAPosition.x = meshPosition.x + parameters.fish.neighbourShift
+        this.pointAPosition.z = meshPosition.z
+        this.pointAPosition.y = this.calculatePositionY(this.pointAPosition.x, this.pointAPosition.z)
+        this.pointBPosition.x = meshPosition.x
+        this.pointBPosition.z = meshPosition.z - parameters.fish.neighbourShift
+        this.pointBPosition.y = this.calculatePositionY(this.pointBPosition.x, this.pointBPosition.z)
+        this.toA.subVectors(this.pointAPosition, meshPosition)
+        this.toB.subVectors(this.pointBPosition, meshPosition)
+        this.normal.crossVectors(this.toA, this.toB)
+        this.quaternion.setFromUnitVectors(
+            this.up,
+            this.normal.normalize()
+        )
+        this.mesh.quaternion.copy(this.quaternion)
     }
 }

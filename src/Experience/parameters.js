@@ -29,4 +29,8 @@ export default {
 
         axesHelperVisibility: false,
     },
+
+    fish: {
+        neighbourShift: 0.04,
+    },
 }
