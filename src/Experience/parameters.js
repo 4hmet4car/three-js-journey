@@ -33,5 +33,6 @@ export default {
     fish: {
         position: { x: 0, y: 0, z: 0 },
         neighbourShift: 0.04,
+        easeFactor: 0.07
     },
 }

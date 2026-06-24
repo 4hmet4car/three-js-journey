@@ -18,7 +18,7 @@ export default class Fish
 
         this.rayCursor.on('intersect', () =>
         {
-            this.updatePositionXZ()
+            this.updateTarget()
         })
     }
 
@@ -28,6 +28,10 @@ export default class Fish
         this.material = new THREE.MeshBasicMaterial()
         this.mesh = new THREE.Mesh(this.geometry, this.material)
         this.scene.add(this.mesh)
+
+        // Initialize target positions
+        this.targetX = 0
+        this.targetZ = 0
 
         // Initialize values for neighbour calculations
         this.meshPosition = new THREE.Vector3()
@@ -69,18 +73,23 @@ export default class Fish
 
     update()
     {
+        this.updatePositionXZ()
         this.mesh.position.y = this.calculatePositionY(this.mesh.position.x, this.mesh.position.z)
         parameters.fish.position = this.mesh.position
         this.updateRotation()
     }
 
-    updatePositionXZ()
+    updateTarget()
     {
         // Update x and z position using the raycaster
-        const cursorX = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
-        const cursorY = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
-        this.mesh.position.x += (cursorX - this.mesh.position.x) * 0.1
-        this.mesh.position.z += (cursorY - this.mesh.position.z) * 0.1
+        this.targetX = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
+        this.targetZ = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
+    }
+
+    updatePositionXZ()
+    {
+        this.mesh.position.x += (this.targetX - this.mesh.position.x) * parameters.fish.easeFactor
+        this.mesh.position.z += (this.targetZ - this.mesh.position.z) * parameters.fish.easeFactor
     }
 
     calculatePositionY(x, z)
