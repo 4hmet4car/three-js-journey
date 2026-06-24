@@ -21,16 +21,17 @@ export default {
         smallIterations: 4,
 
         neighbourShift: 0.04,
-        
+
         depthColor: '#ff4000',
         surfaceColor: '#151c37',
-        colorOffset: 0.925,
+        colorOffset: 0.94,
         colorMultiplier: 1,
 
         axesHelperVisibility: false,
     },
 
     fish: {
+        position: { x: 0, y: 0, z: 0 },
         neighbourShift: 0.04,
     },
 }

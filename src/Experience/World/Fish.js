@@ -70,6 +70,7 @@ export default class Fish
     update()
     {
         this.mesh.position.y = this.calculatePositionY(this.mesh.position.x, this.mesh.position.z)
+        parameters.fish.position = this.mesh.position
         this.updateRotation()
     }
 

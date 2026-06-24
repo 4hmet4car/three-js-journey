@@ -59,6 +59,8 @@ export default class Water
                 uSurfaceColor: new THREE.Uniform(new THREE.Color(parameters.water.surfaceColor)),
                 uColorOffset: new THREE.Uniform(parameters.water.colorOffset),
                 uColorMultiplier: new THREE.Uniform(parameters.water.colorMultiplier),
+                
+                uFishLightPosition: new THREE.Uniform(parameters.fish.position),
             }
         })
     }
@@ -233,5 +235,6 @@ export default class Water
     update()
     {
         this.material.uniforms.uTime.value = this.time.secondsElapsed
+        this.material.uniforms.uFishLightPosition.value = parameters.fish.position
     }
 }

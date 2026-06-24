@@ -2,6 +2,7 @@ uniform vec3 uDepthColor;
 uniform vec3 uSurfaceColor;
 uniform float uColorOffset;
 uniform float uColorMultiplier;
+uniform vec3 uFishLightPosition;
 
 varying float vElevation;
 varying vec3 vNormal;
@@ -36,23 +37,24 @@ void main()
     //     viewDirection,          // View direction
     //     30.0                    // Specular power
     // );
-    // Point light
-    light += pointLight(
+    // Fish light
+    vec3 fishLight = pointLight(
         vec3(1.0),              // Light color
-        10.0,                   // Light intensity
+        3.0,                   // Light intensity
         normal,                 // Normal
-        vec3(0.0, 0.25, 0.0),   // Light position
+        uFishLightPosition,     // Light position
         vPosition,              // Light target position
         viewDirection,          // View direction
         30.0,                   // Specular power
         0.95                    // Decay
     );
+    light += fishLight;
     // Apply the light
     color *= light;
     // -----------Light end-----------
 
     // Depth emission
-    color += uDepthColor * -vElevation * 0.5;
+    color += uDepthColor * -vElevation * 0.15;
     // Clamp it, because tone mapping treats negative
     // values in a weird way, it does not clamp them to 0
     color = clamp(color, 0.0, 1.0);
