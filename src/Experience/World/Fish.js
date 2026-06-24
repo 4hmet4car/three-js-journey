@@ -77,8 +77,10 @@ export default class Fish
     updatePositionXZ()
     {
         // Update x and z position using the raycaster
-        this.mesh.position.x = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
-        this.mesh.position.z = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
+        const cursorX = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
+        const cursorY = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
+        this.mesh.position.x += (cursorX - this.mesh.position.x) * 0.1
+        this.mesh.position.z += (cursorY - this.mesh.position.z) * 0.1
     }
 
     calculatePositionY(x, z)
