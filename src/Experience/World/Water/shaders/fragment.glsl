@@ -40,7 +40,7 @@ void main()
     // Buoy light
     vec3 buoyLight = pointLight(
         vec3(1.0),              // Light color
-        3.0,                   // Light intensity
+        3.0,                    // Light intensity
         normal,                 // Normal
         uBuoyLightPosition,     // Light position
         vPosition,              // Light target position

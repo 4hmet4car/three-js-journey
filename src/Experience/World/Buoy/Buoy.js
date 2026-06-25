@@ -25,15 +25,18 @@ export default class Buoy
 
     setBuoy()
     {
-        this.model = this.resource.scene
+        this.model = this.resource.scene.children[0].children[0].children[0]
         this.model.scale.set(0.002, 0.002, 0.002)
         this.scene.add(this.model)
+
+        console.log(this.model)
 
         this.model.traverse((child) =>
         {
             if (child instanceof THREE.Mesh)
             {
                 const oldMaterial = child.material
+                console.log(oldMaterial)
                 child.material = new THREE.MeshBasicMaterial({
                     color: oldMaterial.color
                 })
