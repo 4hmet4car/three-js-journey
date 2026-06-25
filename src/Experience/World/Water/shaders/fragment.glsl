@@ -2,7 +2,7 @@ uniform vec3 uDepthColor;
 uniform vec3 uSurfaceColor;
 uniform float uColorOffset;
 uniform float uColorMultiplier;
-uniform vec3 uFishLightPosition;
+uniform vec3 uBuoyLightPosition;
 
 varying float vElevation;
 varying vec3 vNormal;
@@ -37,18 +37,18 @@ void main()
     //     viewDirection,          // View direction
     //     30.0                    // Specular power
     // );
-    // Fish light
-    vec3 fishLight = pointLight(
+    // Buoy light
+    vec3 buoyLight = pointLight(
         vec3(1.0),              // Light color
         3.0,                   // Light intensity
         normal,                 // Normal
-        uFishLightPosition,     // Light position
+        uBuoyLightPosition,     // Light position
         vPosition,              // Light target position
         viewDirection,          // View direction
         30.0,                   // Specular power
         0.95                    // Decay
     );
-    light += fishLight;
+    light += buoyLight;
     // Apply the light
     color *= light;
     // -----------Light end-----------

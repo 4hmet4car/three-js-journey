@@ -30,11 +30,11 @@ export default [
     //     type: 'texture',
     //     path: '/models/LeePerrySmith/color.jpg'
     // },
-    // {
-    //     name: 'suzanne',
-    //     type: 'gltfModel',
-    //     path: './suzanne.glb'
-    // },
+    {
+        name: 'buoyModel',
+        type: 'gltfModel',
+        path: '/buoy/scene.gltf'
+    },
     // {
     //     name: 'brainStemModel',
     //     type: 'dracoModel',

@@ -1,18 +1,19 @@
 import * as THREE from 'three'
-import Experience from "../Experience.js"
-import { RAY_RECEIVER } from '../constants.js'
-import parameters from '../parameters.js'
+import Experience from "../../Experience.js"
+import { RAY_RECEIVER } from '../../constants.js'
+import parameters from '../../parameters.js'
 
-export default class Fish
+export default class Buoy
 {
     constructor()
     {
         this.experience = new Experience()
+        this.resource = this.experience.resources.items.buoyModel
         this.scene = this.experience.scene
         this.rayCursor = this.experience.rayCursor
         this.time = this.experience.time
 
-        this.setFish()
+        this.setBuoy()
         this.setRayReceiver()
         this.setRayCursor()
 
@@ -22,19 +23,30 @@ export default class Fish
         })
     }
 
-    setFish()
+    setBuoy()
     {
-        this.geometry = new THREE.BoxGeometry(0.1, 0.1, 0.1)
-        this.material = new THREE.MeshBasicMaterial()
-        this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.scene.add(this.mesh)
+        this.model = this.resource.scene
+        this.model.scale.set(0.002, 0.002, 0.002)
+        this.scene.add(this.model)
+
+        this.model.traverse((child) =>
+        {
+            if (child instanceof THREE.Mesh)
+            {
+                const oldMaterial = child.material
+                child.material = new THREE.MeshBasicMaterial({
+                    color: oldMaterial.color
+                })
+                oldMaterial.dispose()
+            }
+        })
 
         // Initialize target positions
         this.targetX = 0
         this.targetZ = 0
 
         // Initialize values for neighbour calculations
-        this.meshPosition = new THREE.Vector3()
+        this.modelPosition = new THREE.Vector3()
         this.pointAPosition = new THREE.Vector3()
         this.pointBPosition = new THREE.Vector3()
         this.toA = new THREE.Vector3()
@@ -74,8 +86,8 @@ export default class Fish
     update()
     {
         this.updatePositionXZ()
-        this.mesh.position.y = this.calculatePositionY(this.mesh.position.x, this.mesh.position.z)
-        parameters.fish.position = this.mesh.position
+        this.model.position.y = this.calculatePositionY(this.model.position.x, this.model.position.z)
+        parameters.buoy.position = this.model.position
         this.updateRotation()
     }
 
@@ -88,8 +100,8 @@ export default class Fish
 
     updatePositionXZ()
     {
-        this.mesh.position.x += (this.targetX - this.mesh.position.x) * parameters.fish.easeFactor
-        this.mesh.position.z += (this.targetZ - this.mesh.position.z) * parameters.fish.easeFactor
+        this.model.position.x += (this.targetX - this.model.position.x) * parameters.buoy.easeFactor
+        this.model.position.z += (this.targetZ - this.model.position.z) * parameters.buoy.easeFactor
     }
 
     calculatePositionY(x, z)
@@ -104,18 +116,19 @@ export default class Fish
             this.time.secondsElapsed * parameters.water.bigWavesSpeed
         )
         const bigWavesElevation = bigWavesFrequencyX * bigWavesFrequencyZ * parameters.water.bigWavesElevation
-        return bigWavesElevation
+        // console.log(bigWavesElevation)
+        return bigWavesElevation - parameters.buoy.elevationOffset
     }
 
     updateRotation()
     {
         // Neighbours technique
-        const meshPosition = this.mesh.position
-        this.pointAPosition.x = meshPosition.x + parameters.fish.neighbourShift
+        const meshPosition = this.model.position
+        this.pointAPosition.x = meshPosition.x + parameters.buoy.neighbourShift
         this.pointAPosition.z = meshPosition.z
         this.pointAPosition.y = this.calculatePositionY(this.pointAPosition.x, this.pointAPosition.z)
         this.pointBPosition.x = meshPosition.x
-        this.pointBPosition.z = meshPosition.z - parameters.fish.neighbourShift
+        this.pointBPosition.z = meshPosition.z - parameters.buoy.neighbourShift
         this.pointBPosition.y = this.calculatePositionY(this.pointBPosition.x, this.pointBPosition.z)
         this.toA.subVectors(this.pointAPosition, meshPosition)
         this.toB.subVectors(this.pointBPosition, meshPosition)
@@ -124,6 +137,6 @@ export default class Fish
             this.up,
             this.normal.normalize()
         )
-        this.mesh.quaternion.copy(this.quaternion)
+        this.model.quaternion.copy(this.quaternion)
     }
 }

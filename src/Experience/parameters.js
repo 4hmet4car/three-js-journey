@@ -30,9 +30,10 @@ export default {
         axesHelperVisibility: false,
     },
 
-    fish: {
+    buoy: {
         position: { x: 0, y: 0, z: 0 },
         neighbourShift: 0.04,
-        easeFactor: 0.07
+        easeFactor: 0.07,
+        elevationOffset: 0.04,
     },
 }

@@ -1,6 +1,6 @@
 import Experience from "../Experience.js"
 import Water from "./Water/Water.js"
-import Fish from "./Fish.js"
+import Buoy from "./Buoy/Buoy.js"
 
 export default class World
 {
@@ -14,7 +14,7 @@ export default class World
         {
             // Setup
             this.water = new Water()
-            this.fish = new Fish()
+            this.buoy = new Buoy()
         })
 
         this.resources.startLoading()
@@ -22,10 +22,10 @@ export default class World
 
     update()
     {
-        if (this.water && this.fish)
+        if (this.water && this.buoy)
         {
             this.water.update()
-            this.fish.update()
+            this.buoy.update()
         }
     }
 }

@@ -60,7 +60,7 @@ export default class Water
                 uColorOffset: new THREE.Uniform(parameters.water.colorOffset),
                 uColorMultiplier: new THREE.Uniform(parameters.water.colorMultiplier),
                 
-                uFishLightPosition: new THREE.Uniform(parameters.fish.position),
+                uBuoyLightPosition: new THREE.Uniform(parameters.buoy.position),
             }
         })
     }
@@ -235,6 +235,6 @@ export default class Water
     update()
     {
         this.material.uniforms.uTime.value = this.time.secondsElapsed
-        this.material.uniforms.uFishLightPosition.value = parameters.fish.position
+        this.material.uniforms.uBuoyLightPosition.value = parameters.buoy.position
     }
 }
