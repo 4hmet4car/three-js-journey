@@ -31,8 +31,8 @@ export const WATER = {
 
 export const RAY_RECEIVER = {
     GEOMETRY: {
-        SCALE_X: WATER.GEOMETRY.SCALE_X,
-        SCALE_Z: WATER.GEOMETRY.SCALE_Z,
+        RADIUS: WATER.GEOMETRY.SCALE_X / 2 - 0.5,
+        SEGMENTS: 16,
     },
     MATERIAL: {
         WIREFRAME: true,

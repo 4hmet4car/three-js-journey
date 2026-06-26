@@ -13,6 +13,7 @@ export default class Buoy
         this.rayCursor = this.experience.rayCursor
         this.time = this.experience.time
 
+        this.setMaterials()
         this.setBuoy()
         this.setRayReceiver()
         this.setRayCursor()
@@ -23,24 +24,40 @@ export default class Buoy
         })
     }
 
+    setMaterials()
+    {
+        this.buoyLightMaterial = new THREE.MeshBasicMaterial({
+            color: new THREE.Color(0, 0, 1)
+        })
+        this.buoyWhiteMaterial = new THREE.MeshBasicMaterial({
+            color: new THREE.Color(1, 1, 1)
+        })
+        this.buoyRedMaterial = new THREE.MeshBasicMaterial({
+            color: new THREE.Color(1, 1, 0)
+        })
+    }
+
     setBuoy()
     {
         this.model = this.resource.scene.children[0].children[0].children[0]
         this.model.scale.set(0.002, 0.002, 0.002)
         this.scene.add(this.model)
 
-        console.log(this.model)
-
         this.model.traverse((child) =>
         {
             if (child instanceof THREE.Mesh)
             {
-                const oldMaterial = child.material
-                console.log(oldMaterial)
-                child.material = new THREE.MeshBasicMaterial({
-                    color: oldMaterial.color
-                })
-                oldMaterial.dispose()
+                child.material.dispose()
+                if (child.name === 'Sphere001_Material_#25_0')
+                {
+                    child.material = this.buoyLightMaterial
+                } else if (child.name === 'Color_A_Material_#25_0')
+                {
+                    child.material = this.buoyRedMaterial
+                } else
+                {
+                    child.material = this.buoyWhiteMaterial
+                }
             }
         })
 
@@ -61,9 +78,9 @@ export default class Buoy
 
     setRayReceiver()
     {
-        this.rayReceiverGeometry = new THREE.PlaneGeometry(
-            RAY_RECEIVER.GEOMETRY.SCALE_X,
-            RAY_RECEIVER.GEOMETRY.SCALE_Z,
+        this.rayReceiverGeometry = new THREE.CircleGeometry(
+            RAY_RECEIVER.GEOMETRY.RADIUS,
+            RAY_RECEIVER.GEOMETRY.SEGMENTS,
         )
 
         this.rayReceiverMaterial = new THREE.MeshBasicMaterial({
@@ -97,8 +114,8 @@ export default class Buoy
     updateTarget()
     {
         // Update x and z position using the raycaster
-        this.targetX = ((this.rayCursor.intersect[0].uv.x) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_X
-        this.targetZ = -((this.rayCursor.intersect[0].uv.y) - 0.5) * RAY_RECEIVER.GEOMETRY.SCALE_Z
+        this.targetX = this.rayCursor.intersect[0].point.x
+        this.targetZ = this.rayCursor.intersect[0].point.z
     }
 
     updatePositionXZ()
