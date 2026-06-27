@@ -2,6 +2,7 @@ uniform vec3 uDepthColor;
 uniform vec3 uSurfaceColor;
 uniform float uColorOffset;
 uniform float uColorMultiplier;
+uniform vec3 uBuoyLightColor;
 uniform vec3 uBuoyLightPosition;
 
 varying float vElevation;
@@ -39,7 +40,7 @@ void main()
     // );
     // Buoy light
     vec3 buoyLight = pointLight(
-        vec3(1.0),              // Light color
+        uBuoyLightColor,        // Light color
         3.0,                    // Light intensity
         normal,                 // Normal
         uBuoyLightPosition,     // Light position

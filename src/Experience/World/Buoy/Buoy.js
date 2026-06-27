@@ -3,6 +3,15 @@ import Experience from "../../Experience.js"
 import { RAY_RECEIVER } from '../../constants.js'
 import parameters from '../../parameters.js'
 
+import lightVertexShader from './shaders/light/vertex.glsl'
+import lightFragmentShader from './shaders/light/fragment.glsl'
+
+import sticksVertexShader from './shaders/sticks/vertex.glsl'
+import sticksFragmentShader from './shaders/sticks/fragment.glsl'
+
+import bottomVertexShader from './shaders/bottom/vertex.glsl'
+import bottomFragmentShader from './shaders/bottom/fragment.glsl'
+
 export default class Buoy
 {
     constructor()
@@ -26,14 +35,29 @@ export default class Buoy
 
     setMaterials()
     {
-        this.buoyLightMaterial = new THREE.MeshBasicMaterial({
-            color: new THREE.Color(0, 0, 1)
+        this.buoyLightMaterial = new THREE.ShaderMaterial({
+            vertexShader: lightVertexShader,
+            fragmentShader: lightFragmentShader,
+            uniforms:
+            {
+                uBuoyLightColor: new THREE.Uniform(parameters.buoy.lightColor)
+            }
         })
-        this.buoyWhiteMaterial = new THREE.MeshBasicMaterial({
-            color: new THREE.Color(1, 1, 1)
+        this.buoySticksMaterial = new THREE.ShaderMaterial({
+            vertexShader: sticksVertexShader,
+            fragmentShader: sticksFragmentShader,
+            uniforms:
+            {
+                uBuoySticksColor: new THREE.Uniform(parameters.buoy.sticksColor)
+            }
         })
-        this.buoyRedMaterial = new THREE.MeshBasicMaterial({
-            color: new THREE.Color(1, 1, 0)
+        this.buoyBottomMaterial = new THREE.ShaderMaterial({
+            vertexShader: bottomVertexShader,
+            fragmentShader: bottomFragmentShader,
+            uniforms:
+            {
+                uBuoyBottomColor: new THREE.Uniform(parameters.buoy.bottomColor)
+            }
         })
     }
 
@@ -53,10 +77,10 @@ export default class Buoy
                     child.material = this.buoyLightMaterial
                 } else if (child.name === 'Color_A_Material_#25_0')
                 {
-                    child.material = this.buoyRedMaterial
+                    child.material = this.buoyBottomMaterial
                 } else
                 {
-                    child.material = this.buoyWhiteMaterial
+                    child.material = this.buoySticksMaterial
                 }
             }
         })

@@ -60,6 +60,7 @@ export default class Water
                 uColorOffset: new THREE.Uniform(parameters.water.colorOffset),
                 uColorMultiplier: new THREE.Uniform(parameters.water.colorMultiplier),
                 
+                uBuoyLightColor: new THREE.Uniform(parameters.buoy.lightColor),
                 uBuoyLightPosition: new THREE.Uniform(parameters.buoy.position),
             }
         })
