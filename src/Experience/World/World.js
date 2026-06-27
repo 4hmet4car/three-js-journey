@@ -1,6 +1,6 @@
 import Experience from "../Experience.js"
-import Water from "./Water/Water.js"
-import Buoy from "./Buoy/Buoy.js"
+import Water from "./Water.js"
+import Buoy from "./Buoy.js"
 
 export default class World
 {

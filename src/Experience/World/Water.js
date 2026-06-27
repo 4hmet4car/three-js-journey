@@ -1,10 +1,10 @@
 import * as THREE from 'three'
-import Experience from "../../Experience.js"
-import { WATER, PI } from "../../constants.js"
-import parameters from '../../parameters.js'
+import Experience from "../Experience.js"
+import { WATER, PI } from "../constants.js"
+import parameters from '../parameters.js'
 
-import vertexShader from './shaders/vertex.glsl'
-import fragmentShader from './shaders/fragment.glsl'
+import vertexShader from './shaders/water/vertex.glsl'
+import fragmentShader from './shaders/water/fragment.glsl'
 
 export default class Water
 {

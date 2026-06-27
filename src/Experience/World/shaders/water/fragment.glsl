@@ -10,9 +10,9 @@ varying vec3 vNormal;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-#include ./includes/ambientLight.glsl
-#include ./includes/directionalLight.glsl
-#include ./includes/pointLight.glsl
+#include ../includes/ambientLight.glsl
+#include ../includes/directionalLight.glsl
+#include ../includes/pointLight.glsl
 
 void main()
 {
@@ -63,8 +63,6 @@ void main()
     // Smooth edges
     float alpha = 1.0 - distance(vUv, vec2(0.5));
     alpha = smoothstep(0.5,0.6,alpha);
-
-    // color += vec3(0.1);
     
     // Final color
     gl_FragColor = vec4(color, alpha);

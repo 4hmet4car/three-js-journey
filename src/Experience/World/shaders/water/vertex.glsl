@@ -15,7 +15,7 @@ varying vec3 vNormal;
 varying vec3 vPosition;
 varying vec2 vUv;
 
-#include ./includes/perlinClassic3D.glsl
+#include ../includes/perlinClassic3D.glsl
 #include ./includes/waveElevation.glsl
 
 void main()

@@ -1,16 +1,16 @@
 import * as THREE from 'three'
-import Experience from "../../Experience.js"
-import { RAY_RECEIVER } from '../../constants.js'
-import parameters from '../../parameters.js'
+import Experience from "../Experience.js"
+import { RAY_RECEIVER } from '../constants.js'
+import parameters from '../parameters.js'
 
-import lightVertexShader from './shaders/light/vertex.glsl'
-import lightFragmentShader from './shaders/light/fragment.glsl'
+import lightVertexShader from './shaders/buoy/light/vertex.glsl'
+import lightFragmentShader from './shaders/buoy/light/fragment.glsl'
 
-import sticksVertexShader from './shaders/sticks/vertex.glsl'
-import sticksFragmentShader from './shaders/sticks/fragment.glsl'
+import sticksVertexShader from './shaders/buoy/sticks/vertex.glsl'
+import sticksFragmentShader from './shaders/buoy/sticks/fragment.glsl'
 
-import bottomVertexShader from './shaders/bottom/vertex.glsl'
-import bottomFragmentShader from './shaders/bottom/fragment.glsl'
+import bottomVertexShader from './shaders/buoy/bottom/vertex.glsl'
+import bottomFragmentShader from './shaders/buoy/bottom/fragment.glsl'
 
 export default class Buoy
 {
@@ -48,7 +48,9 @@ export default class Buoy
             fragmentShader: sticksFragmentShader,
             uniforms:
             {
-                uBuoySticksColor: new THREE.Uniform(parameters.buoy.sticksColor)
+                uBuoySticksColor: new THREE.Uniform(parameters.buoy.sticksColor),
+                uBuoyLightColor: new THREE.Uniform(parameters.buoy.lightColor),
+                uBuoyLightPosition: new THREE.Uniform(parameters.buoy.position),
             }
         })
         this.buoyBottomMaterial = new THREE.ShaderMaterial({
