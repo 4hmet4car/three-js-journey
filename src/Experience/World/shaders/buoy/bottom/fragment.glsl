@@ -36,6 +36,10 @@ void main()
     color *= light;
     // -----------Light end-----------
 
+    // Clamp it, because tone mapping treats negative
+    // values in a weird way, it does not clamp them to 0
+    color = clamp(color, 0.0, 1.0);
+
     gl_FragColor = vec4(color, 1.0);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
