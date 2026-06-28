@@ -51,6 +51,7 @@ export default class Buoy
                 uBuoySticksColor: new THREE.Uniform(parameters.buoy.sticksColor),
                 uBuoyLightColor: new THREE.Uniform(parameters.buoy.lightColor),
                 uBuoyLightPosition: new THREE.Uniform(parameters.buoy.position),
+                uBuoyLightNormal: new THREE.Uniform(parameters.buoy.normal),
             }
         })
         this.buoyBottomMaterial = new THREE.ShaderMaterial({
@@ -58,7 +59,10 @@ export default class Buoy
             fragmentShader: bottomFragmentShader,
             uniforms:
             {
-                uBuoyBottomColor: new THREE.Uniform(parameters.buoy.bottomColor)
+                uBuoyBottomColor: new THREE.Uniform(parameters.buoy.bottomColor),
+                uBuoyLightColor: new THREE.Uniform(parameters.buoy.lightColor),
+                uBuoyLightPosition: new THREE.Uniform(parameters.buoy.position),
+                uBuoyLightNormal: new THREE.Uniform(parameters.buoy.normal),
             }
         })
     }
@@ -135,6 +139,15 @@ export default class Buoy
         this.model.position.y = this.calculatePositionY(this.model.position.x, this.model.position.z)
         parameters.buoy.position = this.model.position
         this.updateRotation()
+        parameters.buoy.lightColor = Math.abs(Math.sin(this.time.secondsElapsed))
+        this.buoyLightMaterial.uniforms.uBuoyLightColor.value = parameters.buoy.lightColor
+        this.buoySticksMaterial.uniforms.uBuoyLightColor.value = parameters.buoy.lightColor
+        this.buoySticksMaterial.uniforms.uBuoyLightPosition.value = parameters.buoy.position
+        this.buoySticksMaterial.uniforms.uBuoyLightNormal.value = parameters.buoy.normal
+        this.buoyBottomMaterial.uniforms.uBuoyLightColor.value = parameters.buoy.lightColor
+        this.buoyBottomMaterial.uniforms.uBuoyLightPosition.value = parameters.buoy.position
+        this.buoyBottomMaterial.uniforms.uBuoyLightNormal.value = parameters.buoy.normal
+
     }
 
     updateTarget()
@@ -184,5 +197,6 @@ export default class Buoy
             this.normal.normalize()
         )
         this.model.quaternion.copy(this.quaternion)
+        parameters.buoy.normal = this.normal
     }
 }

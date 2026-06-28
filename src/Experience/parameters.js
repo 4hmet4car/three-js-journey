@@ -31,10 +31,11 @@ export default {
     },
 
     buoy: {
-        lightColor: { r: 1, g: 0, b: 1 },
-        sticksColor: { r: 1, g: 1, b: 1 },
-        bottomColor: { r: 1, g: 0, b: 1 },
+        lightColor: 1,
+        sticksColor: { r: 1, g: 0.5, b:0 },
+        bottomColor: { r: 1, g: 1, b: 1 },
         position: { x: 0, y: 0, z: 0 },
+        normal: { x: 0, y: 0, z: 0 },
         neighbourShift: 0.04,
         easeFactor: 0.07,
         elevationOffset: 0.04,

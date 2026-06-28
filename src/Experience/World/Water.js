@@ -237,5 +237,6 @@ export default class Water
     {
         this.material.uniforms.uTime.value = this.time.secondsElapsed
         this.material.uniforms.uBuoyLightPosition.value = parameters.buoy.position
+        this.material.uniforms.uBuoyLightColor.value = parameters.buoy.lightColor
     }
 }

@@ -2,7 +2,7 @@ uniform vec3 uDepthColor;
 uniform vec3 uSurfaceColor;
 uniform float uColorOffset;
 uniform float uColorMultiplier;
-uniform vec3 uBuoyLightColor;
+uniform float uBuoyLightColor;
 uniform vec3 uBuoyLightPosition;
 
 varying float vElevation;
@@ -19,6 +19,7 @@ void main()
     // View direction
     vec3 normal = normalize(vNormal);
     vec3 viewDirection = normalize(vPosition - cameraPosition);
+    vec3 lightPosition = vec3(uBuoyLightPosition.x, uBuoyLightPosition.y + 0.3, uBuoyLightPosition.z);
     
     // Base color
     float mixStrength = (vElevation + uColorOffset) * uColorMultiplier;
@@ -40,10 +41,10 @@ void main()
     // );
     // Buoy light
     vec3 buoyLight = pointLight(
-        uBuoyLightColor,        // Light color
+        vec3(uBuoyLightColor),        // Light color
         3.0,                    // Light intensity
         normal,                 // Normal
-        uBuoyLightPosition,     // Light position
+        lightPosition,     // Light position
         vPosition,              // Light target position
         viewDirection,          // View direction
         30.0,                   // Specular power

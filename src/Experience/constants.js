@@ -36,7 +36,7 @@ export const RAY_RECEIVER = {
     },
     MATERIAL: {
         WIREFRAME: true,
-        VISIBLE: true,
+        VISIBLE: false,
     },
     MESH: {
         ROTATION_X: WATER.MESH.ROTATION_X,
