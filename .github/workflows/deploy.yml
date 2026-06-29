@@ -26,7 +26,7 @@ jobs:
         run: |
           VERCEL_PROJECT_URL=$(echo "${{ github.actor }}-${{ env.VERCEL_PROJECT_NAME }}".vercel.app)
           vercel domains add $VERCEL_PROJECT_URL --token=${{ secrets.VERCEL_TOKEN }}
-        continue-on-error: true
+        #continue-on-error: true
       - name: Build Project Artifacts
         run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }} --yes
       - name: Deploy Project Artifacts
