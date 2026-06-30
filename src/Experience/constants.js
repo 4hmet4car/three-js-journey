@@ -1,0 +1,44 @@
+export const CAMERA = {
+    FOV: 25,
+    POSITION_X: 7,
+    POSITION_Y: 7,
+    POSITION_Z: 7,
+    NEAR: 0.1,
+    FAR: 100,
+    ZOOM: 1,
+}
+
+export const ORBIT_CONTROLS = {
+    TARGET_X: 0,
+    TARGET_Y: 0,
+    TARGET_Z: 0,
+}
+
+export const PI = 3.1415926535897932384626433832795
+
+export const WATER = {
+    GEOMETRY: {
+        SCALE_X: 6,
+        SCALE_Z: 6,
+
+        SUBDIVISIONS_X: 512,
+        SUBDIVISIONS_Z: 512,
+    },
+    MESH: {
+        ROTATION_X: - PI * 0.5,
+    }
+}
+
+export const RAY_RECEIVER = {
+    GEOMETRY: {
+        RADIUS: WATER.GEOMETRY.SCALE_X / 2 - 0.5,
+        SEGMENTS: 16,
+    },
+    MATERIAL: {
+        WIREFRAME: true,
+        VISIBLE: false,
+    },
+    MESH: {
+        ROTATION_X: WATER.MESH.ROTATION_X,
+    }
+}
