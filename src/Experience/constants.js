@@ -5,7 +5,7 @@ export const CAMERA = {
     POSITION_Z: 7,
     NEAR: 0.1,
     FAR: 100,
-    ZOOM: 1,
+    ZOOM: 0.4,
 }
 
 export const ORBIT_CONTROLS = {
@@ -16,29 +16,38 @@ export const ORBIT_CONTROLS = {
 
 export const PI = 3.1415926535897932384626433832795
 
-export const WATER = {
-    GEOMETRY: {
-        SCALE_X: 6,
-        SCALE_Z: 6,
-
-        SUBDIVISIONS_X: 512,
-        SUBDIVISIONS_Z: 512,
+export const SUZANNE = {
+    ANIMATION: {
+        ROTATION_SPEED_X: -0.1,
+        ROTATION_SPEED_Y: 0.2,
     },
-    MESH: {
-        ROTATION_X: - PI * 0.5,
-    }
 }
 
-export const RAY_RECEIVER = {
+export const TORUS_KNOT = {
     GEOMETRY: {
-        RADIUS: WATER.GEOMETRY.SCALE_X / 2 - 0.5,
-        SEGMENTS: 16,
+        RADIUS: 0.6,
+        TUBE_RADIUS: 0.25,
+        TUBULAR_SEGMENTS: 128,
+        RADIAL_SEGMENTS: 32,
     },
-    MATERIAL: {
-        WIREFRAME: true,
-        VISIBLE: false,
-    },
+
     MESH: {
-        ROTATION_X: WATER.MESH.ROTATION_X,
-    }
+        POSITION_X: 3,
+    },
+
+    ANIMATION: {
+        ROTATION_SPEED_X: -0.1,
+        ROTATION_SPEED_Y: 0.2,
+    },
+}
+
+export const SPHERE = {
+    MESH: {
+        POSITION_X: -3,
+    },
+
+    ANIMATION: {
+        ROTATION_SPEED_X: -0.1,
+        ROTATION_SPEED_Y: 0.2,
+    },
 }

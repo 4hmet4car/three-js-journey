@@ -1,6 +1,9 @@
 import Experience from "../Experience.js"
-// import Water from "./Water.js"
-// import Buoy from "./Buoy.js"
+import Halftone from "./Materials/Halftone.js"
+import Sphere from "./Sphere.js"
+import Suzanne from "./Suzanne.js"
+import TorusKnot from "./TorusKnot.js"
+
 
 export default class World
 {
@@ -13,8 +16,10 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
-            // this.water = new Water()
-            // this.buoy = new Buoy()
+            this.halftone = new Halftone()
+            this.suzanne = new Suzanne(this.halftone.material)
+            this.sphere = new Sphere(this.halftone.material)
+            this.torusKnot = new TorusKnot(this.halftone.material)
         })
 
         this.resources.startLoading()
@@ -22,10 +27,12 @@ export default class World
 
     update()
     {
-        // if (this.water && this.buoy)
-        // {
-        //     this.water.update()
-        //     this.buoy.update()
-        // }
+        if (this.suzanne && this.sphere && this.torusKnot && this.halftone)
+        {
+            this.halftone.update()
+            this.suzanne.update()
+            this.sphere.update()
+            this.torusKnot.update()
+        }
     }
 }

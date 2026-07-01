@@ -77,9 +77,9 @@ export default class Experience
         this.sizes.off('resize')
         this.time.off('tick')
         // this.cursor.off('pointerdown')
-        
+
         //Destroy event listeners
-        window.removeEventListener('resize',this.sizes.resize)
+        window.removeEventListener('resize', this.sizes.resize)
         // window.removeEventListener('pointermove',this.cursor.pointerMove)
         // window.removeEventListener('pointerdown',this.cursor.pointerDown)
 

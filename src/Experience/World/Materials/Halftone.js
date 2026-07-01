@@ -12,7 +12,10 @@ export default class Halftone
     constructor()
     {
         this.experience = new Experience()
+        this.debug = this.experience.debug
+
         this.setMaterial()
+        this.setDebug()
     }
 
     setMaterial()
@@ -26,5 +29,25 @@ export default class Halftone
                 uShadeColor: new THREE.Uniform(new THREE.Color(materialParameters.shadeColor)),
             }
         })
+    }
+
+    setDebug()
+    {
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Halftone")
+
+            this.debugFolder
+                .addColor(materialParameters, 'color')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uColor.value.set(new THREE.Color(materialParameters.color))
+                })
+        }
+    }
+
+    update()
+    {
+
     }
 }
