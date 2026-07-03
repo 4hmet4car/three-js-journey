@@ -25,6 +25,14 @@ export default class World
         this.resources.startLoading()
     }
 
+    resize()
+    {
+        if (this.suzanne && this.sphere && this.torusKnot && this.halftone)
+        {
+            this.halftone.resize()
+        }
+    }
+
     update()
     {
         if (this.suzanne && this.sphere && this.torusKnot && this.halftone)

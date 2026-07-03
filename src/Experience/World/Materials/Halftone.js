@@ -12,6 +12,7 @@ export default class Halftone
     constructor()
     {
         this.experience = new Experience()
+        this.sizes = this.experience.sizes
         this.debug = this.experience.debug
 
         this.setMaterial()
@@ -27,6 +28,7 @@ export default class Halftone
             {
                 uColor: new THREE.Uniform(new THREE.Color(materialParameters.color)),
                 uShadeColor: new THREE.Uniform(new THREE.Color(materialParameters.shadeColor)),
+                uResolution: new THREE.Uniform(this.sizes.resolution),
             }
         })
     }
@@ -44,6 +46,11 @@ export default class Halftone
                     this.material.uniforms.uColor.value.set(new THREE.Color(materialParameters.color))
                 })
         }
+    }
+
+    resize()
+    {
+        this.material.uniforms.uResolution.value.set(this.sizes.resolution)
     }
 
     update()
