@@ -25,8 +25,8 @@ export default class Sizes extends EventEmitter
     {
         this.width = window.innerWidth
         this.height = window.innerHeight
-        this.resolution.set(this.width * this.pixelRatio, this.height * this.pixelRatio)
         this.pixelRatio = Math.min(window.devicePixelRatio, 2)
+        this.resolution.set(this.width * this.pixelRatio, this.height * this.pixelRatio)
         this.aspectRatio = this.width / this.height
 
         this.trigger('resize')

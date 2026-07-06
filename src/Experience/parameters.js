@@ -11,4 +11,8 @@ export const rendererParameters = {
 
 export const materialParameters = {
     color: '#ff794d',
+    shadowRepetitions: 100,
+    shadowColor: '#8e19b8',
+    lightRepetitions: 130,
+    lightColor: '#e5ffe0',
 }

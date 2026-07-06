@@ -22,6 +22,7 @@ export default class Halftone
     setMaterial()
     {
         this.material = new THREE.ShaderMaterial({
+            transparent: true,
             vertexShader: halftoneVertexShader,
             fragmentShader: halftoneFragmentShader,
             uniforms:
@@ -29,6 +30,10 @@ export default class Halftone
                 uColor: new THREE.Uniform(new THREE.Color(materialParameters.color)),
                 uShadeColor: new THREE.Uniform(new THREE.Color(materialParameters.shadeColor)),
                 uResolution: new THREE.Uniform(this.sizes.resolution),
+                uShadowRepetitions: new THREE.Uniform(materialParameters.shadowRepetitions),
+                uShadowColor: new THREE.Uniform(new THREE.Color(materialParameters.shadowColor)),
+                uLightRepetitions: new THREE.Uniform(materialParameters.lightRepetitions),
+                uLightColor: new THREE.Uniform(new THREE.Color(materialParameters.lightColor)),
             }
         })
     }
@@ -45,12 +50,48 @@ export default class Halftone
                 {
                     this.material.uniforms.uColor.value.set(new THREE.Color(materialParameters.color))
                 })
+
+            this.debugFolder
+                .add(materialParameters, 'shadowRepetitions')
+                .min(1)
+                .max(300)
+                .step(1)
+                .onChange(() =>
+                {
+                    this.material.uniforms.uShadowRepetitions.value = materialParameters.shadowRepetitions
+                })
+
+            
+            this.debugFolder
+                .addColor(materialParameters, 'shadowColor')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uShadowColor.value.set(new THREE.Color(materialParameters.shadowColor))
+                })
+
+            this.debugFolder
+                .add(materialParameters, 'lightRepetitions')
+                .min(1)
+                .max(300)
+                .step(1)
+                .onChange(() =>
+                {
+                    this.material.uniforms.uLightRepetitions.value = materialParameters.lightRepetitions
+                })
+
+            
+            this.debugFolder
+                .addColor(materialParameters, 'lightColor')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uLightColor.value.set(new THREE.Color(materialParameters.lightColor))
+                })
         }
     }
 
     resize()
     {
-        this.material.uniforms.uResolution.value.set(this.sizes.resolution)
+        this.material.uniforms.uResolution.value.copy(this.sizes.resolution)
     }
 
     update()
