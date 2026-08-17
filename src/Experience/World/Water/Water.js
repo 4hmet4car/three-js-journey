@@ -29,7 +29,7 @@ export default class Water
     }
     setGeometry()
     {
-        this.geometry = new THREE.PlaneGeometry(constants.WATER_SCALE_X,constants.WATER_SCALE_Z, constants.WATER_SUBDIVISIONS_X, constants.WATER_SUBDIVISIONS_Z)
+        this.geometry = new THREE.PlaneGeometry(constants.WATER_SCALE_X, constants.WATER_SCALE_Z, constants.WATER_SUBDIVISIONS_X, constants.WATER_SUBDIVISIONS_Z)
     }
     setTextures()
     {
@@ -40,6 +40,7 @@ export default class Water
         this.colors = {}
         this.colors.depthColor = parameters.depthColor
         this.colors.surfaceColor = parameters.surfaceColor
+        this.colors.foamColor = parameters.foamColor
 
         this.material = new THREE.ShaderMaterial({
             transparent: true,
@@ -64,6 +65,8 @@ export default class Water
                 uSurfaceColor: { value: new THREE.Color(this.colors.surfaceColor) },
                 uColorOffset: { value: parameters.colorOffset },
                 uColorMultiplier: { value: parameters.colorMultiplier },
+                uFoamColor: { value: new THREE.Color(this.colors.foamColor) },
+                uFoamAmount: { value: parameters.foamAmount },
             }
         })
 
@@ -152,6 +155,26 @@ export default class Water
                 .onChange((value) =>
                 {
                     parameters.colorMultiplier = value
+                })
+
+            this.debugFolder
+                .addColor(this.colors, 'foamColor')
+                .name('foamColor')
+                .onChange((value) =>
+                {
+                    this.material.uniforms.uFoamColor.value.set(this.colors.foamColor)
+                    parameters.foamColor = value
+                })
+
+            this.debugFolder
+                .add(this.material.uniforms.uFoamAmount, 'value')
+                .min(0)
+                .max(300)
+                .step(0.001)
+                .name('uFoamAmount')
+                .onChange((value) =>
+                {
+                    parameters.uFoamAmount = value
                 })
 
             this.debugFolder

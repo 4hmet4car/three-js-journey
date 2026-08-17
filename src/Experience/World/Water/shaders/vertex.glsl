@@ -21,6 +21,7 @@ uniform float uSmallWavesSpeed;
 uniform float uSmallWavesIterations;
 
 varying float vElevation;
+varying float vSmallWavesElevation;
 varying vec2 vUv;
 
 //Perlin noise
@@ -34,10 +35,12 @@ void main()
     float bigWavesFrequencyX = sin(modelPosition.x * uPI * uBigWavesFrequency.x + uTime * uBigWavesSpeed);
     float bigWavesFrequencyZ = sin(modelPosition.z * uPI * uBigWavesFrequency.y + uTime * uBigWavesSpeed);
     float bigWavesElevation = bigWavesFrequencyX * bigWavesFrequencyZ * uBigWavesElevation;
+    float smallWavesElevation;
 
     for(float i = 1.0; i <= uSmallWavesIterations; i++)
     {
-        bigWavesElevation -= abs(cnoise(vec3(modelPosition.xz * uSmallWavesFrequency * i, uTime * uSmallWavesSpeed)) * uSmallWavesElevation) / i;
+        smallWavesElevation -= abs(cnoise(vec3(modelPosition.xz * uSmallWavesFrequency * i, uTime * uSmallWavesSpeed)) * uSmallWavesElevation) / i;
+        bigWavesElevation += smallWavesElevation;
     }
     
     modelPosition.y += bigWavesElevation;
@@ -49,5 +52,6 @@ void main()
 
     // Varyings
     vElevation = bigWavesElevation;
+    vSmallWavesElevation = smallWavesElevation;
     vUv = uv;
 }
