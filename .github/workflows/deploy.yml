@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global vercel@54.11.1
       - name: Vercel Link
         run: |
           VERCEL_PROJECT_NAME=$(echo "${{ github.ref }}" | sed -E 's@refs/heads/@@; s@/@-@g')
