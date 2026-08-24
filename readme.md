@@ -56,8 +56,7 @@ Deployment is handled by GitHub Actions.<br>
 35- [Lights Shading](https://4hmet4car-35-lights-shading-shaders.vercel.app/)<br>
 36- [Raging Sea Shading](https://4hmet4car-36-raging-sea-shading-shaders.vercel.app/)<br>
 37- [Halftone Shading](https://4hmet4car-37-halftone-shading-shaders.vercel.app/)<br>
+38- [Earth](https://4hmet4car-38-earth-shaders.vercel.app/)<br>
 
 ---
 > ⚠️ The workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
-
-> ⚠️ [batch_cwebp.sh](https://github.com/4hmet4car/three-js-journey/tree/main/batch-cwebp) allows you to batch convert images to .webp format.
