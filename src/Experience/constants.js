@@ -37,3 +37,33 @@ export const EARTH = {
         ROTATION_SPEED_Z: 0,
     },
 }
+
+export const ATMOSPHERE = {
+    GEOMETRY: {
+        RADIUS: 2.08,
+        WIDTH_SEGMENTS: 64,
+        HEIGHT_SEGMENTS: 64,
+    },
+
+    MESH: {
+        POSITION_X: 0,
+    },
+
+    ANIMATION: {
+        ROTATION_SPEED_X: 0,
+        ROTATION_SPEED_Y: 0,
+        ROTATION_SPEED_Z: 0,
+    },
+}
+
+export const SUN = {
+    GEOMETRY: {
+        RADIUS: 0.1,
+        WIDTH_SEGMENTS: 16,
+        HEIGHT_SEGMENTS: 16,
+    },
+
+    MESH:{
+        RADIUS: 4,
+    }
+}

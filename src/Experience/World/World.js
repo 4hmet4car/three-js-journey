@@ -1,5 +1,7 @@
 import Experience from "../Experience.js"
+import Sun from "./Sun.js"
 import Earth from "./Earth/Earth.js"
+import Atmosphere from "./Atmosphere/Atmosphere.js"
 
 export default class World
 {
@@ -12,7 +14,9 @@ export default class World
         this.resources.on('ready', () =>
         {
             // Setup
+            this.sun = new Sun()
             this.earth = new Earth()
+            this.atmosphere = new Atmosphere()
         })
 
         this.resources.startLoading()

@@ -19,6 +19,8 @@ export default class Renderer
 
         this.setRendererInstance()
         this.setDebug()
+
+        // console.log(this.instance.capabilities.getMaxAnisotropy())
     }
 
     setRendererInstance()

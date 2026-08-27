@@ -4,10 +4,10 @@ import Experience from "../../Experience.js"
 
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
-import { EARTH } from '../../constants.js'
+import { ATMOSPHERE } from '../../constants.js'
 import { atmosphereParameters } from '../../parameters.js'
 
-export default class Earth
+export default class Atmosphere
 {
     constructor()
     {
@@ -16,39 +16,24 @@ export default class Earth
         this.time = this.experience.time
         this.resources = this.experience.resources
         this.sun = this.experience.world.sun
+        this.earth = this.experience.world.earth
         this.debug = this.experience.debug
 
         //Setup
-        this.setTextures()
         this.setMaterial()
         this.setGeometry()
         this.setMesh()
-    }
-
-    setTextures()
-    {
-        this.earthDayTexture = this.resources.items.earthDayTexture
-        this.earthDayTexture.colorSpace = THREE.SRGBColorSpace
-        this.earthDayTexture.anisotropy = 8
-
-        this.earthNightTexture = this.resources.items.earthNightTexture
-        this.earthNightTexture.colorSpace = THREE.SRGBColorSpace
-        this.earthNightTexture.anisotropy = 8
-
-        this.earthSpecularCloudsTexture = this.resources.items.earthSpecularCloudsTexture
-        this.earthSpecularCloudsTexture.anisotropy = 8
+        this.setDebug()
     }
 
     setMaterial()
     {
         this.material = new THREE.ShaderMaterial({
+            side: THREE.BackSide,
+            transparent: true,
             vertexShader: vertexShader,
             fragmentShader: fragmentShader,
             uniforms: {
-                uEarthDayTexture: new THREE.Uniform(this.earthDayTexture),
-                uEarthNightTexture: new THREE.Uniform(this.earthNightTexture),
-                uEarthSpecularCloudsTexture: new THREE.Uniform(this.earthSpecularCloudsTexture),
-
                 uSunDirection: new THREE.Uniform(this.sun.direction),
 
                 uAtmosphereDayColor: new THREE.Uniform(new THREE.Color(atmosphereParameters.atmosphereDayColor)),
@@ -60,9 +45,9 @@ export default class Earth
     setGeometry()
     {
         this.geometry = new THREE.SphereGeometry(
-            EARTH.GEOMETRY.RADIUS,
-            EARTH.GEOMETRY.WIDTH_SEGMENTS,
-            EARTH.GEOMETRY.HEIGHT_SEGMENTS
+            ATMOSPHERE.GEOMETRY.RADIUS,
+            ATMOSPHERE.GEOMETRY.WIDTH_SEGMENTS,
+            ATMOSPHERE.GEOMETRY.HEIGHT_SEGMENTS
         )
     }
 
@@ -72,9 +57,27 @@ export default class Earth
         this.scene.add(this.mesh)
     }
 
-    update()
+    setDebug()
     {
-        this.mesh.rotation.y = this.time.secondsElapsed * EARTH.ANIMATION.ROTATION_SPEED_Y
-    }
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Atmosphere")
 
+            this.debugFolder
+                .addColor(atmosphereParameters, 'atmosphereDayColor')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uAtmosphereDayColor.value.set(atmosphereParameters.atmosphereDayColor)
+                    this.earth.material.uniforms.uAtmosphereDayColor.value.set(atmosphereParameters.atmosphereDayColor)
+                })
+
+            this.debugFolder
+                .addColor(atmosphereParameters, 'atmosphereTwilightColor')
+                .onChange(() =>
+                {
+                    this.material.uniforms.uAtmosphereTwilightColor.value.set(atmosphereParameters.atmosphereTwilightColor)
+                    this.earth.material.uniforms.uAtmosphereTwilightColor.value.set(atmosphereParameters.atmosphereTwilightColor)
+                })
+        }
+    }
 }

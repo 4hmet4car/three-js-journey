@@ -9,10 +9,12 @@ export const rendererParameters = {
     clearColor: '#000011',
 }
 
-export const materialParameters = {
-    color: '#ff794d',
-    shadowRepetitions: 100,
-    shadowColor: '#8e19b8',
-    lightRepetitions: 130,
-    lightColor: '#e5ffe0',
+export const sunParameters = {
+    phi: 1.63,
+    theta: -0.36,
+}
+
+export const atmosphereParameters = {
+    atmosphereDayColor: '#00aaff',
+    atmosphereTwilightColor: '#ff6600',
 }

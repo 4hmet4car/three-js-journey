@@ -25,11 +25,21 @@ export default [
     //         '/textures/environmentMaps/0/nz.jpg',
     //     ]
     // },
-    // {
-    //     name: 'leePerrySmithColorTexture',
-    //     type: 'texture',
-    //     path: '/models/LeePerrySmith/color.jpg'
-    // },
+    {
+        name: 'earthDayTexture',
+        type: 'texture',
+        path: '/earth/day.jpg'
+    },
+    {
+        name: 'earthNightTexture',
+        type: 'texture',
+        path: '/earth/night.jpg'
+    },
+    {
+        name: 'earthSpecularCloudsTexture',
+        type: 'texture',
+        path: '/earth/specularClouds.jpg'
+    },
     // {
     //     name: 'suzanne',
     //     type: 'gltfModel',
