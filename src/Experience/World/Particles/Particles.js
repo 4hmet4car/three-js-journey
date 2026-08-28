@@ -1,0 +1,59 @@
+import * as THREE from 'three'
+import Experience from "../../Experience.js"
+
+import vertexShader from './shaders/vertex.glsl'
+import fragmentShader from './shaders/fragment.glsl'
+import { PARTICLES } from "../../constants.js"
+
+export default class Particles
+{
+    constructor()
+    {
+        this.experience = new Experience()
+        this.sizes = this.experience.sizes
+        this.scene = this.experience.scene
+
+        // Setup
+        this.setMaterial()
+        this.setGeometry()
+        this.setMesh()
+    }
+
+    setMaterial()
+    {
+        this.material = new THREE.ShaderMaterial({
+            vertexShader: vertexShader,
+            fragmentShader: fragmentShader,
+            uniforms:
+            {
+                uResolution: new THREE.Uniform(this.sizes.resolution),
+            }
+        })
+    }
+
+    setGeometry()
+    {
+        this.geometry = new THREE.PlaneGeometry(
+            PARTICLES.GEOMETRY.WIDTH,
+            PARTICLES.GEOMETRY.HEIGHT,
+            PARTICLES.GEOMETRY.WIDTH_SEGMENTS,
+            PARTICLES.GEOMETRY.HEIGHT_SEGMENTS,
+        )
+    }
+
+    setMesh()
+    {
+        this.particles = new THREE.Points(this.geometry, this.material)
+        this.scene.add(this.particles)
+    }
+
+    resize()
+    {
+        
+    }
+
+    update()
+    {
+
+    }
+}
