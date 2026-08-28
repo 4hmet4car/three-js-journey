@@ -32,9 +32,7 @@ export const EARTH = {
     },
 
     ANIMATION: {
-        ROTATION_SPEED_X: 0,
-        ROTATION_SPEED_Y: 0.1,
-        ROTATION_SPEED_Z: 0,
+        ANGULAR_ROTATION_SPEED: 7.292 / 100000 * 24 * 60,
     },
 }
 
@@ -43,16 +41,6 @@ export const ATMOSPHERE = {
         RADIUS: 2.08,
         WIDTH_SEGMENTS: 64,
         HEIGHT_SEGMENTS: 64,
-    },
-
-    MESH: {
-        POSITION_X: 0,
-    },
-
-    ANIMATION: {
-        ROTATION_SPEED_X: 0,
-        ROTATION_SPEED_Y: 0,
-        ROTATION_SPEED_Z: 0,
     },
 }
 

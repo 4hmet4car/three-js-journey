@@ -10,8 +10,12 @@ export const rendererParameters = {
 }
 
 export const sunParameters = {
-    phi: 1.63,
-    theta: -0.36,
+    phi: 1.43,
+    theta: -2.8,
+}
+
+export const earthParameters = {
+    minutesPerDay: 24 * 60,
 }
 
 export const atmosphereParameters = {

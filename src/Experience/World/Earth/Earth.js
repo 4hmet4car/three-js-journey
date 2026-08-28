@@ -5,7 +5,7 @@ import Experience from "../../Experience.js"
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
 import { EARTH } from '../../constants.js'
-import { atmosphereParameters } from '../../parameters.js'
+import { earthParameters, atmosphereParameters } from '../../parameters.js'
 
 export default class Earth
 {
@@ -23,6 +23,7 @@ export default class Earth
         this.setMaterial()
         this.setGeometry()
         this.setMesh()
+        this.setDebug()
     }
 
     setTextures()
@@ -72,9 +73,30 @@ export default class Earth
         this.scene.add(this.mesh)
     }
 
+    setDebug()
+    {
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Earth")
+
+            this.debugFolder
+                .add(earthParameters, 'minutesPerDay')
+                .min(1)
+                .max(1440)
+        }
+    }
+
     update()
     {
-        this.mesh.rotation.y = this.time.secondsElapsed * EARTH.ANIMATION.ROTATION_SPEED_Y
+        const coswt = Math.cos(EARTH.ANIMATION.ANGULAR_ROTATION_SPEED * this.time.secondsElapsed / earthParameters.minutesPerDay) 
+        const sinwt = Math.sin(EARTH.ANIMATION.ANGULAR_ROTATION_SPEED * this.time.secondsElapsed / earthParameters.minutesPerDay) 
+        const rotationMatrix = new THREE.Matrix4(
+            coswt, 0, sinwt, 0,
+            0, 1, 0, 0,
+            -sinwt, 0, coswt, 0,
+            0, 0, 0, 1,
+        )
+        this.mesh.setRotationFromMatrix(rotationMatrix)
     }
 
 }
