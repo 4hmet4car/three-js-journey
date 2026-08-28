@@ -4,6 +4,7 @@ import Experience from "../../Experience.js"
 import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
 import { PARTICLES } from "../../constants.js"
+import Displacement from './Displacement.js'
 
 export default class Particles
 {
@@ -12,11 +13,23 @@ export default class Particles
         this.experience = new Experience()
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
+        this.resources = this.experience.resources
 
         // Setup
+        this.setDisplacement()
+        this.setTexture()
         this.setMaterial()
         this.setGeometry()
         this.setMesh()
+    }
+
+    setDisplacement(){
+        this.displacement = new Displacement()
+    }
+
+    setTexture()
+    {
+        this.pictureTexture = this.resources.items.pictureTexture1
     }
 
     setMaterial()
@@ -27,6 +40,7 @@ export default class Particles
             uniforms:
             {
                 uResolution: new THREE.Uniform(this.sizes.resolution),
+                uPictureTexture: new THREE.Uniform(this.pictureTexture),
             }
         })
     }
@@ -49,7 +63,7 @@ export default class Particles
 
     resize()
     {
-        
+
     }
 
     update()

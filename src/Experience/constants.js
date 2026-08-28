@@ -24,15 +24,23 @@ export const PARTICLES = {
     GEOMETRY: {
         WIDTH: 10,
         HEIGHT: 10,
-        WIDTH_SEGMENTS: 64,
-        HEIGHT_SEGMENTS: 64,
+        WIDTH_SEGMENTS: 128,
+        HEIGHT_SEGMENTS: 128,
     },
+}
 
-    // MESH: {
-    //     POSITION_X: 0,
-    // },
+export const DISPLACEMENT = {
+    CANVAS: {
+        WIDTH: 128,
+        HEIGHT: 128,
 
-    // // ANIMATION: {
-    // //     ANGULAR_ROTATION_SPEED: 7.292 / 100000 * 24 * 60,
-    // // },
+        STYLE: {
+            POSITION: 'fixed',
+            WIDTH: '512px',
+            HEIGHT: '512px',
+            TOP: 0,
+            LEFT: 0,
+            Z_INDEX: 10,
+        }
+    },
 }

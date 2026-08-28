@@ -25,21 +25,26 @@ export default [
     //         '/textures/environmentMaps/0/nz.jpg',
     //     ]
     // },
-    // {
-    //     name: 'earthDayTexture',
-    //     type: 'texture',
-    //     path: '/earth/day.jpg'
-    // },
-    // {
-    //     name: 'earthNightTexture',
-    //     type: 'texture',
-    //     path: '/earth/night.jpg'
-    // },
-    // {
-    //     name: 'earthSpecularCloudsTexture',
-    //     type: 'texture',
-    //     path: '/earth/specularClouds.jpg'
-    // },
+    {
+        name: 'pictureTexture1',
+        type: 'texture',
+        path: '/picture-1.png'
+    },
+    {
+        name: 'pictureTexture2',
+        type: 'texture',
+        path: '/picture-2.png'
+    },
+    {
+        name: 'pictureTexture3',
+        type: 'texture',
+        path: '/picture-3.png'
+    },
+    {
+        name: 'pictureTexture4',
+        type: 'texture',
+        path: '/picture-4.png'
+    },
     // {
     //     name: 'suzanne',
     //     type: 'gltfModel',
