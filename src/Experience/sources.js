@@ -26,6 +26,11 @@ export default [
     //     ]
     // },
     {
+        name: 'glowImage',
+        type: 'image',
+        path: '/glow.png'
+    },
+    {
         name: 'pictureTexture1',
         type: 'texture',
         path: '/picture-1.png'

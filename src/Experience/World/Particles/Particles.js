@@ -5,6 +5,7 @@ import vertexShader from './shaders/vertex.glsl'
 import fragmentShader from './shaders/fragment.glsl'
 import { PARTICLES } from "../../constants.js"
 import Displacement from './Displacement.js'
+import { particlesParameters } from '../../parameters.js'
 
 export default class Particles
 {
@@ -14,6 +15,7 @@ export default class Particles
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.debug = this.experience.debug
 
         // Setup
         this.setDisplacement()
@@ -21,15 +23,17 @@ export default class Particles
         this.setMaterial()
         this.setGeometry()
         this.setMesh()
+        this.setDebug()
     }
 
-    setDisplacement(){
+    setDisplacement()
+    {
         this.displacement = new Displacement()
     }
 
     setTexture()
     {
-        this.pictureTexture = this.resources.items.pictureTexture1
+        this.pictureTexture = this.resources.items['pictureTexture' + particlesParameters.pictureTexture]
     }
 
     setMaterial()
@@ -59,6 +63,22 @@ export default class Particles
     {
         this.particles = new THREE.Points(this.geometry, this.material)
         this.scene.add(this.particles)
+    }
+
+
+    setDebug()
+    {
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Particles")
+
+            this.debugFolder
+                .add(particlesParameters, 'pictureTexture', [1, 2, 3, 4])
+                .onChange((selection) =>
+                {
+                    this.material.uniforms.uPictureTexture.value = this.resources.items['pictureTexture' + selection]
+                })
+        }
     }
 
     resize()

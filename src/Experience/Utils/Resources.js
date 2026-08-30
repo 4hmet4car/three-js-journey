@@ -18,11 +18,12 @@ export default class Resources extends EventEmitter
 
     async startLoading()
     {
-        if (!this.toLoad) {
+        if (!this.toLoad)
+        {
             this.trigger('ready')
             return
         }
-        
+
         for (const source of this.sources)
         {
             switch (source.type)
@@ -69,6 +70,20 @@ export default class Resources extends EventEmitter
                     {
                         this.sourceLoaded(source, file, "%cTexture Loaded: ", "background-color: maroon")
                     })
+                    break;
+
+                case 'image':
+                    this.items[source.name] = new Image()
+                    this.items[source.name].onload = () =>
+                    {
+                        console.log("%cImage Loaded: " + source.name, "background-color: purple")
+                        this.loaded++
+                        if (this.loaded === this.toLoad)
+                        {
+                            this.trigger('ready')
+                        }
+                    }
+                    this.items[source.name].src = source.path
                     break;
 
                 case 'cubeTexture':

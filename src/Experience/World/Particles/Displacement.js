@@ -9,7 +9,6 @@ export default class Displacement
 
         //Setup
         this.setCanvas()
-        this.setCanvasContext()
     }
 
     setCanvas()
@@ -29,10 +28,17 @@ export default class Displacement
 
         // Add canvas to the document
         document.body.append(this.canvas)
-    }
 
-    setCanvasContext()
-    {
+        // Get the 2d context of the canvas to draw a 2d image
         this.context = this.canvas.getContext('2d')
+
+        // Draw a rectangle that fills the canvas
+        this.context.fillStyle = 'red'
+        this.context.fillRect(
+            DISPLACEMENT.CANVAS.STYLE.TOP,  // Top-left corner position
+            DISPLACEMENT.CANVAS.STYLE.LEFT, // Top-left corner position
+            DISPLACEMENT.CANVAS.WIDTH,      // Fill width
+            DISPLACEMENT.CANVAS.HEIGHT,     // Fill height
+        )
     }
 }

@@ -9,6 +9,10 @@ export const rendererParameters = {
     clearColor: '#181818',
 }
 
+export const particlesParameters = {
+    pictureTexture: 1,
+}
+
 // export const sunParameters = {
 //     phi: 1.43,
 //     theta: -2.8,
