@@ -73,18 +73,20 @@ export default class Resources extends EventEmitter
                     break;
 
                 case 'image':
-                    this.items[source.name] = new Image()
-                    this.items[source.name].onload = () =>
-                    {
-                        console.log("%cImage Loaded: " + source.name, "background-color: purple")
-                        this.loaded++
-                        if (this.loaded === this.toLoad)
-                        {
-                            this.trigger('ready')
-                        }
-                    }
-                    this.items[source.name].src = source.path
+                    const image = new Image()
+                    image.onload = this.sourceLoaded(source, image, "%cImage Loaded: ", "background-color: purple")
+                    image.src = source.path
                     break;
+                    // if (!this.loaders.imageLoader)
+                    // {
+                    //     const { ImageLoader } = await import("three")
+                    //     this.loaders.imageLoader = new ImageLoader()
+                    // }
+                    // this.loaders.imageLoader.load(source.path, (file) =>
+                    // {
+                    //     this.sourceLoaded(source, file, "%cImage Loaded: ", "background-color: purple")
+                    // })
+                    // break;
 
                 case 'cubeTexture':
                     if (!this.loaders.cubeTextureLoader)

@@ -6,6 +6,7 @@
  * has each source as a seperate object.
  * 
  * -----------TYPES-----------
+ * --> image
  * --> cubeTexture
  * --> texture
  * --> gltfModel
@@ -13,6 +14,11 @@
  */
 
 export default [
+    {
+        name: 'glowImage',
+        type: 'image',
+        path: '/glow.png'
+    },
     // {
     //     name: 'environmentMapTexture',
     //     type: 'cubeTexture',
@@ -25,11 +31,6 @@ export default [
     //         '/textures/environmentMaps/0/nz.jpg',
     //     ]
     // },
-    {
-        name: 'glowImage',
-        type: 'image',
-        path: '/glow.png'
-    },
     {
         name: 'pictureTexture1',
         type: 'texture',

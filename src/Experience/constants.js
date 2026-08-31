@@ -43,4 +43,11 @@ export const DISPLACEMENT = {
             Z_INDEX: 10,
         }
     },
+
+    RAY_RECEIVER: {
+        GEOMETRY: {
+            WIDTH: PARTICLES.GEOMETRY.WIDTH,
+            HEIGHT: PARTICLES.GEOMETRY.HEIGHT,  
+        },
+    },
 }
