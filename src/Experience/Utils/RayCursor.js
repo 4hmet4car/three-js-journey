@@ -30,6 +30,7 @@ export default class RayCursor extends EventEmitter
             if (this.intersect.length)
             {
                 this.trigger('intersect')
+                console.log(this.intersect)
             }
         }
     }

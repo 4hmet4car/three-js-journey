@@ -64,5 +64,7 @@ export default class Displacement
         )
 
         this.scene.add(this.rayReceiver)
+
+        this.rayCursor.objectToIntersect = this.rayReceiver
     }
 }
