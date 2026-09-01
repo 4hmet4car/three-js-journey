@@ -50,4 +50,8 @@ export const DISPLACEMENT = {
             HEIGHT: PARTICLES.GEOMETRY.HEIGHT,  
         },
     },
+
+    CANVAS_CURSOR: {
+        CANVAS_SIZE_MULTIPLIER: 0.25
+    }
 }
