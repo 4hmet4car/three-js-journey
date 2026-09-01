@@ -27,16 +27,16 @@ export default class Displacement
         this.canvas.width = DISPLACEMENT.CANVAS.WIDTH
         this.canvas.height = DISPLACEMENT.CANVAS.HEIGHT
 
-        // Set style
-        this.canvas.style.position = DISPLACEMENT.CANVAS.STYLE.POSITION
-        this.canvas.style.width = DISPLACEMENT.CANVAS.STYLE.WIDTH
-        this.canvas.style.height = DISPLACEMENT.CANVAS.STYLE.HEIGHT
-        this.canvas.style.top = DISPLACEMENT.CANVAS.STYLE.TOP
-        this.canvas.style.left = DISPLACEMENT.CANVAS.STYLE.LEFT
-        this.canvas.style.zIndex = DISPLACEMENT.CANVAS.STYLE.Z_INDEX
+        // // Set style
+        // this.canvas.style.position = DISPLACEMENT.CANVAS.STYLE.POSITION
+        // this.canvas.style.width = DISPLACEMENT.CANVAS.STYLE.WIDTH
+        // this.canvas.style.height = DISPLACEMENT.CANVAS.STYLE.HEIGHT
+        // this.canvas.style.top = DISPLACEMENT.CANVAS.STYLE.TOP
+        // this.canvas.style.left = DISPLACEMENT.CANVAS.STYLE.LEFT
+        // this.canvas.style.zIndex = DISPLACEMENT.CANVAS.STYLE.Z_INDEX
 
-        // Add canvas to the document
-        document.body.append(this.canvas)
+        // // Add canvas to the document
+        // document.body.append(this.canvas)
     }
 
     setContext()
