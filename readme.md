@@ -58,6 +58,7 @@ Deployment is handled by GitHub Actions.<br>
 37- [Halftone Shading](https://4hmet4car-37-halftone-shading-shaders.vercel.app/)<br>
 38- [Earth](https://4hmet4car-38-earth-shaders.vercel.app/)<br>
 39- [Particles Cursor Animation](https://4hmet4car-39-particles-cursor-animation-shader.vercel.app/)<br>
+40- [Particles Morphing](https://4hmet4car-40-particles-morphing-shader.vercel.app/)<br>
 
 ---
 > ⚠️ The deployment workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
