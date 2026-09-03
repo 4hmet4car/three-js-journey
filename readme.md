@@ -6,7 +6,7 @@ Deployment is handled by GitHub Actions.<br>
 
 > ⚠️ To follow the original course, visit [Bruno Simon's official website](https://threejs-journey.com).
 
-## Course Content
+## Three.js
 
 ### Chapter 01 - Basics
 
@@ -59,6 +59,12 @@ Deployment is handled by GitHub Actions.<br>
 38- [Earth](https://4hmet4car-38-earth-shaders.vercel.app/)<br>
 39- [Particles Cursor Animation](https://4hmet4car-39-particles-cursor-animation-shader.vercel.app/)<br>
 40- [Particles Morphing](https://4hmet4car-40-particles-morphing-shader.vercel.app/)<br>
+
+## WebGPU & TSL
+
+### Chapter 01 - Fundamentals
+
+01- [Introduction to WebGPU and TSL](https://4hmet4car-68-introduction-to-webgpu-tsl.vercel.app/)<br>
 
 ---
 > ⚠️ The deployment workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
