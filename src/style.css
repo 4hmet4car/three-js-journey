@@ -10,7 +10,7 @@ body
     overflow: hidden;
 }
 
-.webgl
+.threejs
 {
     position: fixed;
     top: 0;

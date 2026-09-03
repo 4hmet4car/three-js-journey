@@ -12,11 +12,6 @@ export default class Time extends EventEmitter
         this.elapsed = 0
         this.secondsElapsed = this.elapsed * 0.001
         this.delta = 16
-
-        window.requestAnimationFrame(() =>
-        {
-            this.tick()
-        })
     }
 
     tick()
@@ -28,10 +23,5 @@ export default class Time extends EventEmitter
         this.secondsElapsed = this.elapsed * 0.001
 
         this.trigger('tick')
-
-        window.requestAnimationFrame(() =>
-        {
-            this.tick() //It is important to use fat arrows to not to loose the context
-        })
     }
 }
