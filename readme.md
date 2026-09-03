@@ -1,71 +1,16 @@
 # Three.js Journey
 
-This repository contains _my own implementations and experiments_ of the exercises from the **Three.js Journey** course by Bruno Simon.<br>
-Each lesson is developed as a new branch and is deployed as an individual project with Vercel.<br>
-Deployment is handled by GitHub Actions.<br>
+## Setup
+Download [Node.js](https://nodejs.org/en/download/).
+Run the following commands:
 
-> ⚠️ To follow the original course, visit [Bruno Simon's official website](https://threejs-journey.com).
+``` bash
+# Install dependencies (only the first time)
+npm install
 
-## Three.js
+# Run the local server
+npm run dev
 
-### Chapter 01 - Basics
-
-01- Introduction<br>
-02- What is WebGL and why use Three.js<br>
-03- [First Three.js Project](https://4hmet4car-03-first-threejs-project.vercel.app/)<br>
-04- [Transform objects](https://4hmet4car-04-transform-objects.vercel.app/)<br>
-05- [Animations](https://4hmet4car-05-animations.vercel.app/)<br>
-06- [Cameras](https://4hmet4car-06-cameras.vercel.app/)<br>
-07- [Fullscreen and resizing](https://4hmet4car-07-fullscreen-and-resizing.vercel.app/)<br>
-08- [Geometries](https://4hmet4car-08-geometries.vercel.app/)<br>
-09- [Debug UI](https://4hmet4car-09-debug-ui.vercel.app/)<br>
-10- [Textures](https://4hmet4car-10-textures.vercel.app/)<br>
-11- [Materials](https://4hmet4car-11-materials.vercel.app/)<br>
-12- [3D Text](https://4hmet4car-12-3d-text.vercel.app/)<br>
-13- [Go live](https://4hmet4car-13-go-live.vercel.app/)<br>
-
-### Chapter 02 - Classic techniques
-
-14- [Lights](https://4hmet4car-14-lights.vercel.app/)<br>
-15- [Shadows](https://4hmet4car-15-shadows.vercel.app/)<br>
-16- [Haunted House](https://4hmet4car-16-haunted-house.vercel.app/)<br>
-17- [Particles](https://4hmet4car-17-particles.vercel.app/)<br>
-18- [Galaxy Generator](https://4hmet4car-18-galaxy-generator.vercel.app/)<br>
-19- [Scroll Based Animation](https://4hmet4car-19-scroll-based-animation.vercel.app/)<br>
-
-### Chapter 03 - Advanced techniques
-
-20- [Physics](https://4hmet4car-20-physics.vercel.app/)<br>
-21- [Imported models](https://4hmet4car-21-imported-models.vercel.app/)<br>
-22- [Raycaster and Mouse Events](https://4hmet4car-22-raycaster-and-mouse-events.vercel.app/)<br>
-23- [Custom models with Blender](https://4hmet4car-23-custom-models-with-blender.vercel.app/)<br>
-24- [Environment map](https://4hmet4car-24-environment-map.vercel.app/)<br>
-25- [Realistic render](https://4hmet4car-25-realistic-render.vercel.app/)<br>
-26- [Code structuring for bigger projects](https://4hmet4car-26-code-structuring-for-bigger-projects.vercel.app/)<br>
-
-### Chapter 04 - Shaders
-
-27- [Shaders](https://4hmet4car-27-shaders.vercel.app/)<br>
-28- [Shader patterns](https://4hmet4car-28-shader-patterns.vercel.app/)<br>
-29- [Raging sea](https://4hmet4car-29-raging-sea.vercel.app/)<br>
-30- [Animated galaxy](https://4hmet4car-30-animated-galaxy.vercel.app/)<br>
-31- [Modified materials](https://4hmet4car-31-modified-materials.vercel.app/)<br>
-32- [Coffee Smoke](https://4hmet4car-32-coffee-smoke-shader.vercel.app/)<br>
-33- [Hologram](https://4hmet4car-33-hologram-shader.vercel.app/)<br>
-34- [Fireworks](https://4hmet4car-34-fireworks-shaders.vercel.app/)<br>
-35- [Lights Shading](https://4hmet4car-35-lights-shading-shaders.vercel.app/)<br>
-36- [Raging Sea Shading](https://4hmet4car-36-raging-sea-shading-shaders.vercel.app/)<br>
-37- [Halftone Shading](https://4hmet4car-37-halftone-shading-shaders.vercel.app/)<br>
-38- [Earth](https://4hmet4car-38-earth-shaders.vercel.app/)<br>
-39- [Particles Cursor Animation](https://4hmet4car-39-particles-cursor-animation-shader.vercel.app/)<br>
-40- [Particles Morphing](https://4hmet4car-40-particles-morphing-shader.vercel.app/)<br>
-
-## WebGPU & TSL
-
-### Chapter 01 - Fundamentals
-
-01- [Introduction to WebGPU and TSL](https://4hmet4car-68-introduction-to-webgpu-tsl.vercel.app/)<br>
-02- [Node Materials](https://4hmet4car-69-tsl-node-materials.vercel.app/)<br>
-
----
-> ⚠️ The deployment workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
+# Build for production in the dist/ directory
+npm run build
+```
