@@ -1,3 +1,4 @@
+import { mx_noise_vec3, uv, vertexStage } from 'three/tsl'
 import * as THREE from 'three/webgpu'
 import Experience from "../Experience.js"
 
@@ -9,19 +10,37 @@ export default class Environment
         this.resources = this.experience.resources
         this.scene = this.experience.scene
 
+        this.setFloorGeometry()
+        this.setFloorMaterial()
         this.setFloor()
         this.setLights()
     }
 
-    setFloor()
+    setFloorGeometry()
+    {
+        this.floorGeometry = new THREE.PlaneGeometry(10, 10, 10, 10)
+    }
+
+    setFloorMaterial()
     {
         this.floorTexture = this.resources.items.floorTexture
         this.floorTexture.colorSpace = THREE.SRGBColorSpace
+        this.floorMaterial = new THREE.MeshStandardNodeMaterial({
+            map: this.floorTexture,
+            transparent: true
+        })
 
-        this.floor = new THREE.Mesh(
-            new THREE.PlaneGeometry(10, 10),
-            new THREE.MeshStandardMaterial({ map: this.floorTexture })
-        )
+
+        const fade = uv().sub(0.5).length().smoothstep(0.5, 0.2)
+        this.floorMaterial.opacityNode = fade
+
+        const noise = vertexStage(mx_noise_vec3(uv().mul(4)))
+        this.floorMaterial.colorNode = noise
+    }
+
+    setFloor()
+    {
+        this.floor = new THREE.Mesh(this.floorGeometry, this.floorMaterial)
         this.floor.rotation.x = - Math.PI * 0.5
         this.floor.receiveShadow = true
         this.scene.add(this.floor)

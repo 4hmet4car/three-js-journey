@@ -1,7 +1,7 @@
 import * as THREE from 'three/webgpu'
 import Experience from "../Experience.js"
 
-import { checker, uv, float, vec3 } from 'three/tsl'
+import { sin, positionLocal, time, vec2, checker, uv, float, vec3 } from 'three/tsl'
 
 
 export default class Dummy
@@ -29,8 +29,18 @@ export default class Dummy
             roughness: 0.25,
         })
 
-        this.material.colorNode = vec3(1, 0.4, 0.1)
-        this.material.roughnessNode = float(0)
+        this.pattern = checker(
+            uv()
+                .add(time.mul(0.02))
+                .mul(vec2(40, 5))
+        )
+
+        this.material.colorNode = vec3(this.pattern, 0, 0)
+
+        this.material.roughnessNode = this.pattern
+
+        const zOffset = sin(time.add(positionLocal.y.mul(3))).mul(0.4)
+        this.material.positionNode = positionLocal.add(vec3(0, 0, zOffset))
     }
 
     setMesh()
