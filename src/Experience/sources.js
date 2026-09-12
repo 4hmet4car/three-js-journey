@@ -56,9 +56,9 @@ export default [
     //     type: 'gltfModel',
     //     path: '/suzanne.glb'
     // },
-    // {
-    //     name: 'brainStemModel',
-    //     type: 'dracoModel',
-    //     path: '/models/BrainStem.glb'
-    // },
+    {
+        name: 'models',
+        type: 'dracoModel',
+        path: '/models.glb'
+    },
 ]

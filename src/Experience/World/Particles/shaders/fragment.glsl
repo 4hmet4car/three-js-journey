@@ -1,6 +1,9 @@
 void main()
 {
-    gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
+    float alpha = 0.05 / length(gl_PointCoord - 0.5);
+    alpha = smoothstep(0.1, 1.0, alpha);
+    
+    gl_FragColor = vec4(1.0, 1.0, 1.0, alpha);
     #include <tonemapping_fragment>
     #include <colorspace_fragment>
 }

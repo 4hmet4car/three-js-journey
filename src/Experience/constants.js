@@ -19,11 +19,9 @@ export const RENDERER = {
 }
 
 export const PARTICLES = {
-    GEOMETRY: {
-        SPHERE_RADIUS: 3,
-    },
+    GEOMETRY: {},
     MATERIAL: {
-        PARTICLE_SIZE: 0.4
+        PARTICLE_SIZE: 0.3
     },
 }
 
