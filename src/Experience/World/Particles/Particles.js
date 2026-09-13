@@ -43,15 +43,20 @@ export default class Particles
 
     normalizeModelPositionAttributeArrayLength()
     {
-        this.maxCount = 0
-
-        for (const positionAttribute of this.modelPositionAttributes)
+        this.maxCount = this.modelPositionAttributes.reduce((previous, current) =>
         {
-            if (positionAttribute.count > this.maxCount)
-            {
-                this.maxCount = positionAttribute.count
-            }
-        }
+            return previous < current.count ? current.count : previous
+        }, 0)
+
+        // this.maxCount = 0
+
+        // for (const positionAttribute of this.modelPositionAttributes)
+        // {
+        //     if (positionAttribute.count > this.maxCount)
+        //     {
+        //         this.maxCount = positionAttribute.count
+        //     }
+        // }
 
         this.normalizedPositionAttributes = []
 
@@ -71,7 +76,7 @@ export default class Particles
                     newPositionAttributeArray[i3 + 2] = originalPositionAttributeArray[i3 + 2]
                 }
                 else    
-                {   
+                {
                     const randomIndex = Math.floor(Math.random() * positionAttribute.count) * 3
 
                     newPositionAttributeArray[i3 + 0] = originalPositionAttributeArray[randomIndex + 0]
@@ -90,6 +95,7 @@ export default class Particles
     {
         this.geometry = new THREE.BufferGeometry()
         this.geometry.setAttribute('position', this.normalizedPositionAttributes[1])
+        this.geometry.setAttribute('aPositionTarget', this.normalizedPositionAttributes[3])
     }
 
     setMaterial()
