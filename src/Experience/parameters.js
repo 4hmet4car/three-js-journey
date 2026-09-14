@@ -9,9 +9,9 @@ export const rendererParameters = {
     clearColor: '#160920',
 }
 
-// export const particlesParameters = {
-//     pictureTexture: 1,
-// }
+export const particlesParameters = {
+    transitionProgress: 0,
+}
 
 // export const sunParameters = {
 //     phi: 1.43,

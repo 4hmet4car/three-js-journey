@@ -4,6 +4,7 @@ import Experience from "../../Experience.js"
 // console.log('ok')
 
 import { PARTICLES } from '../../constants.js'
+import { particlesParameters } from '../../parameters.js'
 import particlesFragmentShader from './shaders/fragment.glsl'
 import particlesVertexShader from './shaders/vertex.glsl'
 
@@ -15,6 +16,7 @@ export default class Particles
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.debug = this.experience.debug
 
         this.setModels()
         this.extractModelPositionAttributes()
@@ -23,6 +25,7 @@ export default class Particles
         this.setGeometry()
         this.setMaterial()
         this.setPoints()
+        this.setDebug()
     }
 
     setModels()
@@ -88,6 +91,16 @@ export default class Particles
             this.normalizedPositionAttributes.push(new THREE.Float32BufferAttribute(newPositionAttributeArray, 3))
         }
 
+        let cube = new Float32Array(this.maxCount * 3)
+        for (let i = 0; i < this.maxCount; i++)
+        {
+            const i3 = i * 3
+            cube[i3 + 0] = (Math.random() - 0.5) * 2
+            cube[i3 + 1] = (Math.random() - 0.5) * 2
+            cube[i3 + 2] = (Math.random() - 0.5) * 2
+        }
+        this.normalizedPositionAttributes.push(new THREE.Float32BufferAttribute(cube, 3))
+
         console.log(this.normalizedPositionAttributes)
     }
 
@@ -108,7 +121,8 @@ export default class Particles
             uniforms:
             {
                 uSize: new THREE.Uniform(PARTICLES.MATERIAL.PARTICLE_SIZE),
-                uResolution: new THREE.Uniform(this.sizes.resolution)
+                uResolution: new THREE.Uniform(this.sizes.resolution),
+                uProgress: new THREE.Uniform(particlesParameters.transitionProgress),
             }
         })
     }
@@ -117,6 +131,24 @@ export default class Particles
     {
         this.points = new THREE.Points(this.geometry, this.material)
         this.scene.add(this.points)
+    }
+
+    setDebug()
+    {
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder("Particles")
+
+            this.debugFolder
+                .add(particlesParameters, 'transitionProgress')
+                .min(0)
+                .max(1)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.material.uniforms.uProgress.value = particlesParameters.transitionProgress
+                })
+        }
     }
 
     resize()
