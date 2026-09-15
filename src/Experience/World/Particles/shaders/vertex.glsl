@@ -1,8 +1,12 @@
 attribute vec3 aPositionTarget;
+attribute float aRandomSize;
 
 uniform vec2 uResolution;
 uniform float uSize;
 uniform float uProgress;
+uniform vec3 uColorA;
+uniform vec3 uColorB;
+uniform float uTime;
 
 varying vec3 vColor;
 
@@ -23,6 +27,10 @@ void main()
 
     float progress = smoothstep(delay, end, uProgress);
     vec3 mixedPosition = mix(position, aPositionTarget, progress);
+
+    mixedPosition.x += sin(uTime * 0.1) * noise * 0.1;
+    mixedPosition.y += sin((0.5 + uTime) * 0.1) * noise * 0.1;
+    mixedPosition.z += sin((0.75 + uTime) * 0.1) * noise * 0.1;
     
     // Final position
     vec4 modelPosition = modelMatrix * vec4(mixedPosition, 1.0);
@@ -31,9 +39,9 @@ void main()
     gl_Position = projectedPosition;
 
     // Point size
-    gl_PointSize = uSize * uResolution.y;
+    gl_PointSize = aRandomSize * uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
 
     // Varying
-    vColor = vec3(noise);
+    vColor = mix(uColorA, uColorB, noise);
 }

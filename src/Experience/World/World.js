@@ -28,9 +28,9 @@ export default class World
 
     update()
     {
-        // if (this.particles)
-        // {
-        //     this.particles.update()
-        // }
+        if (this.particles)
+        {
+            this.particles.update()
+        }
     }
 }

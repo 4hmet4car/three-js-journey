@@ -11,6 +11,8 @@ export const rendererParameters = {
 
 export const particlesParameters = {
     transitionProgress: 0,
+    colorA: '#ff7300',
+    colorB: '#0097ff',
 }
 
 // export const sunParameters = {

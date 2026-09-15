@@ -21,7 +21,7 @@ export const RENDERER = {
 export const PARTICLES = {
     GEOMETRY: {},
     MATERIAL: {
-        PARTICLE_SIZE: 0.2
+        PARTICLE_SIZE: 0.4
     },
 }
 
