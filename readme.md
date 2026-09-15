@@ -59,6 +59,7 @@ Deployment is handled by GitHub Actions.<br>
 38- [Earth](https://4hmet4car-38-earth-shaders.vercel.app/)<br>
 39- [Particles Cursor Animation](https://4hmet4car-39-particles-cursor-animation-shader.vercel.app/)<br>
 40- [Particles Morphing](https://4hmet4car-40-particles-morphing-shader.vercel.app/)<br>
+41- [GPGPU Flow Field Particles](https://4hmet4car-41-gpgpu-flow-field-particles-shaders.vercel.app/)<br>
 
 ## WebGPU & TSL
 
