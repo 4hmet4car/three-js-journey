@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import Experience from "../../Experience.js"
 
 import { particlesParameters } from '../../parameters.js'
+import BaseGeometry from './BaseGeometry.js'
+import GPGPU from './GPGPU.js'
 import particlesFragmentShader from './shaders/fragment.glsl'
 import particlesVertexShader from './shaders/vertex.glsl'
 
@@ -14,15 +16,28 @@ export default class Particles
         this.scene = this.experience.scene
         this.debug = this.experience.debug
 
+        this.setBaseGeometry()
+        this.setGPGPU()
+
         this.setGeometry()
         this.setMaterial()
         this.setPoints()
         this.setDebug()
     }
 
+    setBaseGeometry()
+    {
+        this.baseGeometry = new BaseGeometry()
+    }
+
+    setGPGPU()
+    {
+        this.GPGPU = new GPGPU(this.baseGeometry.vertexCount)
+    }
+
     setGeometry()
     {
-        this.geometry = new THREE.SphereGeometry(3)
+        this.geometry = this.baseGeometry.instance
     }
 
     setMaterial()
