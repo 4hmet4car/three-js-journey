@@ -1,4 +1,8 @@
 void main()
 {
-    gl_FragColor = vec4(1.0, 0.0, 0.0, 1.0);
+    vec2 uv = gl_FragCoord.xy / resolution.xy;
+    vec4 positions = texture(uParticlesPositions, uv);
+    positions.y += 0.001;
+    
+    gl_FragColor = positions;
 }

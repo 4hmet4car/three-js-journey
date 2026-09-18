@@ -32,7 +32,7 @@ export default class Particles
 
     setGPGPU()
     {
-        this.GPGPU = new GPGPU(this.baseGeometry.vertexCount)
+        this.GPGPU = new GPGPU(this.baseGeometry.vertexCount, this.baseGeometry.positionsArray)
     }
 
     setGeometry()
@@ -84,6 +84,6 @@ export default class Particles
 
     update()
     {
-
+        this.GPGPU.update()
     }
 }

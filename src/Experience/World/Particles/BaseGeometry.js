@@ -9,6 +9,7 @@ export default class BaseGeometry
 
         this.setIntance()
         this.getVertexCount()
+        this.getPositionsArray()
     }
 
     setIntance()
@@ -19,5 +20,10 @@ export default class BaseGeometry
     getVertexCount()
     {
         this.vertexCount = this.instance.attributes.position.count
+    }
+
+    getPositionsArray()
+    {
+        this.positionsArray = this.instance.attributes.position.array
     }
 }
