@@ -4,6 +4,7 @@ import Experience from "../../Experience.js"
 import { particlesParameters } from '../../parameters.js'
 import BaseGeometry from './BaseGeometry.js'
 import GPGPU from './GPGPU.js'
+import ParticlesBufferGeometry from './ParticlesBufferGeometry.js'
 import particlesFragmentShader from './shaders/fragment.glsl'
 import particlesVertexShader from './shaders/vertex.glsl'
 
@@ -18,6 +19,7 @@ export default class Particles
 
         this.setBaseGeometry()
         this.setGPGPU()
+        this.setBufferGeometry()
 
         this.setGeometry()
         this.setMaterial()
@@ -35,9 +37,14 @@ export default class Particles
         this.GPGPU = new GPGPU(this.baseGeometry.vertexCount, this.baseGeometry.positionsArray)
     }
 
+    setBufferGeometry()
+    {
+        this.bufferGeometry = new ParticlesBufferGeometry(this.baseGeometry.vertexCount, this.GPGPU.size)
+    }
+
     setGeometry()
     {
-        this.geometry = this.baseGeometry.instance
+        this.geometry = this.bufferGeometry.instance
     }
 
     setMaterial()
@@ -48,7 +55,8 @@ export default class Particles
             uniforms:
             {
                 uSize: new THREE.Uniform(particlesParameters.particleSize),
-                uResolution: new THREE.Uniform(this.sizes.resolution)
+                uResolution: new THREE.Uniform(this.sizes.resolution),
+                uParticlesPositionTexture: new THREE.Uniform()
             }
         })
     }
@@ -85,5 +93,6 @@ export default class Particles
     update()
     {
         this.GPGPU.update()
+        this.material.uniforms.uParticlesPositionTexture.value = this.GPGPU.computationTextureOutput
     }
 }

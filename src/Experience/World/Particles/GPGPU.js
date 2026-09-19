@@ -93,5 +93,9 @@ export default class GPGPU
     update()
     {
         this.computationRenderer.compute()
+        // This is how you get the result of the computation as a texture
+        this.computationTextureOutput = this.computationRenderer
+                                            .getCurrentRenderTarget(this.particlesPositionVariable)
+                                            .texture
     }
 }
