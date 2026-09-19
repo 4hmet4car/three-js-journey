@@ -2,11 +2,14 @@ import * as THREE from 'three'
 
 export default class ParticlesBufferGeometry
 {
-    constructor(vertexCount, size)
+    constructor(vertexCount, size, colorAttribute)
     {
         this.setParticlesUVArray(vertexCount, size)
+        this.setParticlesSizeArray(vertexCount)
         this.setInstance(vertexCount)
         this.setUVAttribute()
+        this.setColorAttribute(colorAttribute)
+        this.setRandomSizeAttribute(vertexCount)
     }
 
     setParticlesUVArray(vertexCount, size)
@@ -26,6 +29,16 @@ export default class ParticlesBufferGeometry
         }
     }
 
+    setParticlesSizeArray(vertexCount)
+    {
+        this.particlesSizeArray = new Float32Array(vertexCount)
+
+        for (let i = 0; i < vertexCount; i++)
+        {
+            this.particlesSizeArray[i] = Math.random()
+        }
+    }
+
     setInstance(vertexCount)
     {
         this.instance = new THREE.BufferGeometry()
@@ -35,5 +48,15 @@ export default class ParticlesBufferGeometry
     setUVAttribute()
     {
         this.instance.setAttribute('aParticlesUV', new THREE.BufferAttribute(this.particlesUVArray, 2))
+    }
+
+    setColorAttribute(colorAttribute)
+    {
+        this.instance.setAttribute('aParticlesColor', colorAttribute)
+    }
+
+    setRandomSizeAttribute()
+    {
+        this.instance.setAttribute('aParticlesSize', new THREE.BufferAttribute(this.particlesSizeArray, 1))
     }
 }

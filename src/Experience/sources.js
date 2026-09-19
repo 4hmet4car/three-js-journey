@@ -57,7 +57,7 @@ export default [
     //     path: '/suzanne.glb'
     // },
     {
-        name: 'models',
+        name: 'model',
         type: 'dracoModel',
         path: '/model.glb'
     },

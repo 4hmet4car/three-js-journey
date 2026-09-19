@@ -39,7 +39,11 @@ export default class Particles
 
     setBufferGeometry()
     {
-        this.bufferGeometry = new ParticlesBufferGeometry(this.baseGeometry.vertexCount, this.GPGPU.size)
+        this.bufferGeometry = new ParticlesBufferGeometry(
+            this.baseGeometry.vertexCount,
+            this.GPGPU.size,
+            this.baseGeometry.instance.attributes.color
+        )
     }
 
     setGeometry()
@@ -50,6 +54,7 @@ export default class Particles
     setMaterial()
     {
         this.material = new THREE.ShaderMaterial({
+            vertexColors: true,
             vertexShader: particlesVertexShader,
             fragmentShader: particlesFragmentShader,
             uniforms:

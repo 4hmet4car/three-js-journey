@@ -1,9 +1,13 @@
 import * as THREE from 'three'
+import Experience from '../../Experience.js'
 
 export default class BaseGeometry
 {
     constructor()
     {
+        this.experience = new Experience()
+        this.resources = this.experience.resources
+        
         this.setIntance()
         this.getVertexCount()
         this.getPositionsArray()
@@ -11,7 +15,7 @@ export default class BaseGeometry
 
     setIntance()
     {
-        this.instance = new THREE.SphereGeometry(3)
+        this.instance = this.resources.items.model.scene.children[0].geometry
     }
 
     getVertexCount()

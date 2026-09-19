@@ -10,7 +10,7 @@ export const rendererParameters = {
 }
 
 export const particlesParameters = {
-    particleSize: 0.4,
+    particleSize: 0.07,
 }
 
 // export const sunParameters = {

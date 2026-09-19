@@ -1,4 +1,6 @@
 attribute vec2 aParticlesUV;
+attribute vec3 aParticlesColor;
+attribute float aParticlesSize;
 
 uniform vec2 uResolution;
 uniform float uSize;
@@ -17,9 +19,9 @@ void main()
     gl_Position = projectedPosition;
 
     // Point size
-    gl_PointSize = uSize * uResolution.y;
+    gl_PointSize = aParticlesSize * uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
 
     // Varyings
-    vColor = vec3(1.0);
+    vColor = aParticlesColor;
 }
