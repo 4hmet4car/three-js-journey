@@ -13,6 +13,10 @@ export const particlesParameters = {
     particleSize: 0.07,
 }
 
+export const GPGPUParameters = {
+    flowFieldInfluence: 0.25,
+}
+
 // export const sunParameters = {
 //     phi: 1.43,
 //     theta: -2.8,
