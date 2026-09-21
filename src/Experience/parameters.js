@@ -14,7 +14,10 @@ export const particlesParameters = {
 }
 
 export const GPGPUParameters = {
-    flowFieldInfluence: 0.25,
+    debugPlane: false,
+    flowFieldInfluence: 0.5,
+    flowFieldStrength: 2,
+    flowFieldFrequency: 0.5,
 }
 
 // export const sunParameters = {

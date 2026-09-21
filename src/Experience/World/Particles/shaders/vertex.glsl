@@ -18,8 +18,13 @@ void main()
     vec4 projectedPosition = projectionMatrix * viewPosition;
     gl_Position = projectedPosition;
 
+    // Size
+    float sizeIn = smoothstep(0.0, 0.1, particlePosition.a);
+    float sizeOut = 1.0 - smoothstep(0.7, 1.0, particlePosition.a);
+    float size = min(sizeIn, sizeOut);
+
     // Point size
-    gl_PointSize = aParticlesSize * uSize * uResolution.y;
+    gl_PointSize = size * aParticlesSize * uSize * uResolution.y;
     gl_PointSize *= (1.0 / - viewPosition.z);
 
     // Varyings

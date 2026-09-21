@@ -71,6 +71,8 @@ export default class GPGPU
         this.particlesPositionVariable.material.uniforms.uDeltaTime = new THREE.Uniform(0)
         this.particlesPositionVariable.material.uniforms.uInitialParticlesPositions = new THREE.Uniform(this.baseParticlesPositionTexture)
         this.particlesPositionVariable.material.uniforms.uFlowFieldInfluence = new THREE.Uniform(GPGPUParameters.flowFieldInfluence)
+        this.particlesPositionVariable.material.uniforms.uFlowFieldStrength = new THREE.Uniform(GPGPUParameters.flowFieldStrength)
+        this.particlesPositionVariable.material.uniforms.uFlowFieldFrequency = new THREE.Uniform(GPGPUParameters.flowFieldFrequency)
     }
 
     initializeCompute()
@@ -94,6 +96,26 @@ export default class GPGPU
                     this.particlesPositionVariable.material.uniforms.uFlowFieldInfluence.value = GPGPUParameters.flowFieldInfluence
                 })
 
+            this.debugFolder
+                .add(GPGPUParameters, 'flowFieldStrength')
+                .min(0)
+                .max(10)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.particlesPositionVariable.material.uniforms.uFlowFieldStrength.value = GPGPUParameters.flowFieldStrength
+                })
+
+            this.debugFolder
+                .add(GPGPUParameters, 'flowFieldFrequency')
+                .min(0)
+                .max(1)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.particlesPositionVariable.material.uniforms.uFlowFieldFrequency.value = GPGPUParameters.flowFieldFrequency
+                })
+
             /**
              * Debug plane
              */
@@ -106,15 +128,23 @@ export default class GPGPU
                 new THREE.PlaneGeometry(3, 3),
                 new THREE.MeshBasicMaterial({ map: this.computationTextureOutput })
             )
+            this.debugPlane.visible = GPGPUParameters.debugPlane
             this.debugPlane.position.x = 3
             this.scene.add(this.debugPlane)
+
+            this.debugFolder
+                .add(GPGPUParameters, 'debugPlane')
+                .onChange(() =>
+                {
+                    this.debugPlane.visible = GPGPUParameters.debugPlane
+                })
         }
     }
 
     update()
     {
         this.particlesPositionVariable.material.uniforms.uTime.value = this.time.secondsElapsed
-        this.particlesPositionVariable.material.uniforms.uDeltaTime.value = this.time.delta
+        this.particlesPositionVariable.material.uniforms.uDeltaTime.value = this.time.delta / 1000
         this.computationRenderer.compute()
         // This is how you get the result of the computation as a texture
         this.computationTextureOutput = this.computationRenderer
