@@ -1,7 +1,10 @@
 import * as THREE from 'three'
+import CustomShaderMaterial from 'three-custom-shader-material/vanilla'
+import { WOBBLY_SPHERE } from '../../constants.js'
 import Experience from "../../Experience.js"
 import { wobblySphereParameters } from "../../parameters.js"
-import { WOBBLY_SPHERE } from '../../constants.js'
+import wobbleFragmentShader from './shaders/fragment.glsl'
+import wobbleVertexShader from './shaders/vertex.glsl'
 
 export default class WobblySphere
 {
@@ -19,7 +22,13 @@ export default class WobblySphere
 
     setMaterial()
     {
-        this.material = new THREE.MeshPhysicalMaterial({
+        this.material = new CustomShaderMaterial({
+            // CSM
+            baseMaterial: THREE.MeshPhysicalMaterial,
+            vertexShader: wobbleVertexShader,
+            fragmentShader: wobbleFragmentShader,
+
+            // MeshPhysicalMaterial
             metalness: wobblySphereParameters.material.metalness,
             roughness: wobblySphereParameters.material.roughness,
             color: wobblySphereParameters.material.color,
