@@ -109,7 +109,7 @@ export default class Resources extends EventEmitter
                     }
                     this.loaders.RGBELoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file, "%cHDR Texture Loaded: ", "background-color: orange")
+                        this.sourceLoaded(source, file, "%cHDR Texture Loaded: ", "background-color: firebrick")
                     })
                     break;
 
