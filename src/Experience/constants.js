@@ -28,6 +28,21 @@ export const RENDERER = {
     }
 }
 
+export const WOBBLY_SUZAN = {
+    GEOMETRY: {
+        RADIUS: 2.5,
+        DETAIL_NUMBER: 50,
+    },
+    MATERIAL: {
+        TRANSPARENT: true,
+    },
+    MESH: {
+        POSITION_X: 3,
+        RECEIVE_SHADOW: true,
+        CAST_SHADOW: true,
+    }
+}
+
 export const WOBBLY_SPHERE = {
     GEOMETRY: {
         RADIUS: 2.5,
@@ -37,6 +52,7 @@ export const WOBBLY_SPHERE = {
         TRANSPARENT: true,
     },
     MESH: {
+        POSITION_X: -WOBBLY_SUZAN.MESH.POSITION_X,
         RECEIVE_SHADOW: true,
         CAST_SHADOW: true,
     }

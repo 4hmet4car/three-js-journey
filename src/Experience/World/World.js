@@ -1,6 +1,7 @@
 import Experience from "../Experience.js"
 import Environment from "./Environment.js"
 import WobblySphere from "./WobblySphere/WobblySphere.js"
+import WobblySuzan from "./WobblySuzan/WobblySuzan.js"
 
 export default class World
 {
@@ -15,6 +16,7 @@ export default class World
             // Setup
             this.environment = new Environment()
             this.wobblySphere = new WobblySphere()
+            this.wobblySuzan = new WobblySuzan()
         })
 
         this.resources.startLoading()
@@ -30,9 +32,10 @@ export default class World
 
     update()
     {
-        // if (this.particles)
-        // {
-        //     this.particles.update()
-        // }
+        if (this.wobblySphere && this.wobblySuzan)
+        {
+            this.wobblySphere.update()
+            this.wobblySuzan.update()
+        }
     }
 }

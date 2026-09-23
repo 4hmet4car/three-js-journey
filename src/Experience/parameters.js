@@ -11,6 +11,45 @@ export const rendererParameters = {
 
 export const wobblySphereParameters = {
     material: {
+        uniforms: {
+            uPositionFrequency: 0.5,
+            uTimeFrequency: 0.4,
+            uStrength: 0.3,
+            
+            uWarpPositionFrequency: 0.38,
+            uWarpTimeFrequency: 0.12,
+            uWarpStrength: 1.7,
+
+            uColorA: '#0000ff',
+            uColorB: '#ff0000',
+        },
+
+        metalness: 0,
+        roughness: 0.5,
+        color: '#ffffff',
+        transmission: 0,
+        ior: 1.5,
+        thickness: 1.5,
+        transparent: true,
+        wireframe: false
+    },
+}
+
+export const wobblySuzanParameters = {
+    material: {
+        uniforms: {
+            uPositionFrequency: 0.5,
+            uTimeFrequency: 0.4,
+            uStrength: 0.3,
+            
+            uWarpPositionFrequency: 0.38,
+            uWarpTimeFrequency: 0.12,
+            uWarpStrength: 1.7,
+
+            uColorA: '#0000ff',
+            uColorB: '#ff0000',
+        },
+
         metalness: 0,
         roughness: 0.5,
         color: '#ffffff',
