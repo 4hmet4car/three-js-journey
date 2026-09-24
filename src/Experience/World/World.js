@@ -30,10 +30,9 @@ export default class World
 
     update()
     {
-        // if (this.wobblySphere && this.wobblySuzan)
-        // {
-        //     this.wobblySphere.update()
-        //     this.wobblySuzan.update()
-        // }
+        if (this.gears)
+        {
+            this.gears.update()
+        }
     }
 }

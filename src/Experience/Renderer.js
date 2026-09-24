@@ -32,8 +32,9 @@ export default class Renderer
         this.instance.setClearColor(rendererParameters.clearColor)
         this.instance.shadowMap.enabled = RENDERER.SHADOWMAP.ENABLED
         this.instance.shadowMap.type = RENDERER.SHADOWMAP.TYPE
-        this.instance.toneMapping = RENDERER.TONEMAPPING.TYPE
-        this.instance.toneMappingExposure = RENDERER.TONEMAPPING.EXPOSURE
+        // this.instance.toneMapping = RENDERER.TONEMAPPING.TYPE
+        // this.instance.toneMappingExposure = RENDERER.TONEMAPPING.EXPOSURE
+        this.instance.outputColorSpace = RENDERER.OUTPUT_COLOR_SPACE
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }

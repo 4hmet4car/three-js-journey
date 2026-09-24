@@ -18,6 +18,7 @@ export const ORBIT_CONTROLS = {
 
 export const RENDERER = {
     ANTIALIAS: true,
+    OUTPUT_COLOR_SPACE: THREE.LinearSRGBColorSpace,
     SHADOWMAP: {
         ENABLED: true,
         TYPE: THREE.PCFShadowMap,
@@ -29,12 +30,15 @@ export const RENDERER = {
 }
 
 export const GEARS = {
-    GEOMETRY: {
-        RADIUS: 2.5,
-        DETAIL_NUMBER: 5,
-    },
     MATERIAL: {
         TRANSPARENT: true,
+    },
+    ANIMATION: {
+        ROTATION_Y: 0.1
+    },
+    MESH: {
+        CAST_SHADOW: true,
+        RECEIVE_SHADOW: true,
     },
 }
 
