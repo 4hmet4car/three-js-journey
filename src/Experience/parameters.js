@@ -16,6 +16,13 @@ export const gearsParameters = {
         envMapIntensity: 0.5,
         color: '#858080',
     },
+
+    slicedMaterial: {
+        uniforms: {
+            uSliceStart: 1.0,
+            uSliceArc: 1.5,
+        },
+    },
 }
 
 // export const particlesParameters = {
