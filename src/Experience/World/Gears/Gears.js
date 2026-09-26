@@ -19,6 +19,7 @@ export default class Gears
 
         this.setModel()
         this.setUniforms()
+        this.setPatchMap()
         this.setMaterials()
         this.addModel()
         this.setDebug()
@@ -35,6 +36,21 @@ export default class Gears
         {
             uSliceStart: new THREE.Uniform(gearsParameters.slicedMaterial.uniforms.uSliceStart),
             uSliceArc: new THREE.Uniform(gearsParameters.slicedMaterial.uniforms.uSliceArc),
+        }
+    }
+
+    setPatchMap()
+    {
+        this.patchMap = {
+            csm_Slice: {
+                '#include <colorspace_fragment>': 
+                `
+                    #include <colorspace_fragment>
+                    
+                    if(!gl_FrontFacing)
+                        gl_FragColor = vec4(0.75, 0.15, 0.3, 1.0);
+                `
+            },
         }
     }
 
@@ -55,6 +71,7 @@ export default class Gears
             vertexShader: slicedVertexShader,
             fragmentShader: slicedFragmentShader,
             uniforms: this.uniforms,
+            patchMap: this.patchMap,
 
             // MeshStandardMaterial
             side: THREE.DoubleSide,
@@ -64,6 +81,19 @@ export default class Gears
             color: gearsParameters.material.color,
         })
 
+        // This is the modified depth material
+        this.slicedDepthMaterial = new CustomShaderMaterial({
+            // CSM
+            baseMaterial: THREE.MeshDepthMaterial,
+            vertexShader: slicedVertexShader,
+            fragmentShader: slicedFragmentShader,
+            uniforms: this.uniforms,
+            patchMap: this.patchMap,
+
+            // MeshDepthMaterial
+            depthPacking: THREE.RGBADepthPacking
+        })
+
         this.model.traverse((child) =>
         {
             if (child.isMesh)
@@ -71,6 +101,7 @@ export default class Gears
                 if (child.name === 'outerHull')
                 {
                     child.material = this.slicedMaterial
+                    child.customDepthMaterial = this.slicedDepthMaterial
                 } else
                 {
                     child.material = this.material
@@ -117,6 +148,6 @@ export default class Gears
 
     update()
     {
-        // this.model.rotation.y = this.time.secondsElapsed * GEARS.ANIMATION.ROTATION_Y
+        this.model.rotation.y = this.time.secondsElapsed * GEARS.ANIMATION.ROTATION_Y
     }
 }
