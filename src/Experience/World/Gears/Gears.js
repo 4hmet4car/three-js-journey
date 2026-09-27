@@ -36,6 +36,8 @@ export default class Gears
         {
             uSliceStart: new THREE.Uniform(gearsParameters.slicedMaterial.uniforms.uSliceStart),
             uSliceArc: new THREE.Uniform(gearsParameters.slicedMaterial.uniforms.uSliceArc),
+            uHorizontalCut: new THREE.Uniform(gearsParameters.slicedMaterial.uniforms.uHorizontalCut),
+            uTime: new THREE.Uniform(0),
         }
     }
 
@@ -143,11 +145,22 @@ export default class Gears
                 {
                     this.uniforms.uSliceArc.value = gearsParameters.slicedMaterial.uniforms.uSliceArc
                 })
+
+            this.debugFolder
+                .add(gearsParameters.slicedMaterial.uniforms, 'uHorizontalCut')
+                .min(-1)
+                .max(1)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.uniforms.uHorizontalCut.value = gearsParameters.slicedMaterial.uniforms.uHorizontalCut
+                })
         }
     }
 
     update()
     {
         this.model.rotation.y = this.time.secondsElapsed * GEARS.ANIMATION.ROTATION_Y
+        this.slicedMaterial.uniforms.uTime.value = this.time.secondsElapsed
     }
 }

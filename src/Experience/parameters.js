@@ -20,7 +20,8 @@ export const gearsParameters = {
     slicedMaterial: {
         uniforms: {
             uSliceStart: 1.0,
-            uSliceArc: 1.5,
+            uSliceArc: 0,
+            uHorizontalCut: 0.5,
         },
     },
 }

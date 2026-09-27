@@ -1,5 +1,7 @@
 uniform float uSliceStart;
 uniform float uSliceArc;
+uniform float uHorizontalCut;
+uniform float uTime;
 
 varying vec3 vPosition;
 
@@ -16,7 +18,10 @@ void main()
 
     float csm_Slice;
 
-    // float noise = simplexNoise3d(vPosition);
+    float noise = simplexNoise3d(vec3(vPosition.xz, uTime * 0.05) * 2.0) * 0.05;
+    
+    if(vPosition.y > uHorizontalCut + noise)
+        discard;
 
-    // csm_FragColor = vec4(noise);
+        // csm_FragColor = vec4(noise);
 }
