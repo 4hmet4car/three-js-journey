@@ -62,6 +62,7 @@ Deployment is handled by GitHub Actions.<br>
 41- [GPGPU Flow Field Particles](https://4hmet4car-41-gpgpu-flow-field-particles-shaders.vercel.app/)<br>
 42- [Wobbly Sphere](https://4hmet4car-42-wobbly-sphere-shader.vercel.app/)<br>
 43- [Sliced Model](https://4hmet4car-43-sliced-model-shader.vercel.app/)<br>
+44- [Procedural Terrain](https://44-procedural-terrain-shader.vercel.app/)<br>
 
 ## WebGPU & TSL
 
