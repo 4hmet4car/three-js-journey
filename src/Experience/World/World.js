@@ -1,4 +1,5 @@
 import Experience from "../Experience.js"
+import Board from "./Board.js"
 import Environment from "./Environment.js"
 import Terrain from "./Terrain/Terrain.js"
 
@@ -14,6 +15,7 @@ export default class World
         {
             // Setup
             this.environment = new Environment()
+            this.board = new Board()
             this.terrain = new Terrain()
         })
 

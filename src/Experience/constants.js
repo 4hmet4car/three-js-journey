@@ -29,12 +29,41 @@ export const RENDERER = {
     }
 }
 
-export const GEARS = {
+export const TERRAIN = {
+    GEOMETRY: {
+        WIDTH: 10,
+        HEIGHT: 10,
+        WIDTH_SEGMENTS: 500,
+        HEIGHT_SEGMENTS: 500,
+        ROTATION_X: -Math.PI * 0.5,
+    },
     MATERIAL: {
         TRANSPARENT: true,
     },
     ANIMATION: {
         ROTATION_Y: 0.1
+    },
+    MESH: {
+        CAST_SHADOW: true,
+        RECEIVE_SHADOW: true,
+    },
+}
+
+export const BOARD = {
+    BOARD_FILL: {
+        WIDTH: 11,
+        HEIGHT: 2,
+        DEPTH: 11,
+    },
+    BOARD_HOLE: {
+        WIDTH: 10,
+        HEIGHT: 2.1,
+        DEPTH: 10,
+    },
+    MATERIAL: {
+        COLOR: '#ffffff',
+        METALNESS: 0,
+        ROUGHNESS: 0.3
     },
     MESH: {
         CAST_SHADOW: true,
