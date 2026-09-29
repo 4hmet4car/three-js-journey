@@ -9,19 +9,21 @@ export const rendererParameters = {
     clearColor: '#29191f',
 }
 
-export const gearsParameters = {
-    material: {
-        metalness: 0.5,
-        roughness: 0.25,
-        envMapIntensity: 0.5,
-        color: '#858080',
-    },
-
-    slicedMaterial: {
+export const terrainParameters = {
+    customShaderMaterial: {
         uniforms: {
-            uSliceStart: 1.0,
-            uSliceArc: 0,
-            uHorizontalCut: 0.5,
+            uPositionFrequency: 0.2,
+            uDetailAmount: 7,
+            uStrength: 1.8,
+            uWarpFrequency: 5.0,
+            uWarpStrength: 0,
+
+            uColorWaterDeep: '#002b3d',
+            uColorWaterSurface: '#66a8ff',
+            uColorSand: '#ffe894',
+            uColorGrass: '#85d534',
+            uColorSnow: '#ffffff',
+            uColorRock: '#bfbd8d',
         },
     },
 }

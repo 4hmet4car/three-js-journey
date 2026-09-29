@@ -32,9 +32,9 @@ export default class World
 
     update()
     {
-        // if (this.gears)
-        // {
-        //     this.gears.update()
-        // }
+        if (this.terrain)
+        {
+            this.terrain.update()
+        }
     }
 }

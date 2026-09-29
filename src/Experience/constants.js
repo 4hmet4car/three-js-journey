@@ -38,7 +38,12 @@ export const TERRAIN = {
         ROTATION_X: -Math.PI * 0.5,
     },
     MATERIAL: {
-        TRANSPARENT: true,
+        CUSTOM_SHADER_MATERIAL: {},
+        BASE_MATERIAL: {
+            METALNESS: 0,
+            ROUGHNESS: 0.5,
+            COLOR: '#85d534',
+        },
     },
     ANIMATION: {
         ROTATION_Y: 0.1
