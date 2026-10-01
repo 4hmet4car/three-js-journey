@@ -64,6 +64,10 @@ Deployment is handled by GitHub Actions.<br>
 43- [Sliced Model](https://4hmet4car-43-sliced-model-shader.vercel.app/)<br>
 44- [Procedural Terrain](https://4hmet4car-44-procedural-terrain-shader.vercel.app/)<br>
 
+### Chapter 05 - Extra
+
+45- [Post-processing](https://4hmet4car-45-post-processing.vercel.app/)<br>
+
 ## WebGPU & TSL
 
 ### Chapter 01 - Fundamentals
