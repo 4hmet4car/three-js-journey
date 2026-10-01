@@ -42,6 +42,7 @@ export default class Terrain
     {
         this.uniforms = {
             uTime: new THREE.Uniform(0),
+            uTranslationSpeed: new THREE.Uniform(terrainParameters.customShaderMaterial.uniforms.uTranslationSpeed),
             
             uPositionFrequency: new THREE.Uniform(terrainParameters.customShaderMaterial.uniforms.uPositionFrequency),
             uDetailAmount: new THREE.Uniform(terrainParameters.customShaderMaterial.uniforms.uDetailAmount),
@@ -103,6 +104,16 @@ export default class Terrain
             this.debugFolder = this.debug.ui.addFolder('Terrain')
 
             this.debugFolder
+                .add(terrainParameters.customShaderMaterial.uniforms, 'uTranslationSpeed')
+                .min(0)
+                .max(3)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.uniforms.uTranslationSpeed.value = terrainParameters.customShaderMaterial.uniforms.uTranslationSpeed
+                })
+
+            this.debugFolder
                 .add(terrainParameters.customShaderMaterial.uniforms, 'uPositionFrequency')
                 .min(0)
                 .max(1)
@@ -126,7 +137,7 @@ export default class Terrain
                 .add(terrainParameters.customShaderMaterial.uniforms, 'uStrength')
                 .min(0)
                 .max(10)
-                .step(0.1)
+                .step(0.001)
                 .onChange(() =>
                 {
                     this.uniforms.uStrength.value = terrainParameters.customShaderMaterial.uniforms.uStrength
@@ -136,7 +147,7 @@ export default class Terrain
                 .add(terrainParameters.customShaderMaterial.uniforms, 'uWarpFrequency')
                 .min(0)
                 .max(10)
-                .step(0.1)
+                .step(0.001)
                 .onChange(() =>
                 {
                     this.uniforms.uWarpFrequency.value = terrainParameters.customShaderMaterial.uniforms.uWarpFrequency
@@ -145,8 +156,8 @@ export default class Terrain
             this.debugFolder
                 .add(terrainParameters.customShaderMaterial.uniforms, 'uWarpStrength')
                 .min(0)
-                .max(10)
-                .step(0.1)
+                .max(1)
+                .step(0.001)
                 .onChange(() =>
                 {
                     this.uniforms.uWarpStrength.value = terrainParameters.customShaderMaterial.uniforms.uWarpStrength

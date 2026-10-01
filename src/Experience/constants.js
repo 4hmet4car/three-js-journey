@@ -29,6 +29,23 @@ export const RENDERER = {
     }
 }
 
+export const WATER = {
+    GEOMETRY: {
+        WIDTH: 10,
+        HEIGHT: 10,
+        WIDTH_SEGMENTS: 1,
+        HEIGHT_SEGMENTS: 1,
+    },
+    MATERIAL: {
+        TRANSMISSION: 1,
+        ROUGHNESS: 0.2,
+    },
+    MESH: {
+        ROTATION_X: -Math.PI * 0.5,
+        POSITION_Y: -0.1,
+    },
+}
+
 export const TERRAIN = {
     GEOMETRY: {
         WIDTH: 10,

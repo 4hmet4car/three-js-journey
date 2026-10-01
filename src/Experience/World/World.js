@@ -2,6 +2,7 @@ import Experience from "../Experience.js"
 import Board from "./Board.js"
 import Environment from "./Environment.js"
 import Terrain from "./Terrain/Terrain.js"
+import Water from "./Water.js"
 
 export default class World
 {
@@ -17,6 +18,7 @@ export default class World
             this.environment = new Environment()
             this.board = new Board()
             this.terrain = new Terrain()
+            this.water = new Water()
         })
 
         this.resources.startLoading()

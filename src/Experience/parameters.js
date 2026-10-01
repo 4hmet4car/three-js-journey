@@ -12,6 +12,8 @@ export const rendererParameters = {
 export const terrainParameters = {
     customShaderMaterial: {
         uniforms: {
+            uTranslationSpeed: 0.1,
+            
             uPositionFrequency: 0.2,
             uDetailAmount: 7,
             uStrength: 1.8,

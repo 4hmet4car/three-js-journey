@@ -4,8 +4,10 @@ uniform float uStrength;
 uniform float uWarpFrequency;
 uniform float uWarpStrength;
 uniform float uTime;
+uniform float uTranslationSpeed;
 
 varying vec3 vPosition;
+varying float vUpDot;
 
 #include ./includes/simplexNoise2d.glsl
 
@@ -14,13 +16,13 @@ float getElevation(vec2 position)
     float elevation = 0.0;
             
     vec2 warpedPosition = position;
-    warpedPosition += uTime * 0.2;
+    warpedPosition += uTime * uTranslationSpeed;
     warpedPosition += simplexNoise2d(warpedPosition * uPositionFrequency * uWarpFrequency) * uWarpStrength;
 
     for(float i = 0.0; i < uDetailAmount; i++){
         elevation += simplexNoise2d(warpedPosition * uPositionFrequency * pow(2.0, i)) / pow(2.0, i + 1.0);    
     }
-    // This is the same thing as the above for loop, just explicit
+    // This is the same thing as the above "for loop", just explicit
     // elevation += simplexNoise2d(warpedPosition * uPositionFrequency      ) / 2.0;
     // elevation += simplexNoise2d(warpedPosition * uPositionFrequency * 2.0) / 4.0;
     // elevation += simplexNoise2d(warpedPosition * uPositionFrequency * 4.0) / 8.0;
@@ -42,7 +44,7 @@ void main()
     vec3 positionB = position.xyz + vec3(0.0, 0.0, -shift);       
 
     // Elevation
-    float elevation = getElevation(csm_Position.xz);
+    float elevation = getElevation(position.xz);
     csm_Position.y += elevation;
     positionA.y = getElevation(positionA.xz);
     positionB.y = getElevation(positionB.xz);
@@ -54,4 +56,7 @@ void main()
     csm_Normal = cross(toA, toB);
 
     vPosition = csm_Position;
+    vPosition.xz += uTime * uTranslationSpeed;
+
+    vUpDot = dot(csm_Normal, vec3(0.0, 1.0, 0.0));
 }
