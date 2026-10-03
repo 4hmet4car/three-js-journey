@@ -6,6 +6,8 @@ import { RENDERER } from './constants.js'
 
 import { rendererParameters } from './parameters.js'
 
+import renderPasses from './renderPasses.js'
+
 export default class Renderer
 {
     constructor()
@@ -18,6 +20,7 @@ export default class Renderer
         this.debug = this.experience.debug
 
         this.setRendererInstance()
+        this.setEffectComposer()
         this.setDebug()
 
         // console.log(this.instance.capabilities.getMaxAnisotropy())
@@ -37,6 +40,14 @@ export default class Renderer
         // this.instance.outputColorSpace = RENDERER.OUTPUT_COLOR_SPACE
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
+    }
+
+    setEffectComposer()
+    {
+        if (renderPasses.length)
+        {
+
+        }
     }
 
     setDebug()
