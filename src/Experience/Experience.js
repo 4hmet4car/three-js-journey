@@ -10,6 +10,7 @@ import Resources from './Utils/Resources.js'
 import World from './World/World.js'
 
 import sources from './sources.js'
+import postProcessingPasses from './postProcessingPasses.js'
 // import RayCursor from './Utils/RayCursor.js'
 
 let instance = null
@@ -40,7 +41,7 @@ export default class Experience
         this.resources = new Resources(sources)
         this.camera = new Camera()
         // this.rayCursor = new RayCursor(this.cursor, this.camera)
-        this.renderer = new Renderer()
+        this.renderer = new Renderer(postProcessingPasses)
 
         this.world = new World()
 

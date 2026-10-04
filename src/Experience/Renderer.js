@@ -6,11 +6,9 @@ import { RENDERER } from './constants.js'
 
 import { rendererParameters } from './parameters.js'
 
-import renderPasses from './renderPasses.js'
-
 export default class Renderer
 {
-    constructor()
+    constructor(postProcessingPasses)
     {
         this.experience = new Experience()
         this.canvas = this.experience.canvas
@@ -19,8 +17,13 @@ export default class Renderer
         this.camera = this.experience.camera
         this.debug = this.experience.debug
 
+        this.postProcessingPasses = postProcessingPasses
+        this.effectComposerReady = false
+
         this.setRendererInstance()
-        this.setEffectComposer()
+
+        if (this.postProcessingPasses.length) this.setEffectComposer();
+
         this.setDebug()
 
         // console.log(this.instance.capabilities.getMaxAnisotropy())
@@ -42,11 +45,30 @@ export default class Renderer
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }
 
-    setEffectComposer()
+    async setEffectComposer()
     {
-        if (renderPasses.length)
-        {
+        const { EffectComposer } = await import("three/examples/jsm/postprocessing/EffectComposer.js")
+        this.effectComposer = new EffectComposer(this.instance)
+        this.effectComposer.setSize(this.sizes.width, this.sizes.height)
+        this.effectComposer.setPixelRatio(this.sizes.pixelRatio)
 
+        const { RenderPass } = await import('three/examples/jsm/postprocessing/RenderPass.js')
+        this.renderPass = new RenderPass(this.scene, this.camera.instance)
+        this.effectComposer.addPass(this.renderPass)
+
+        this.setPostProcessingPasses()
+
+        this.effectComposerReady = true
+    }
+
+    setPostProcessingPasses()
+    {
+        for (const postProcessingPass of this.postProcessingPasses)
+        {
+            if (postProcessingPass.enabled)
+            {
+                this.effectComposer.addPass(postProcessingPass.pass)
+            }
         }
     }
 
@@ -69,10 +91,22 @@ export default class Renderer
     {
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
+
+        if (this.effectComposer)
+        {
+            this.effectComposer.setSize(this.sizes.width, this.sizes.height)
+            this.effectComposer.setPixelRatio(this.sizes.pixelRatio)
+        }
     }
 
     update()
     {
-        this.instance.render(this.scene, this.camera.instance)
+        if (this.effectComposerReady)
+        {
+            this.effectComposer.render()
+        } else
+        {
+            this.instance.render(this.scene, this.camera.instance)
+        }
     }
 }
