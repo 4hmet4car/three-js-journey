@@ -19,7 +19,7 @@ export default class Renderer
 
         this.postProcessingPasses = postProcessingPasses
         this.effectComposerReady = false
-
+        
         this.setRendererInstance()
 
         if (this.postProcessingPasses.length) this.setEffectComposer();
@@ -40,19 +40,25 @@ export default class Renderer
         this.instance.shadowMap.type = RENDERER.SHADOWMAP.TYPE
         this.instance.toneMapping = RENDERER.TONEMAPPING.TYPE
         this.instance.toneMappingExposure = RENDERER.TONEMAPPING.EXPOSURE
-        // this.instance.outputColorSpace = RENDERER.OUTPUT_COLOR_SPACE
+        this.instance.outputColorSpace = RENDERER.OUTPUT_COLOR_SPACE
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
     }
 
     async setEffectComposer()
     {
-        const { EffectComposer } = await import("three/examples/jsm/postprocessing/EffectComposer.js")
+        const [
+            { EffectComposer },
+            { RenderPass }
+        ] = await Promise.all([
+            import('three/examples/jsm/postprocessing/EffectComposer.js'),
+            import('three/examples/jsm/postprocessing/RenderPass.js')
+        ])
+
         this.effectComposer = new EffectComposer(this.instance)
         this.effectComposer.setSize(this.sizes.width, this.sizes.height)
         this.effectComposer.setPixelRatio(this.sizes.pixelRatio)
 
-        const { RenderPass } = await import('three/examples/jsm/postprocessing/RenderPass.js')
         this.renderPass = new RenderPass(this.scene, this.camera.instance)
         this.effectComposer.addPass(this.renderPass)
 
@@ -63,13 +69,15 @@ export default class Renderer
 
     setPostProcessingPasses()
     {
-        for (const postProcessingPass of this.postProcessingPasses)
-        {
-            if (postProcessingPass.enabled)
-            {
-                this.effectComposer.addPass(postProcessingPass.pass)
-            }
+        this.passes = {}
+
+        for (const { name, enabled, pass } of this.postProcessingPasses)
+        {            
+            this.passes[name] = pass
+            pass.enabled = enabled
+            this.effectComposer.addPass(pass)
         }
+        
     }
 
     setDebug()

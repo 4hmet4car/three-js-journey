@@ -18,7 +18,7 @@ export const ORBIT_CONTROLS = {
 
 export const RENDERER = {
     ANTIALIAS: true,
-    OUTPUT_COLOR_SPACE: THREE.LinearSRGBColorSpace,
+    OUTPUT_COLOR_SPACE: THREE.SRGBColorSpace,
     SHADOWMAP: {
         ENABLED: true,
         TYPE: THREE.PCFShadowMap,
