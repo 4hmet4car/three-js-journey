@@ -20,7 +20,9 @@ export default class Renderer
         this.setRendererInstance()
         this.setDebug()
 
+        // console.log(this.instance.capabilities)
         // console.log(this.instance.capabilities.getMaxAnisotropy())
+        // console.log(this.instance.getPixelRatio())
     }
 
     setRendererInstance()
