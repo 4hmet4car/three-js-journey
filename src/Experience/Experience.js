@@ -6,11 +6,11 @@ import Time from "./Utils/Time.js"
 // import Cursor from './Utils/Cursor.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
+import PostProcessing from './PostProcessing.js'
 import Resources from './Utils/Resources.js'
 import World from './World/World.js'
 
 import sources from './sources.js'
-import postProcessingPasses from './postProcessingPasses.js'
 // import RayCursor from './Utils/RayCursor.js'
 
 let instance = null
@@ -41,7 +41,8 @@ export default class Experience
         this.resources = new Resources(sources)
         this.camera = new Camera()
         // this.rayCursor = new RayCursor(this.cursor, this.camera)
-        this.renderer = new Renderer(postProcessingPasses)
+        this.renderer = new Renderer()
+        this.postProcessing = new PostProcessing()
 
         this.world = new World()
 
@@ -62,6 +63,7 @@ export default class Experience
     {
         this.camera.resize()
         this.renderer.resize()
+        this.postProcessing.resize()
         this.world.resize()
     }
 
@@ -70,7 +72,8 @@ export default class Experience
         this.camera.update()
         // this.cursor.update()
         this.world.update()
-        this.renderer.update()
+        // this.renderer.update()
+        this.postProcessing.update()
     }
 
     destroy()
