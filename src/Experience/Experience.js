@@ -6,7 +6,7 @@ import Time from "./Utils/Time.js"
 // import Cursor from './Utils/Cursor.js'
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
-import PostProcessing from './PostProcessing.js'
+import PostProcessing from './PostProcessing/PostProcessing.js'
 import Resources from './Utils/Resources.js'
 import World from './World/World.js'
 

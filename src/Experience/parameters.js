@@ -30,4 +30,16 @@ export const postProcessingParameters = {
         radius: 1,
         threshold: 0.6,
     },
+    tintPass: {
+        enabled: false,
+        r: 1,
+        g: 0,
+        b: 0,
+    },
+    displacementPass: {
+        enabled: true,
+        r: 0,
+        g: 1,
+        b: 0,
+    },
 }

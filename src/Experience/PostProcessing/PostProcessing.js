@@ -9,8 +9,11 @@ import { RGBShiftShader } from 'three/examples/jsm/shaders/RGBShiftShader.js'
 import { UnrealBloomPass } from 'three/examples/jsm/postprocessing/UnrealBloomPass.js'
 import { GammaCorrectionShader } from 'three/examples/jsm/shaders/GammaCorrectionShader.js'
 
-import Experience from "./Experience.js"
-import { postProcessingParameters } from "./parameters.js"
+import TintPass from './CustomPostProcessinPasses/TintPass/TintPass.js'
+import DisplacementPass from './CustomPostProcessinPasses/DisplacementPass/DisplacementPass.js'
+
+import Experience from "../Experience.js"
+import { postProcessingParameters } from "../parameters.js"
 
 export default class PostProcessing
 {
@@ -21,11 +24,19 @@ export default class PostProcessing
         this.renderer = this.experience.renderer
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+        this.resources = this.experience.resources
         this.debug = this.experience.debug
+        this.time = this.experience.time
+
 
         this.setRenderTarget()
         this.setEffectComposer()
-        this.setRenderPasses()
+
+        this.resources.on('ready', () =>
+        {
+            this.setRenderPasses()
+        })
+
         this.setDebug()
     }
 
@@ -69,6 +80,18 @@ export default class PostProcessing
         this.unrealBloomPass = new UnrealBloomPass()
         this.unrealBloomPass.enabled = postProcessingParameters.unrealBloomPass.enabled
         this.effectComposer.addPass(this.unrealBloomPass)
+
+        // Custom tint pass
+        this.tintPass = new ShaderPass(TintPass)
+        this.tintPass.enabled = postProcessingParameters.tintPass.enabled
+        this.effectComposer.addPass(this.tintPass)
+
+        // // Custom displacement pass
+        this.displacementPass = new ShaderPass(DisplacementPass)
+        console.log(this.resources.items.interfaceNormalMap)
+        this.displacementPass.material.uniforms.uNormalMap.value = this.resources.items.interfaceNormalMap
+        this.displacementPass.enabled = postProcessingParameters.displacementPass.enabled
+        this.effectComposer.addPass(this.displacementPass)
 
         // Gamma correction pass is always after the classic passses
         this.gammaCorrectionPass = new ShaderPass(GammaCorrectionShader)
@@ -174,6 +197,62 @@ export default class PostProcessing
                     this.unrealBloomPass.threshold = postProcessingParameters.unrealBloomPass.threshold
                 })
                 .show(postProcessingParameters.unrealBloomPass.enabled)
+
+            this.debugFolder
+                .add(postProcessingParameters.tintPass, 'enabled')
+                .name('TintPass')
+                .onChange(() =>
+                {
+                    this.tintPass.enabled = postProcessingParameters.tintPass.enabled
+                    tintPassRed.show(tintPassRed._hidden)
+                    tintPassGreen.show(tintPassGreen._hidden)
+                    tintPassBlue.show(tintPassBlue._hidden)
+                })
+
+            const tintPassRed = this.debugFolder
+                .add(postProcessingParameters.tintPass, 'r')
+                .name('TintRed')
+                .min(-1)
+                .max(1)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.tintPass.material.uniforms.uTint.value.r = postProcessingParameters.tintPass.r
+                })
+                .show(postProcessingParameters.tintPass.enabled)
+
+            const tintPassGreen = this.debugFolder
+                .add(postProcessingParameters.tintPass, 'g')
+                .name('TintGreen')
+                .min(-1)
+                .max(1)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.tintPass.material.uniforms.uTint.value.g = postProcessingParameters.tintPass.g
+                })
+                .show(postProcessingParameters.tintPass.enabled)
+
+            const tintPassBlue = this.debugFolder
+                .add(postProcessingParameters.tintPass, 'b')
+                .name('TintGreen')
+                .min(-1)
+                .max(1)
+                .step(0.001)
+                .onChange(() =>
+                {
+                    this.tintPass.material.uniforms.uTint.value.b = postProcessingParameters.tintPass.b
+                })
+                .show(postProcessingParameters.tintPass.enabled)
+
+
+            this.debugFolder
+                .add(postProcessingParameters.displacementPass, 'enabled')
+                .name('DisplacementPass')
+                .onChange(() =>
+                {
+                    this.displacementPass.enabled = postProcessingParameters.displacementPass.enabled
+                })
         }
     }
 

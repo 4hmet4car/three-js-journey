@@ -31,11 +31,11 @@ export default [
             '/textures/environmentMaps/0/nz.jpg',
         ]
     },
-    // {
-    //     name: 'pictureTexture1',
-    //     type: 'texture',
-    //     path: '/picture-1.png'
-    // },
+    {
+        name: 'interfaceNormalMap',
+        type: 'texture',
+        path: '/textures/interfaceNormalMap.png'
+    },
     // {
     //     name: 'pictureTexture2',
     //     type: 'texture',
