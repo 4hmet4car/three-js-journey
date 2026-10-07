@@ -90,6 +90,7 @@ export default class PostProcessing
         this.displacementPass = new ShaderPass(DisplacementPass)
         console.log(this.resources.items.interfaceNormalMap)
         this.displacementPass.material.uniforms.uNormalMap.value = this.resources.items.interfaceNormalMap
+        this.displacementPass.material.uniforms.uResolution.value = this.sizes.resolution
         this.displacementPass.enabled = postProcessingParameters.displacementPass.enabled
         this.effectComposer.addPass(this.displacementPass)
 
