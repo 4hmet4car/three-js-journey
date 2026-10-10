@@ -10,12 +10,15 @@ export default class Foo
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.time = this.experience.time
+        this.resources = this.experience.resources
 
         this.setCube()
         this.setTorusKnot()
         this.setSphere()
         this.setFloor()
         this.setCubeCluster()
+        this.setCubeInstancedCluster()
+        this.setShaderObject()
     }
 
     setCube()
@@ -76,7 +79,7 @@ export default class Foo
 
             geometry.rotateX((Math.random() - 0.5) * Math.PI * 2)
             geometry.rotateY((Math.random() - 0.5) * Math.PI * 2)
-            
+
             geometry.translate(
                 (Math.random() - 0.5) * 10,
                 (Math.random() - 0.5) * 10,
@@ -92,6 +95,100 @@ export default class Foo
         this.cubeClusterMesh = new THREE.Mesh(this.cubeClusterGeometry, this.cubeClusterMaterial)
 
         this.scene.add(this.cubeClusterMesh)
+    }
+
+    setCubeInstancedCluster()
+    {
+        this.cubeInstancedGeometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+
+        this.cubeInstancedMaterial = new THREE.MeshBasicMaterial({ color: 'orange' })
+
+        this.cubeInstancedMesh = new THREE.InstancedMesh(
+            this.cubeInstancedGeometry,
+            this.cubeInstancedMaterial,
+            50
+        )
+
+        // // Set this if you are going to be animating any of the instances
+        // this.cubeInstancedMesh.instanceMatrix.setUsage(THREE.DynamicDrawUsage)
+
+        this.scene.add(this.cubeInstancedMesh)
+
+        for (let i = 0; i < 50; i++)
+        {
+            const position = new THREE.Vector3(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            )
+
+            const quaternion = new THREE.Quaternion()
+            quaternion.setFromEuler(new THREE.Euler(
+                (Math.random() - 0.5) * Math.PI * 2,
+                (Math.random() - 0.5) * Math.PI * 2,
+                0,
+            ))
+
+            const matrix = new THREE.Matrix4()
+            matrix.makeRotationFromQuaternion(quaternion)
+            matrix.setPosition(position)
+            this.cubeInstancedMesh.setMatrixAt(i, matrix)
+        }
+    }
+
+    setShaderObject()
+    {
+
+        this.shaderGeometry = new THREE.PlaneGeometry(10, 10, 256, 256)
+
+        this.shaderMaterial = new THREE.ShaderMaterial({
+            precision: 'lowp',
+            defines:
+            {
+                DISPLACEMENT_STRENGTH: 1.5    
+            },
+            uniforms:
+            {
+                uDisplacementTexture: { value: this.resources.items.displacementMap },
+            },
+            vertexShader: `
+                // #define DISPLACEMENT_STRENGTH 1.5    
+
+                uniform sampler2D uDisplacementTexture;
+
+                varying vec3 vColor;
+
+                void main()
+                {
+                    // Position
+                    vec4 modelPosition = modelMatrix * vec4(position, 1.0);
+                    float elevation = texture2D(uDisplacementTexture, uv).r;
+                    modelPosition.y += max(elevation, 0.5) * DISPLACEMENT_STRENGTH;
+                    gl_Position = projectionMatrix * viewMatrix * modelPosition;
+
+                    // Color
+                    float colorMix = max(elevation, 0.25);
+                    vec3 depthColor = vec3(1.0, 0.1, 0.1);
+                    vec3 surfaceColor = vec3(0.1, 0.0, 0.5);
+                    vec3 finalColor = mix(depthColor, surfaceColor, colorMix);
+
+                    // Varyings
+                    vColor = finalColor;
+                }
+            `,
+            fragmentShader: `
+                varying vec3 vColor;
+
+                void main()
+                {                 
+                    gl_FragColor = vec4(vColor, 1.0);
+                }
+            `
+        })
+
+        this.shaderMesh = new THREE.Mesh(this.shaderGeometry, this.shaderMaterial)
+        this.shaderMesh.rotation.x = - Math.PI * 0.5
+        this.scene.add(this.shaderMesh)
     }
 
     update()
