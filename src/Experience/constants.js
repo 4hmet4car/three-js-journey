@@ -23,6 +23,8 @@ export const RENDERER = {
     SHADOWMAP: {
         ENABLED: true,
         TYPE: THREE.PCFShadowMap,
+        AUTO_UPDATE: false,
+        NEEDS_UPDATE: true,
     },
     TONEMAPPING: {
         EXPOSURE: 1.5,

@@ -1,6 +1,8 @@
 import * as THREE from 'three'
 import Experience from "../Experience.js"
 
+import { mergeGeometries } from 'three/examples/jsm/utils/BufferGeometryUtils.js'
+
 export default class Foo
 {
     constructor()
@@ -13,6 +15,7 @@ export default class Foo
         this.setTorusKnot()
         this.setSphere()
         this.setFloor()
+        this.setCubeCluster()
     }
 
     setCube()
@@ -22,7 +25,7 @@ export default class Foo
             new THREE.MeshStandardMaterial()
         )
         this.cube.castShadow = true
-        this.cube.receiveShadow = true
+        this.cube.receiveShadow = false
         this.cube.position.set(- 5, 0, 0)
         this.scene.add(this.cube)
     }
@@ -34,7 +37,7 @@ export default class Foo
             new THREE.MeshStandardMaterial()
         )
         this.torusKnot.castShadow = true
-        this.torusKnot.receiveShadow = true
+        this.torusKnot.receiveShadow = false
         this.scene.add(this.torusKnot)
     }
 
@@ -46,7 +49,7 @@ export default class Foo
         )
         this.sphere.position.set(5, 0, 0)
         this.sphere.castShadow = true
-        this.sphere.receiveShadow = true
+        this.sphere.receiveShadow = false
         this.scene.add(this.sphere)
     }
 
@@ -61,6 +64,34 @@ export default class Foo
         this.floor.castShadow = true
         this.floor.receiveShadow = true
         this.scene.add(this.floor)
+    }
+
+    setCubeCluster()
+    {
+        this.cubeClusterGeometries = []
+
+        for (let i = 0; i < 50; i++)
+        {
+            const geometry = new THREE.BoxGeometry(0.5, 0.5, 0.5)
+
+            geometry.rotateX((Math.random() - 0.5) * Math.PI * 2)
+            geometry.rotateY((Math.random() - 0.5) * Math.PI * 2)
+            
+            geometry.translate(
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10,
+                (Math.random() - 0.5) * 10
+            )
+
+            this.cubeClusterGeometries.push(geometry)
+        }
+
+        this.cubeClusterGeometry = mergeGeometries(this.cubeClusterGeometries)
+        this.cubeClusterMaterial = new THREE.MeshNormalMaterial()
+
+        this.cubeClusterMesh = new THREE.Mesh(this.cubeClusterGeometry, this.cubeClusterMaterial)
+
+        this.scene.add(this.cubeClusterMesh)
     }
 
     update()

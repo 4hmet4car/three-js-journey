@@ -20,6 +20,7 @@ export default class Renderer
         this.setRendererInstance()
         this.setDebug()
 
+        // console.log(this.instance.info)
         // console.log(this.instance.capabilities)
         // console.log(this.instance.capabilities.getMaxAnisotropy())
         // console.log(this.instance.getPixelRatio())
@@ -35,6 +36,8 @@ export default class Renderer
         this.instance.setClearColor(rendererParameters.clearColor)
         this.instance.shadowMap.enabled = RENDERER.SHADOWMAP.ENABLED
         this.instance.shadowMap.type = RENDERER.SHADOWMAP.TYPE
+        this.instance.shadowMap.autoUpdate = RENDERER.SHADOWMAP.AUTO_UPDATE
+        this.instance.shadowMap.needsUpdate = RENDERER.SHADOWMAP.NEEDS_UPDATE
         // this.instance.toneMapping = RENDERER.TONEMAPPING.TYPE
         // this.instance.toneMappingExposure = RENDERER.TONEMAPPING.EXPOSURE
         // this.instance.outputColorSpace = RENDERER.OUTPUT_COLOR_SPACE

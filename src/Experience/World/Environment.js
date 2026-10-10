@@ -29,5 +29,15 @@ export default class Environment
         this.directionalLight.shadow.normalBias = 0.05
         this.directionalLight.position.set(0.25, 3, 2.25)
         this.scene.add(this.directionalLight)
+
+        this.directionalLight.shadow.camera.top = 3
+        this.directionalLight.shadow.camera.right = 6
+        this.directionalLight.shadow.camera.left = - 6
+        this.directionalLight.shadow.camera.bottom = - 3
+        this.directionalLight.shadow.camera.far = 10
+        this.directionalLight.shadow.mapSize.set(1024, 1024)
+
+        this.cameraHelper = new THREE.CameraHelper(this.directionalLight.shadow.camera)
+        this.scene.add(this.cameraHelper)
     }
 }
