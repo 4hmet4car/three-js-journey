@@ -23,11 +23,23 @@ export const RENDERER = {
     SHADOWMAP: {
         ENABLED: true,
         TYPE: THREE.PCFShadowMap,
-        AUTO_UPDATE: true,
+        AUTO_UPDATE: false,
         NEEDS_UPDATE: true,
     },
     TONEMAPPING: {
         EXPOSURE: 3,
         TYPE: THREE.ReinhardToneMapping,
     }
+}
+
+export const SPLASH = {
+    GEOMETRY: {
+        WIDTH: 2,
+        HEIGHT: 2,
+        WIDTH_SEGMENTS: 1,
+        HEIGHT_SEGMENTS: 1,
+    },
+    ANIMATION: {
+        FADE_OUT_DURATION: 3
+    },
 }

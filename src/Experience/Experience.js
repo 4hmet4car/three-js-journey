@@ -2,6 +2,7 @@ import * as THREE from 'three'
 
 import Camera from './Camera.js'
 import Renderer from './Renderer.js'
+import Splash from './Splash/Splash.js'
 import Debug from './Utils/Debug.js'
 import Resources from './Utils/Resources.js'
 import Sizes from "./Utils/Sizes.js"
@@ -41,6 +42,7 @@ export default class Experience
         this.time = new Time()
         this.scene = new THREE.Scene()
         this.resources = new Resources(sources)
+        this.splash = new Splash()
         this.camera = new Camera()
         this.renderer = new Renderer()
         // this.cursor = new Cursor(this.sizes) 
@@ -79,6 +81,7 @@ export default class Experience
             this.statistics.FPSCounter?.begin()
         }
 
+        this.splash.update()
         this.camera.update()
         // this.cursor.update()
         this.world.update()
