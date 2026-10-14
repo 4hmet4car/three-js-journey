@@ -30,9 +30,9 @@ export default class Helmet
             {
                 // child.material.envMap = environmentMap
                 child.material.envMapIntensity = 2.5
-                child.material.needsUpdate = true
                 child.castShadow = true
                 child.receiveShadow = true
+                child.material.needsUpdate = true
             }
         })
     }

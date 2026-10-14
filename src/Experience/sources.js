@@ -31,6 +31,11 @@ export default [
             '/textures/environmentMaps/0/nz.jpg',
         ]
     },
+    {
+        name: 'flightHelmet',
+        type: 'gltfModel',
+        path: '/models/FlightHelmet/glTF/FlightHelmet.gltf'
+    },
     // {
     //     name: 'displacementMap',
     //     type: 'texture',
@@ -51,11 +56,6 @@ export default [
     //     type: 'texture',
     //     path: '/picture-4.png'
     // },
-    {
-        name: 'flightHelmet',
-        type: 'gltfModel',
-        path: '/models/FlightHelmet/glTF/FlightHelmet.gltf'
-    },
     // {
     //     name: 'gears',
     //     type: 'dracoModel',

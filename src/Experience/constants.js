@@ -32,7 +32,7 @@ export const RENDERER = {
     }
 }
 
-export const SPLASH = {
+export const OVERLAY = {
     GEOMETRY: {
         WIDTH: 2,
         HEIGHT: 2,

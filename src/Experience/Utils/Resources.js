@@ -16,6 +16,20 @@ export default class Resources extends EventEmitter
         this.loaders = {}
     }
 
+    onLoad(source, file, logMessage, logColor)
+    {
+        console.log(logMessage + source.name, logColor)
+
+        this.items[source.name] = file
+
+        this.loaded++
+
+        if (this.loaded === this.toLoad)
+        {
+            this.trigger('ready')
+        }
+    }
+
     async startLoading()
     {
         if (!this.toLoad)
@@ -36,8 +50,8 @@ export default class Resources extends EventEmitter
                     }
                     this.loaders.gltfLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file, "%cGLTF Loaded: ", "background-color: navy")
-                    })
+                        this.onLoad(source, file, "%cGLTF Loaded: ", "background-color: navy")
+                    },(a,b,c)=>{console.log(a,b,c)})
                     break;
 
                 case 'dracoModel':
@@ -56,7 +70,7 @@ export default class Resources extends EventEmitter
                     }
                     this.loaders.gltfLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file, "%cDraco Loaded: ", "background-color: navy")
+                        this.onLoad(source, file, "%cDraco Loaded: ", "background-color: navy")
                     })
                     break;
 
@@ -68,25 +82,21 @@ export default class Resources extends EventEmitter
                     }
                     this.loaders.textureLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file, "%cTexture Loaded: ", "background-color: maroon")
+                        this.onLoad(source, file, "%cTexture Loaded: ", "background-color: maroon")
                     })
                     break;
 
                 case 'image':
-                    const image = new Image()
-                    image.onload = this.sourceLoaded(source, image, "%cImage Loaded: ", "background-color: purple")
-                    image.src = source.path
+                    if (!this.loaders.imageLoader)
+                    {
+                        const { ImageLoader } = await import("three")
+                        this.loaders.imageLoader = new ImageLoader()
+                    }
+                    this.loaders.imageLoader.load(source.path, (file) =>
+                    {
+                        this.onLoad(source, file, "%cImage Loaded: ", "background-color: purple")
+                    })
                     break;
-                // if (!this.loaders.imageLoader)
-                // {
-                //     const { ImageLoader } = await import("three")
-                //     this.loaders.imageLoader = new ImageLoader()
-                // }
-                // this.loaders.imageLoader.load(source.path, (file) =>
-                // {
-                //     this.sourceLoaded(source, file, "%cImage Loaded: ", "background-color: purple")
-                // })
-                // break;
 
                 case 'cubeTexture':
                     if (!this.loaders.cubeTextureLoader)
@@ -96,7 +106,7 @@ export default class Resources extends EventEmitter
                     }
                     this.loaders.cubeTextureLoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file, "%cCube Texture Loaded: ", "background-color: darkgreen")
+                        this.onLoad(source, file, "%cCube Texture Loaded: ", "background-color: darkgreen")
                     })
                     break;
 
@@ -109,27 +119,13 @@ export default class Resources extends EventEmitter
                     }
                     this.loaders.RGBELoader.load(source.path, (file) =>
                     {
-                        this.sourceLoaded(source, file, "%cHDR Texture Loaded: ", "background-color: firebrick")
+                        this.onLoad(source, file, "%cHDR Texture Loaded: ", "background-color: firebrick")
                     })
                     break;
 
                 default:
                     console.log('Unknown type!')
             }
-        }
-    }
-
-    sourceLoaded(source, file, logMessage, logColor)
-    {
-        console.log(logMessage + source.name, logColor)
-
-        this.items[source.name] = file
-
-        this.loaded++
-
-        if (this.loaded === this.toLoad)
-        {
-            this.trigger('ready')
         }
     }
 }
