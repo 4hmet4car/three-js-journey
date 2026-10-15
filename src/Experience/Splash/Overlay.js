@@ -59,7 +59,13 @@ export default class Overlay
     }
 
     fadeOut()
-    {        
+    {
+        this.finishTime = this.time.secondsElapsed
+        this.canFadeOut = true
+    }
+
+    update()
+    {
         if (!this.canFadeOut) return
         const secondsElapsedAfterLoad = this.time.secondsElapsed - this.finishTime
         const remainingAlpha = 1 - secondsElapsedAfterLoad / OVERLAY.ANIMATION.FADE_OUT_DURATION
@@ -72,11 +78,6 @@ export default class Overlay
             this.destroy()
             this.canFadeOut = false
         }
-    }
-
-    update()
-    {
-        this.fadeOut()
     }
 
     destroy()

@@ -28,8 +28,7 @@ export default class Splash
 
     remove()
     {
-        this.overlay.finishTime = this.time.secondsElapsed
-        this.overlay.canFadeOut = true
+        this.overlay.fadeOut()
         this.loadingBar.collapse()
     }
 

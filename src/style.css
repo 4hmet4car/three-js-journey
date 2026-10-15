@@ -34,5 +34,5 @@ body
 .loading-bar.ended
 {
     transform-origin: top right;
-    transition: transform 1.5s ease-in-out;
+    transition: transform 1.5s;
 }

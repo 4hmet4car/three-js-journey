@@ -45,6 +45,6 @@ export default class LoadingBar
             {
                 this.instance.remove()
             }, 1500)
-        }, 500)
+        }, 1000)
     }
 }
