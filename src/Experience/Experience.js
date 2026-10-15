@@ -5,9 +5,9 @@ import Renderer from './Renderer.js'
 import Splash from './Splash/Splash.js'
 import Debug from './Utils/Debug.js'
 import Resources from './Utils/Resources.js'
-import Sizes from "./Utils/Sizes.js"
+import Sizes from './Utils/Sizes.js'
 import Statistics from './Utils/Statistics.js'
-import Time from "./Utils/Time.js"
+import Time from './Utils/Time.js'
 import World from './World/World.js'
 
 import sources from './sources.js'
@@ -41,8 +41,8 @@ export default class Experience
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
-        this.resources = new Resources(sources)
         this.splash = new Splash()
+        this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
         // this.cursor = new Cursor(this.sizes) 
@@ -64,6 +64,22 @@ export default class Experience
         {
             this.update()
         })
+
+        // -------Resources ready event------
+        this.resources.on('ready', () =>
+        {
+            this.world.init()
+            this.splash.remove()
+        })
+
+        // -------Resources itemLoaded event------
+        this.resources.on('itemLoaded', () =>
+        {
+            this.splash.loadingBar.progress(this.resources.loaded, this.resources.toLoad)
+        })
+
+        // -------Start Loading-------
+        this.resources.startLoading()
     }
 
     resize()

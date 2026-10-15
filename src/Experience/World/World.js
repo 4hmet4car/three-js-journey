@@ -9,15 +9,12 @@ export default class World
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+    }
 
-        this.resources.on('ready', () =>
-        {
-            // Setup
-            this.environment = new Environment()
-            this.helmet = new Helmet()
-        })
-
-        this.resources.startLoading()
+    init()
+    {
+        this.environment = new Environment()
+        this.helmet = new Helmet()
     }
 
     resize()

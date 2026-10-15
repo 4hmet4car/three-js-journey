@@ -15,26 +15,26 @@ export default class Overlay
         this.resources = this.experience.resources
         this.time = this.experience.time
 
-        this.setOverlayGeometry()
-        this.setOverlayMaterial()
+        this.setGeometry()
+        this.setMaterial()
         this.setOverlay()
-        this.setFadeOut()
+        this.setState()
     }
 
-    setOverlayGeometry()
+    setGeometry()
     {
-        this.overlayGeometry = new THREE.PlaneGeometry(
+        this.geometry = new THREE.PlaneGeometry(
             OVERLAY.GEOMETRY.WIDTH,
             OVERLAY.GEOMETRY.HEIGHT,
             OVERLAY.GEOMETRY.WIDTH_SEGMENTS,
             OVERLAY.GEOMETRY.HEIGHT_SEGMENTS,
         )
-        this.overlayGeometry.deleteAttribute('uv')
+        this.geometry.deleteAttribute('uv')
     }
 
-    setOverlayMaterial()
+    setMaterial()
     {
-        this.overlayMaterial = new THREE.ShaderMaterial({
+        this.material = new THREE.ShaderMaterial({
             transparent: true,
             vertexShader: overlayVertexShader,
             fragmentShader: overlayFragmentShader,
@@ -47,42 +47,42 @@ export default class Overlay
 
     setOverlay()
     {
-        this.overlay = new THREE.Mesh(this.overlayGeometry, this.overlayMaterial)
+        this.overlay = new THREE.Mesh(this.geometry, this.material)
         this.overlay.renderOrder = 1
         this.scene.add(this.overlay)
     }
 
-    setFadeOut()
+    setState()
     {
-        this.overlayCanFadeOut = false
-        this.fadeOutStartTime = 0
-        this.resources.on('ready', () =>
+        this.canFadeOut = false
+        this.finishTime = 0
+    }
+
+    fadeOut()
+    {        
+        if (!this.canFadeOut) return
+        const secondsElapsedAfterLoad = this.time.secondsElapsed - this.finishTime
+        const remainingAlpha = 1 - secondsElapsedAfterLoad / OVERLAY.ANIMATION.FADE_OUT_DURATION
+        this.material.uniforms.uAlpha.value = Math.max(remainingAlpha, 0)
+
+        this.fadeOutComplete = remainingAlpha < 0
+
+        if (this.fadeOutComplete)
         {
-            this.fadeOutStartTime = this.time.secondsElapsed
-            this.overlayCanFadeOut = true
-        })
+            this.destroy()
+            this.canFadeOut = false
+        }
     }
 
     update()
     {
-        if (!this.overlayCanFadeOut) return
-
-        const secondsElapsedSinceEverythingWasLoaded = this.time.secondsElapsed - this.fadeOutStartTime
-        const remainingAlpha = 1 - secondsElapsedSinceEverythingWasLoaded / OVERLAY.ANIMATION.FADE_OUT_DURATION
-
-        this.overlayMaterial.uniforms.uAlpha.value = Math.max(remainingAlpha, 0)
-
-        if (remainingAlpha < 0)
-        {
-            this.overlayCanFadeOut = false
-            this.destroy()
-        }
+        this.fadeOut()
     }
 
     destroy()
     {
         this.scene.remove(this.overlay)
-        this.overlayGeometry.dispose()
-        this.overlayMaterial.dispose()
+        this.geometry.dispose()
+        this.material.dispose()
     }
 }

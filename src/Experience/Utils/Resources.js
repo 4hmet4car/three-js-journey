@@ -24,6 +24,8 @@ export default class Resources extends EventEmitter
 
         this.loaded++
 
+        this.trigger('itemLoaded')
+
         if (this.loaded === this.toLoad)
         {
             this.trigger('ready')
@@ -51,7 +53,7 @@ export default class Resources extends EventEmitter
                     this.loaders.gltfLoader.load(source.path, (file) =>
                     {
                         this.onLoad(source, file, "%cGLTF Loaded: ", "background-color: navy")
-                    },(a,b,c)=>{console.log(a,b,c)})
+                    })
                     break;
 
                 case 'dracoModel':
