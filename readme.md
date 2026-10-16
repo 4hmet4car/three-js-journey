@@ -69,6 +69,7 @@ Deployment is handled by GitHub Actions.<br>
 45- [Post-processing](https://4hmet4car-45-post-processing.vercel.app/)<br>
 46- [Performance tips](https://4hmet4car-46-performance-tips.vercel.app/)<br>
 47- [Intro and loading progress](https://4hmet4car-47-intro-and-loading-progress.vercel.app/)<br>
+48- [Mixing HTML and WebGL](https://4hmet4car-48-mixing-html-and-webgl.vercel.app/)<br>
 
 ## WebGPU & TSL
 
