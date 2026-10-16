@@ -12,8 +12,8 @@ export default class Splash
         this.resources = this.experience.resources
         this.time = this.experience.time
 
-        this.setLoadingBar()
         this.setOverlay()
+        this.setLoadingBar()
     }
 
     setLoadingBar()
@@ -29,14 +29,15 @@ export default class Splash
     remove()
     {
         this.overlay.fadeOut()
-        this.loadingBar.collapse()
+        this.loadingBar.fadeOut()
     }
 
     update()
     {
-        if (this.overlay)
+        if (this.overlay && this.loadingBar)
         {
             this.overlay.update()
+            this.loadingBar.update()
         }
     }
 

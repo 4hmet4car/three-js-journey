@@ -12,7 +12,6 @@ export default class Overlay
     {
         this.experience = new Experience()
         this.scene = this.experience.scene
-        this.resources = this.experience.resources
         this.time = this.experience.time
 
         this.setGeometry()

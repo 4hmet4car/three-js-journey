@@ -43,3 +43,15 @@ export const OVERLAY = {
         FADE_OUT_DURATION: 3
     },
 }
+
+export const LOADING_BAR = {
+    GEOMETRY: {
+        WIDTH: 2,
+        HEIGHT: 2,
+        WIDTH_SEGMENTS: 1,
+        HEIGHT_SEGMENTS: 1,
+    },
+    ANIMATION: {
+        FADE_OUT_DURATION: 3
+    },
+}
