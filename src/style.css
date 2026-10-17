@@ -16,4 +16,17 @@ body
     top: 0;
     left: 0;
     outline: none;
+    /* visibility: hidden; */
+}
+
+.anchor
+{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+}
+
+.content
+{
+    visibility: visible;
 }

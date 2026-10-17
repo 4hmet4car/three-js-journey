@@ -1,6 +1,6 @@
 import Experience from "../Experience.js"
 import Environment from "./Environment.js"
-import Helmet from "./Helmet.js"
+import Helmet from "./Helmet/Helmet.js"
 
 export default class World
 {

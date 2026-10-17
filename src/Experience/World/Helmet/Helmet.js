@@ -1,5 +1,6 @@
 import * as THREE from 'three'
-import Experience from "../Experience.js"
+import Experience from "../../Experience.js"
+import PointOfInterest from './PointOfInterest.js'
 
 export default class Helmet
 {
@@ -11,6 +12,7 @@ export default class Helmet
 
         this.setHelmet()
         this.setMaterials()
+        this.setPoints()
     }
 
     setHelmet()
@@ -27,13 +29,17 @@ export default class Helmet
         {
             if (child instanceof THREE.Mesh && child.material instanceof THREE.MeshStandardMaterial)
             {
-                // child.material.envMap = environmentMap
                 child.material.envMapIntensity = 2.5
                 child.castShadow = true
                 child.receiveShadow = true
                 child.material.needsUpdate = true
             }
         })
+    }
+
+    setPoints()
+    {
+        this.point1 = new PointOfInterest()
     }
 
     update()
