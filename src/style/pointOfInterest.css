@@ -1,19 +1,67 @@
-.anchor
+:root
 {
-    position: absolute;
+    /* Anchor */
+    --anchor-height: 40px;
+}
+
+.pointOfInterest
+{
     top: 50%;
     left: 50%;
-}
-
-.anchor .label
-{
+    transform: translate(-50%, calc(var(--anchor-height) / -2));
+    width: 200px;
+    border: 2px dotted rgb(96 139 168);
+    
     position: absolute;
-    width: 40px;
-    height: 40px;
-    background: #ff0000;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
 }
 
-.anchor .content
+.anchor
 {
-    visibility: hidden;
+    height: var(--anchor-height);    
+    width: var(--anchor-height);
+    border-radius: 50%;
+    border: 1px solid #ffffff;
+    background: #00000077;
+
+    color: #ffffff;
+    font-weight: 1000;
+    font-size: 14px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    cursor: pointer;
+
+    transform: scale(0.001, 0.001);
+    transition: transform 0.3s;
+}
+
+.anchor.visible
+{
+    transform: scale(1, 1);
+}
+
+.content
+{
+    background: #00000077;
+    color: #ffffff;
+    
+    padding: 20px;
+    border-radius: 10px;    
+    border: 1px solid #ffffff;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+
+    pointer-events: none;
+}
+
+.content.active
+{
+    opacity: 1;
 }

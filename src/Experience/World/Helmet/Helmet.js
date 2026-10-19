@@ -2,6 +2,8 @@ import * as THREE from 'three'
 import Experience from "../../Experience.js"
 import PointOfInterest from './PointOfInterest.js'
 
+import points from '../../../data/points.js'
+
 export default class Helmet
 {
     constructor()
@@ -39,7 +41,13 @@ export default class Helmet
 
     setPoints()
     {
-        this.point1 = new PointOfInterest()
+        this.points = []
+
+        for (const point of points)
+        {
+            const pointOfInterest = new PointOfInterest(point.index, point.description)
+            this.points.push(pointOfInterest)
+        }
     }
 
     update()
