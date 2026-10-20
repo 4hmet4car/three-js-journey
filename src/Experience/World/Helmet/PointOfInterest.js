@@ -9,21 +9,20 @@ export default class PointOfInterest
         this.camera = this.experience.camera
         this.scene = this.experience.scene
         this.sizes = this.experience.sizes
+        this.rayCaster = rayCaster
 
-        this.setPointOfInterest(pointIndex, pointCoordinates)
+        this.setPointOfInterest(pointCoordinates)
         this.setLabel(pointIndex)
         this.setContent(pointDescription)
         this.addEventListeners()
-        this.setRayCaster(rayCaster)
     }
 
-    setPointOfInterest(pointIndex, pointCoordinates)
+    setPointOfInterest(pointCoordinates)
     {
         this.pointOfInterest = document.createElement('div')
         this.pointOfInterest.classList.add('pointOfInterest')
         document.body.appendChild(this.pointOfInterest)
 
-        this.isActive = false
         this.coordinates = pointCoordinates
         this.screenCoordinates = new Vector3()
     }
@@ -48,24 +47,34 @@ export default class PointOfInterest
     {
         this.anchor.addEventListener('mouseenter', () =>
         {
+            const activeContentDiv = document.querySelector('.content.active')
+            if (activeContentDiv)
+            {
+                activeContentDiv.style.willChange = 'opacity'
+            }
+
             this.content.style.willChange = 'opacity'
         })
 
         this.anchor.addEventListener('click', () =>
         {
-            // This also returns true when toggled on and false when toggled off
+            const activeContentDiv = document.querySelector('.content.active')
+            if (activeContentDiv && activeContentDiv !== this.content)
+            {
+                const activePointOfInterest = activeContentDiv.parentElement
+                activePointOfInterest.style.zIndex = 'auto'
+                activeContentDiv.classList.remove('active')
+            }
+
+            this.pointOfInterest.style.zIndex = '9999'
             this.content.classList.toggle('active')
         })
 
         this.anchor.addEventListener('mouseleave', () =>
         {
-            this.content.style.willChange = 'auto'
+            const allContentDivs = document.querySelectorAll('.content')
+            allContentDivs.forEach((div) => div.style.willChange = 'auto')
         })
-    }
-
-    setRayCaster(rayCaster)
-    {
-        this.rayCaster = rayCaster
     }
 
     calculateScreenCoordinates()
@@ -93,6 +102,8 @@ export default class PointOfInterest
             if (intersectionDistance < pointDistance)
             {
                 this.anchor.classList.remove('visible')
+                this.content.classList.remove('active')
+                this.pointOfInterest.style.zIndex = 'auto'
             }
             else
             {
