@@ -27,9 +27,9 @@ export default class World
 
     update()
     {
-        // if (this.helmet)
-        // {
-        //     this.helmet.update()
-        // }
+        if (this.helmet)
+        {
+            this.helmet.update()
+        }
     }
 }

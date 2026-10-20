@@ -14,7 +14,8 @@ export default class Helmet
 
         this.setHelmet()
         this.setMaterials()
-        this.setPoints()
+        this.setRayCaster()
+        this.initPoints()
     }
 
     setHelmet()
@@ -39,20 +40,28 @@ export default class Helmet
         })
     }
 
-    setPoints()
+    setRayCaster()
     {
-        this.points = []
+        this.rayCaster = new THREE.Raycaster()
+    }
+
+    initPoints()
+    {
+        this.pointsOfInterest = []
 
         for (const point of points)
         {
-            const pointOfInterest = new PointOfInterest(point.index, point.description)
-            this.points.push(pointOfInterest)
+            const pointOfInterest = new PointOfInterest(point.index, point.description, point.coordinates, this.rayCaster)
+            this.pointsOfInterest.push(pointOfInterest)
         }
     }
 
     update()
     {
-
+        for (const pointOfInterest of this.pointsOfInterest)
+        {
+            pointOfInterest.update()
+        }
     }
 
 }

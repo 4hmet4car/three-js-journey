@@ -65,20 +65,20 @@ export default class Experience
             this.update()
         })
 
-        // -------Resources ready event------
+        // Resources ready event
         this.resources.on('ready', () =>
         {
             this.world.init()
             this.splash.remove()
         })
 
-        // -------Resources itemLoaded event------
+        // Resources itemLoaded event
         this.resources.on('itemLoaded', () =>
         {
             this.splash.loadingBar.progress(this.resources.loaded, this.resources.toLoad)
         })
 
-        // -------Start Loading-------
+        // Start Loading
         this.resources.startLoading()
     }
 

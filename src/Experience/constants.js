@@ -52,6 +52,6 @@ export const LOADING_BAR = {
         HEIGHT_SEGMENTS: 1,
     },
     ANIMATION: {
-        FADE_OUT_DURATION: 3
+        FADE_OUT_DURATION: 2
     },
 }
