@@ -66,8 +66,15 @@ export default class PointOfInterest
                 activeContentDiv.classList.remove('active')
             }
 
-            this.pointOfInterest.style.zIndex = '9999'
-            this.content.classList.toggle('active')
+            const contentIsActive = this.content.classList.toggle('active')
+            if (contentIsActive)
+            {
+                this.pointOfInterest.style.zIndex = '9999'
+            }
+            else
+            {
+                this.pointOfInterest.style.zIndex = 'auto'
+            }
         })
 
         this.anchor.addEventListener('mouseleave', () =>
