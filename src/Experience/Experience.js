@@ -8,7 +8,7 @@ import Resources from './Utils/Resources.js'
 import Sizes from './Utils/Sizes.js'
 import Statistics from './Utils/Statistics.js'
 import Time from './Utils/Time.js'
-import World from './World/World.js'
+import World from './C3DWV/C3DWV.js'
 
 import sources from './sources.js'
 

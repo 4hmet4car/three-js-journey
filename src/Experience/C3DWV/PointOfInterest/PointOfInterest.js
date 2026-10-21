@@ -1,10 +1,13 @@
 import { Vector3 } from 'three'
 import Experience from '../../Experience.js'
+import EventEmitter from '../../Utils/EventEmitter.js'
 
-export default class PointOfInterest
+export default class PointOfInterest extends EventEmitter
 {
     constructor(pointIndex, pointDescription, pointCoordinates, rayCaster)
     {
+        super()
+
         this.experience = new Experience()
         this.camera = this.experience.camera
         this.scene = this.experience.scene
@@ -12,7 +15,7 @@ export default class PointOfInterest
         this.rayCaster = rayCaster
 
         this.setPointOfInterest(pointCoordinates)
-        this.setLabel(pointIndex)
+        this.setAnchor(pointIndex)
         this.setContent(pointDescription)
         this.addEventListeners()
     }
@@ -25,11 +28,13 @@ export default class PointOfInterest
 
         this.coordinates = pointCoordinates
         this.screenCoordinates = new Vector3()
+        this.active = false
     }
 
-    setLabel(pointIndex)
+    setAnchor(pointIndex)
     {
-        this.anchor = document.createElement('div')
+        this.anchor = document.createElement('button')
+        this.anchor.type = 'button'
         this.anchor.classList.add('anchor')
         this.anchor.textContent = pointIndex
         this.pointOfInterest.appendChild(this.anchor)
@@ -45,42 +50,12 @@ export default class PointOfInterest
 
     addEventListeners()
     {
-        this.anchor.addEventListener('mouseenter', () =>
-        {
-            const activeContentDiv = document.querySelector('.content.active')
-            if (activeContentDiv)
-            {
-                activeContentDiv.style.willChange = 'opacity'
-            }
-
-            this.content.style.willChange = 'opacity'
-        })
-
         this.anchor.addEventListener('click', () =>
         {
-            const activeContentDiv = document.querySelector('.content.active')
-            if (activeContentDiv && activeContentDiv !== this.content)
-            {
-                const activePointOfInterest = activeContentDiv.parentElement
-                activePointOfInterest.style.zIndex = 'auto'
-                activeContentDiv.classList.remove('active')
-            }
-
-            const contentIsActive = this.content.classList.toggle('active')
-            if (contentIsActive)
-            {
-                this.pointOfInterest.style.zIndex = '9999'
-            }
-            else
-            {
-                this.pointOfInterest.style.zIndex = 'auto'
-            }
-        })
-
-        this.anchor.addEventListener('mouseleave', () =>
-        {
-            const allContentDivs = document.querySelectorAll('.content')
-            allContentDivs.forEach((div) => div.style.willChange = 'auto')
+            this.active = !this.active
+            this.pointOfInterest.classList.toggle('active', this.active)
+            this.content.classList.toggle('visible', this.active)
+            this.trigger('clicked')
         })
     }
 
@@ -109,8 +84,7 @@ export default class PointOfInterest
             if (intersectionDistance < pointDistance)
             {
                 this.anchor.classList.remove('visible')
-                this.content.classList.remove('active')
-                this.pointOfInterest.style.zIndex = 'auto'
+                this.deactivate()
             }
             else
             {
@@ -119,7 +93,7 @@ export default class PointOfInterest
         }
     }
 
-    movePoint()
+    move()
     {
         const translateX = this.screenCoordinates.x * this.sizes.width * 0.5
         const translateY = - this.screenCoordinates.y * this.sizes.height * 0.5
@@ -135,6 +109,13 @@ export default class PointOfInterest
         this.calculateScreenCoordinates()
         this.castRay()
         this.togglePointVisibility()
-        this.movePoint()
+        this.move()
+    }
+
+    deactivate()
+    {
+        this.active = false
+        this.pointOfInterest.classList.remove('active')
+        this.content.classList.remove('visible')
     }
 }

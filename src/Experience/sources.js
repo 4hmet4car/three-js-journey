@@ -32,7 +32,7 @@ export default [
         ]
     },
     {
-        name: 'damagedHelmet',
+        name: 'heritage',
         type: 'gltfModel',
         path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
     },

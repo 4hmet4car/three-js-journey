@@ -1,20 +1,21 @@
-import Experience from "../Experience.js"
-import Environment from "./Environment.js"
-import Helmet from "./Helmet/Helmet.js"
+import Experience from '../Experience.js'
+import Environment from './Environment.js'
+import Heritage from './Heritage.js'
+import PointsOfInterest from './PointOfInterest/PointsOfInterest.js'
 
 export default class World
 {
     constructor()
     {
         this.experience = new Experience()
-        this.scene = this.experience.scene
         this.resources = this.experience.resources
     }
 
     init()
     {
         this.environment = new Environment()
-        this.helmet = new Helmet()
+        this.heritage = new Heritage()
+        this.pointsOfInterest = new PointsOfInterest()
     }
 
     resize()
@@ -27,9 +28,9 @@ export default class World
 
     update()
     {
-        if (this.helmet)
+        if (this.pointsOfInterest)
         {
-            this.helmet.update()
+            this.pointsOfInterest.update()
         }
     }
 }
