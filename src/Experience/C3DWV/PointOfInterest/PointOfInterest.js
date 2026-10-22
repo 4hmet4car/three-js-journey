@@ -61,6 +61,7 @@ export default class PointOfInterest extends EventEmitter
     {
         this.inputField = document.createElement('input')
         this.inputField.type = 'text'
+        this.inputField.maxLength = 500
         this.inputField.classList.add('inputField')
         this.inputField.placeholder = 'Ask about this...'
         this.pointOfInterest.appendChild(this.inputField)
@@ -95,6 +96,7 @@ export default class PointOfInterest extends EventEmitter
         userQuestion.classList.add('userQuestion')
         userQuestion.textContent = question
         this.chatBox.appendChild(userQuestion)
+        this.chatBox.scrollTop = this.chatBox.scrollHeight //This scrolls everything down in the div
     }
 
     calculateScreenCoordinates()

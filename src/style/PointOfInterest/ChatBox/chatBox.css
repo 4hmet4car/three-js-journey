@@ -10,15 +10,19 @@
     border-radius: 10px 10px 0 0;
     border: 1px solid #ffffff;
 
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
+    display: flex;          /*This lets the chatBox to become a flexbox that is a container for the messages*/
+    flex-direction: column; /*This lets the chatBox to become a flexbox that is a container for the messages*/
+    gap: 10px;              /*This lets the chatBox to become a flexbox that is a container for the messages*/
 
     opacity: 0;
     transition: opacity 0.3s;
+
+    scrollbar-width: thin;
+    scrollbar-color: #ffffff transparent;
 }
 
 .chatBox.visible
 {
     opacity: 1;
+    pointer-events: auto;
 }
