@@ -16,7 +16,8 @@ export default class PointOfInterest extends EventEmitter
 
         this.setPointOfInterest(pointCoordinates)
         this.setAnchor(pointIndex)
-        this.setContent(pointDescription)
+        this.setChatBox(pointDescription)
+        // this.setChatInput()
         this.addEventListeners()
     }
 
@@ -40,12 +41,30 @@ export default class PointOfInterest extends EventEmitter
         this.pointOfInterest.appendChild(this.anchor)
     }
 
-    setContent(pointDescription)
+    setChatBox(pointDescription)
     {
-        this.content = document.createElement('div')
-        this.content.classList.add('content')
-        this.content.textContent = pointDescription
-        this.pointOfInterest.appendChild(this.content)
+        this.chatBox = document.createElement('div')
+        this.chatBox.classList.add('chatBox')
+        this.chatBox.textContent = pointDescription
+        this.pointOfInterest.appendChild(this.chatBox)
+        
+        this.fuuu = document.createElement('div')
+        this.fuuu.textContent = 'Questo è un testo molto lungo che supererà laltezza massima del contenitore...'
+        this.chatBox.appendChild(this.fuuu)
+    }
+
+    setChatInput()
+    {
+        // this.chatBox = document.createElement('div')
+        // this.chatBox.classList.add('chatBox')
+        // this.pointOfInterest.appendChild(this.chatBox)
+
+        this.chatInput = document.createElement('input')
+        this.chatInput.type = 'text'
+        this.chatInput.classList.add('chatInput')
+        this.chatInput.placeholder = 'Ask about this...'
+        this.pointOfInterest.appendChild(this.chatInput)
+
     }
 
     addEventListeners()
@@ -54,7 +73,7 @@ export default class PointOfInterest extends EventEmitter
         {
             this.active = !this.active
             this.pointOfInterest.classList.toggle('active', this.active)
-            this.content.classList.toggle('visible', this.active)
+            this.chatBox.classList.toggle('visible', this.active)
             this.trigger('clicked')
         })
     }
@@ -100,7 +119,7 @@ export default class PointOfInterest extends EventEmitter
 
         this.pointOfInterest.style.transform =
             `
-            translate(${translateX}px, ${translateY}px) translate(-50%, calc(var(--anchor-height) / -2))
+            translate(${translateX}px, ${translateY}px) translate(-50%, calc(var(--anchor-size) / -2))
             `
     }
 
@@ -116,6 +135,6 @@ export default class PointOfInterest extends EventEmitter
     {
         this.active = false
         this.pointOfInterest.classList.remove('active')
-        this.content.classList.remove('visible')
+        this.chatBox.classList.remove('visible')
     }
 }

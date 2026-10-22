@@ -1,0 +1,19 @@
+.chatBox
+{
+    background: #000000bb;
+    color: #ffffff;
+    
+    height: 100px;
+    overflow-y: auto;
+    padding: 20px;
+    border-radius: 10px 10px 0 0;
+    border: 1px solid #ffffff;
+
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.chatBox.visible
+{
+    opacity: 1;
+}

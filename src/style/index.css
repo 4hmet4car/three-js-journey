@@ -1,3 +1,6 @@
+@import url('./variables.css');
 @import url('./general.css');
 @import url('./webGL.css');
-@import url('./pointOfInterest.css');
+@import url('./PointOfInterest/pointOfInterest.css');
+@import url('./PointOfInterest/anchor.css');
+@import url('./PointOfInterest/chatBox.css');
