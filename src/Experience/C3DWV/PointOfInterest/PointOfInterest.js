@@ -16,8 +16,9 @@ export default class PointOfInterest extends EventEmitter
 
         this.setPointOfInterest(pointCoordinates)
         this.setAnchor(pointIndex)
-        this.setChatBox(pointDescription)
-        // this.setChatInput()
+        this.setChatBox()
+        this.setPointDescription(pointDescription)
+        this.setInputField()
         this.addEventListeners()
     }
 
@@ -41,30 +42,28 @@ export default class PointOfInterest extends EventEmitter
         this.pointOfInterest.appendChild(this.anchor)
     }
 
-    setChatBox(pointDescription)
+    setChatBox()
     {
         this.chatBox = document.createElement('div')
         this.chatBox.classList.add('chatBox')
-        this.chatBox.textContent = pointDescription
         this.pointOfInterest.appendChild(this.chatBox)
-        
-        this.fuuu = document.createElement('div')
-        this.fuuu.textContent = 'Questo è un testo molto lungo che supererà laltezza massima del contenitore...'
-        this.chatBox.appendChild(this.fuuu)
     }
 
-    setChatInput()
+    setPointDescription(pointDescription)
     {
-        // this.chatBox = document.createElement('div')
-        // this.chatBox.classList.add('chatBox')
-        // this.pointOfInterest.appendChild(this.chatBox)
+        this.pointDescription = document.createElement('div')
+        this.pointDescription.classList.add('llmAnswer')
+        this.pointDescription.textContent = pointDescription
+        this.chatBox.appendChild(this.pointDescription)
+    }
 
-        this.chatInput = document.createElement('input')
-        this.chatInput.type = 'text'
-        this.chatInput.classList.add('chatInput')
-        this.chatInput.placeholder = 'Ask about this...'
-        this.pointOfInterest.appendChild(this.chatInput)
-
+    setInputField()
+    {
+        this.inputField = document.createElement('input')
+        this.inputField.type = 'text'
+        this.inputField.classList.add('inputField')
+        this.inputField.placeholder = 'Ask about this...'
+        this.pointOfInterest.appendChild(this.inputField)
     }
 
     addEventListeners()
@@ -74,8 +73,28 @@ export default class PointOfInterest extends EventEmitter
             this.active = !this.active
             this.pointOfInterest.classList.toggle('active', this.active)
             this.chatBox.classList.toggle('visible', this.active)
+            this.inputField.classList.toggle('visible', this.active)
             this.trigger('clicked')
         })
+
+        this.inputField.addEventListener('keydown', (event) =>
+        {
+            if (event.key === 'Enter')
+            {
+                const message = this.inputField.value.trim()
+                if (!message) return
+                this.askQuestion(message)
+                this.inputField.value = ''
+            }
+        })
+    }
+
+    askQuestion(question)
+    {
+        const userQuestion = document.createElement('div')
+        userQuestion.classList.add('userQuestion')
+        userQuestion.textContent = question
+        this.chatBox.appendChild(userQuestion)
     }
 
     calculateScreenCoordinates()
@@ -136,5 +155,6 @@ export default class PointOfInterest extends EventEmitter
         this.active = false
         this.pointOfInterest.classList.remove('active')
         this.chatBox.classList.remove('visible')
+        this.inputField.classList.remove('visible')
     }
 }
