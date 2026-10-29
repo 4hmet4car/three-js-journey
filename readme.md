@@ -71,6 +71,10 @@ Deployment is handled by GitHub Actions.<br>
 47- [Intro and loading progress](https://4hmet4car-47-intro-and-loading-progress.vercel.app/)<br>
 48- [Mixing HTML and WebGL](https://4hmet4car-48-mixing-html-and-webgl.vercel.app/)<br>
 
+### Chapter 06 - Portal Scene
+
+49- Creating a scene in Blender<br>
+
 ## WebGPU & TSL
 
 ### Chapter 01 - Fundamentals
