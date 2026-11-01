@@ -74,6 +74,7 @@ Deployment is handled by GitHub Actions.<br>
 ### Chapter 06 - Portal Scene
 
 49- Creating a scene in Blender<br>
+50- Baking and exporting the scene<br>
 
 ## WebGPU & TSL
 
