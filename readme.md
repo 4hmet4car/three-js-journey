@@ -75,6 +75,7 @@ Deployment is handled by GitHub Actions.<br>
 
 49- Creating a scene in Blender<br>
 50- Baking and exporting the scene<br>
+51- [Importing and optimizing the scene](https://4hmet4car-51-importing-and-optimizing-the-scene.vercel.app/)<br>
 
 ## WebGPU & TSL
 
