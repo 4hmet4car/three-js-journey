@@ -1,7 +1,6 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
-import Heritage from './Heritage.js'
-import PointsOfInterest from './PointOfInterest/PointsOfInterest.js'
+import Foo from './Foo.js'
 
 export default class World
 {
@@ -13,9 +12,8 @@ export default class World
 
     init()
     {
-        this.environment = new Environment()
-        this.heritage = new Heritage()
-        this.pointsOfInterest = new PointsOfInterest()
+        // this.environment = new Environment()
+        this.foo = new Foo()
     }
 
     resize()
@@ -28,9 +26,9 @@ export default class World
 
     update()
     {
-        if (this.pointsOfInterest)
-        {
-            this.pointsOfInterest.update()
-        }
+        // if (this.pointsOfInterest)
+        // {
+        //     this.pointsOfInterest.update()
+        // }
     }
 }

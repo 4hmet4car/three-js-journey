@@ -1,10 +1,10 @@
 import * as THREE from 'three'
 
 export const CAMERA = {
-    FOV: 75,
+    FOV: 45,
     POSITION_X: 4,
-    POSITION_Y: 1,
-    POSITION_Z: -4,
+    POSITION_Y: 2,
+    POSITION_Z: 4,
     NEAR: 0.1,
     FAR: 100,
     ZOOM: 1,
@@ -21,14 +21,14 @@ export const RENDERER = {
     ANTIALIAS: true,
     OUTPUT_COLOR_SPACE: THREE.SRGBColorSpace,
     SHADOWMAP: {
-        ENABLED: true,
+        ENABLED: false,
         TYPE: THREE.PCFShadowMap,
         AUTO_UPDATE: false,
         NEEDS_UPDATE: true,
     },
     TONEMAPPING: {
-        EXPOSURE: 3,
-        TYPE: THREE.ReinhardToneMapping,
+        EXPOSURE: 1,
+        TYPE: THREE.NoToneMapping,
     }
 }
 

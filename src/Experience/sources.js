@@ -19,23 +19,23 @@ export default [
     //     type: 'image',
     //     path: '/glow.png'
     // },
-    {
-        name: 'environmentMapTexture',
-        type: 'cubeTexture',
-        path: [
-            '/textures/environmentMaps/0/px.jpg',
-            '/textures/environmentMaps/0/nx.jpg',
-            '/textures/environmentMaps/0/py.jpg',
-            '/textures/environmentMaps/0/ny.jpg',
-            '/textures/environmentMaps/0/pz.jpg',
-            '/textures/environmentMaps/0/nz.jpg',
-        ]
-    },
-    {
-        name: 'heritage',
-        type: 'gltfModel',
-        path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
-    },
+    // {
+    //     name: 'environmentMapTexture',
+    //     type: 'cubeTexture',
+    //     path: [
+    //         '/textures/environmentMaps/0/px.jpg',
+    //         '/textures/environmentMaps/0/nx.jpg',
+    //         '/textures/environmentMaps/0/py.jpg',
+    //         '/textures/environmentMaps/0/ny.jpg',
+    //         '/textures/environmentMaps/0/pz.jpg',
+    //         '/textures/environmentMaps/0/nz.jpg',
+    //     ]
+    // },
+    // {
+    //     name: 'heritage',
+    //     type: 'gltfModel',
+    //     path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
+    // },
     // {
     //     name: 'displacementMap',
     //     type: 'texture',
