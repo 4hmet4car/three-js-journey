@@ -17,53 +17,53 @@ export default [
     // {
     //     name: 'glowImage',
     //     type: 'image',
-    //     path: '/glow.png'
+    //     path: 'glow.png'
     // },
     // {
     //     name: 'environmentMapTexture',
     //     type: 'cubeTexture',
     //     path: [
-    //         '/textures/environmentMaps/0/px.jpg',
-    //         '/textures/environmentMaps/0/nx.jpg',
-    //         '/textures/environmentMaps/0/py.jpg',
-    //         '/textures/environmentMaps/0/ny.jpg',
-    //         '/textures/environmentMaps/0/pz.jpg',
-    //         '/textures/environmentMaps/0/nz.jpg',
+    //         'textures/environmentMaps/0/px.jpg',
+    //         'textures/environmentMaps/0/nx.jpg',
+    //         'textures/environmentMaps/0/py.jpg',
+    //         'textures/environmentMaps/0/ny.jpg',
+    //         'textures/environmentMaps/0/pz.jpg',
+    //         'textures/environmentMaps/0/nz.jpg',
     //     ]
     // },
     // {
     //     name: 'heritage',
     //     type: 'gltfModel',
-    //     path: '/models/DamagedHelmet/glTF/DamagedHelmet.gltf'
+    //     path: 'models/DamagedHelmet/glTF/DamagedHelmet.gltf'
     // },
     // {
     //     name: 'displacementMap',
     //     type: 'texture',
-    //     path: '/textures/displacementMap.png'
+    //     path: 'textures/displacementMap.png'
     // },
     // {
     //     name: 'pictureTexture2',
     //     type: 'texture',
-    //     path: '/picture-2.png'
+    //     path: 'picture-2.png'
     // },
     // {
     //     name: 'pictureTexture3',
     //     type: 'texture',
-    //     path: '/picture-3.png'
+    //     path: 'picture-3.png'
     // },
-    // {
-    //     name: 'pictureTexture4',
-    //     type: 'texture',
-    //     path: '/picture-4.png'
-    // },
-    // {
-    //     name: 'gears',
-    //     type: 'dracoModel',
-    //     path: '/gears.glb'
-    // },
+    {
+        name: 'bakedTexture',
+        type: 'texture',
+        path: 'baked.jpg'
+    },
+    {
+        name: 'portal',
+        type: 'dracoModel',
+        path: 'portal.glb'
+    },
     // {
     //     name: 'spruitSunrise',
     //     type: 'HDRTexture',
-    //     path: '/spruit_sunrise.hdr'
+    //     path: 'spruit_sunrise.hdr'
     // },
 ]

@@ -9,7 +9,7 @@ export default class Environment
         this.resources = this.experience.resources
         this.scene = this.experience.scene
 
-        this.setEnvironmentMap()
+        // this.setEnvironmentMap()
         this.setDirectionalLight()
     }
 

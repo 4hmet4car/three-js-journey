@@ -1,6 +1,6 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
-import Foo from './Foo.js'
+import Portal from './Portal.js'
 
 export default class World
 {
@@ -13,7 +13,7 @@ export default class World
     init()
     {
         // this.environment = new Environment()
-        this.foo = new Foo()
+        this.portal = new Portal()
     }
 
     resize()
