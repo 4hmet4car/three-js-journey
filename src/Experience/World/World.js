@@ -1,6 +1,7 @@
 import Experience from '../Experience.js'
 import Environment from './Environment.js'
-import Portal from './Portal.js'
+import Fireflies from './Fireflies/Fireflies.js'
+import Portal from './Portal/Portal.js'
 
 export default class World
 {
@@ -14,6 +15,7 @@ export default class World
     {
         // this.environment = new Environment()
         this.portal = new Portal()
+        this.fireflies = new Fireflies()
     }
 
     resize()
@@ -26,9 +28,9 @@ export default class World
 
     update()
     {
-        // if (this.pointsOfInterest)
-        // {
-        //     this.pointsOfInterest.update()
-        // }
+        if (this.fireflies)
+        {
+            this.fireflies.update()
+        }
     }
 }

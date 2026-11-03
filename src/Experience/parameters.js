@@ -6,7 +6,7 @@ export const cameraParameters = {
 }
 
 export const rendererParameters = {
-    clearColor: '#000000',
+    clearColor: '#201919',
 }
 
 export const postProcessingParameters = {
@@ -38,4 +38,9 @@ export const postProcessingParameters = {
         g: 1,
         b: 0,
     },
+}
+
+export const firefliesParameters = {
+    firefliesCount: 30,
+    firefliesSize: 100,
 }

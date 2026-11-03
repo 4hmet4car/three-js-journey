@@ -1,5 +1,8 @@
 import * as THREE from 'three'
-import Experience from "../Experience.js"
+import Experience from "../../Experience.js"
+
+import portalVertexShader from './shaders/vertex.glsl'
+import portalFragmentShader from './shaders/fragment.glsl'
 
 export default class Portal
 {
