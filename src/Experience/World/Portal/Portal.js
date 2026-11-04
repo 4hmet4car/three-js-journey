@@ -3,6 +3,7 @@ import Experience from "../../Experience.js"
 
 import portalVertexShader from './shaders/vertex.glsl'
 import portalFragmentShader from './shaders/fragment.glsl'
+import { portalParameters } from '../../parameters.js'
 
 export default class Portal
 {
@@ -11,10 +12,13 @@ export default class Portal
         this.experience = new Experience()
         this.scene = this.experience.scene
         this.resources = this.experience.resources
+        this.debug = this.experience.debug
+        this.time = this.experience.time
 
         this.setModel()
         this.setTextures()
         this.setMaterials()
+        this.setDebug()
     }
 
     setModel()
@@ -32,7 +36,17 @@ export default class Portal
 
     setMaterials()
     {
-        this.portalLightMaterial = new THREE.MeshBasicMaterial({ color: 0xffffff, side: THREE.DoubleSide })
+        this.portalLightMaterial = new THREE.ShaderMaterial({
+            vertexShader: portalVertexShader,
+            fragmentShader: portalFragmentShader,
+            uniforms:
+            {
+                uTime: new THREE.Uniform(0),
+                uColorStart: new THREE.Uniform(portalParameters.uColorStart),
+                uColorEnd: new THREE.Uniform(portalParameters.uColorEnd),
+            }
+        })
+
         this.poleLightMaterial = new THREE.MeshBasicMaterial({ color: 0xfff9f9 })
         this.bakedMaterial = new THREE.MeshBasicMaterial({ map: this.bakedTexture })
 
@@ -59,14 +73,30 @@ export default class Portal
         })
     }
 
-    setInstance()
+    setDebug()
     {
+        if (this.debug.active)
+        {
+            this.debugFolder = this.debug.ui.addFolder('Portal')
 
+            this.debugFolder
+                .addColor(portalParameters, 'uColorStart')
+                .onChange(() =>
+                {
+                    this.portalLightMaterial.uniforms.uColorStart.value = portalParameters.uColorStart
+                })
+
+            this.debugFolder
+                .addColor(portalParameters, 'uColorEnd')
+                .onChange(() =>
+                {
+                    this.portalLightMaterial.uniforms.uColorEnd.value = portalParameters.uColorEnd
+                })
+        }
     }
 
     update()
     {
-
+        this.portalLightMaterial.uniforms.uTime.value = this.time.secondsElapsed
     }
-
 }

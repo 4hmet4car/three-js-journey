@@ -28,8 +28,9 @@ export default class World
 
     update()
     {
-        if (this.fireflies)
+        if (this.portal && this.fireflies)
         {
+            this.portal.update()
             this.fireflies.update()
         }
     }
