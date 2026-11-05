@@ -1,7 +1,7 @@
 /**
  * This module exports the point of interests' information
  */
-import { Vector3 } from "three"
+import { Vector3 } from "three/webgpu"
 
 export default [
     {

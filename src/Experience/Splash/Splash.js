@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import * as THREE from 'three/webgpu'
 import Experience from "../Experience.js"
 import Overlay from './Overlay.js'
 import LoadingBar from './LoadingBar.js'

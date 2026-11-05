@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import * as THREE from 'three/webgpu'
 
 import Experience from './Experience.js'
 
@@ -15,6 +15,7 @@ export default class Renderer
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.camera = this.experience.camera
+        this.time = this.experience.time
         this.debug = this.experience.debug
 
         this.setRendererInstance()
@@ -28,7 +29,7 @@ export default class Renderer
 
     setRendererInstance()
     {
-        this.instance = new THREE.WebGLRenderer({
+        this.instance = new THREE.WebGPURenderer({
             canvas: this.canvas,
             powerPreference: RENDERER.POWER_PREFERENCE,
             antialias: RENDERER.ANTIALIAS,
@@ -43,6 +44,8 @@ export default class Renderer
         this.instance.outputColorSpace = RENDERER.OUTPUT_COLOR_SPACE
         this.instance.setSize(this.sizes.width, this.sizes.height)
         this.instance.setPixelRatio(this.sizes.pixelRatio)
+
+        this.instance.setAnimationLoop(() => { this.time.tick() })
     }
 
     setDebug()
@@ -74,6 +77,6 @@ export default class Renderer
 
     update()
     {
-        this.instance.render(this.scene, this.camera.instance)
+        this.instance.render(this.scene, this.camera.instance)        
     }
 }

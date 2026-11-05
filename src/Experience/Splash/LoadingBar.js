@@ -1,4 +1,4 @@
-import * as THREE from 'three'
+import * as THREE from 'three/webgpu'
 import Experience from '../Experience.js'
 import loadingBarVertexShader from './shaders/loadingBar/vertex.glsl'
 import loadingBarFragmentShader from './shaders/loadingBar/fragment.glsl'
