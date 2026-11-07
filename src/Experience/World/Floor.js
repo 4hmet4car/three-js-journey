@@ -17,13 +17,17 @@ export default class Floor
     {
         this.floorTexture = this.resources.items.floorTexture
         this.floorTexture.colorSpace = THREE.SRGBColorSpace
+
+        this.material = new THREE.MeshStandardNodeMaterial({
+            map: this.floorTexture,
+        })
     }
 
     setMesh()
     {
         this.mesh = new THREE.Mesh(
             new THREE.PlaneGeometry(10, 10, 10, 10),
-            new THREE.MeshStandardMaterial({ map: this.floorTexture })
+            this.material
         )
         this.mesh.rotation.x = - Math.PI * 0.5
         this.mesh.receiveShadow = true

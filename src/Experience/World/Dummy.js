@@ -1,5 +1,6 @@
 import * as THREE from 'three/webgpu'
 import Experience from "../Experience.js"
+import { color, vec2, vec3 } from 'three/tsl'
 
 export default class Floor
 {
@@ -22,6 +23,27 @@ export default class Floor
     setMaterial()
     {
         this.material = new THREE.MeshStandardMaterial()
+
+        // const foo = vec2(1, 0)
+        // this.material.colorNode = vec3(foo, 0)
+
+        // const foo = color(0xff0000)
+        // this.material.colorNode = foo
+
+        // const foo = color('#ff0000')
+        // this.material.colorNode = foo
+
+        // const foo = color(0xff0000)
+        // this.material.colorNode = foo
+
+        // const foo = color(1, 0, 0)
+        // this.material.colorNode = foo
+
+        // const foo = color({ r: 1, g: 0, b: 0 })
+        // this.material.colorNode = foo
+
+        const foo = color(new THREE.Color('red'))
+        this.material.colorNode = foo
     }
 
     setMesh()
