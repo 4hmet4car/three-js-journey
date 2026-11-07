@@ -22,7 +22,7 @@ export default class Floor
     setMesh()
     {
         this.mesh = new THREE.Mesh(
-            new THREE.PlaneGeometry(10, 10),
+            new THREE.PlaneGeometry(10, 10, 10, 10),
             new THREE.MeshStandardMaterial({ map: this.floorTexture })
         )
         this.mesh.rotation.x = - Math.PI * 0.5
