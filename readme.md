@@ -85,6 +85,7 @@ Deployment is handled by GitHub Actions.<br>
 01- [Introduction to WebGPU and TSL](https://4hmet4car-68-introduction-to-webgpu-tsl.vercel.app/)<br>
 02- [Node Materials](https://4hmet4car-69-node-materials.vercel.app/)<br>
 03- [Variables & References](https://4hmet4car-70-variables-and-references.vercel.app/)<br>
+04- [Tools & debug](https://4hmet4car-71-tools-and-debug.vercel.app/)<br>
 
 ---
 > ⚠️ The deployment workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
