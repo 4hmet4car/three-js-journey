@@ -6,7 +6,6 @@ import Renderer from './Renderer.js'
 import Debug from './Utils/Debug.js'
 import Resources from './Utils/Resources.js'
 import Sizes from './Utils/Sizes.js'
-import Statistics from './Utils/Statistics.js'
 import Time from './Utils/Time.js'
 import World from './World/World.js'
 
@@ -37,7 +36,6 @@ export default class Experience
         this.canvas = canvas
 
         //Setup
-        this.debug = new Debug()
         this.sizes = new Sizes()
         this.time = new Time()
         this.scene = new THREE.Scene()
@@ -45,13 +43,13 @@ export default class Experience
         this.resources = new Resources(sources)
         this.camera = new Camera()
         this.renderer = new Renderer()
+        this.debug = new Debug()
         // this.cursor = new Cursor(this.sizes) 
         // this.rayCursor = new RayCursor(this.cursor, this.camera)
         // this.postProcessing = new PostProcessing()
 
         this.world = new World()
 
-        this.statistics = new Statistics()
 
         // Sizes resize event
         this.sizes.on('resize', () =>
@@ -92,22 +90,12 @@ export default class Experience
 
     update()
     {
-        if (this.statistics.active)
-        {
-            this.statistics.FPSCounter?.begin()
-        }
-
         // this.splash.update()
         this.camera.update()
         // this.cursor.update()
         this.world.update()
         this.renderer.update()
         // this.postProcessing.update()
-
-        if (this.statistics.active)
-        {
-            this.statistics.FPSCounter?.end()
-        }
     }
 
     destroy()
@@ -149,12 +137,7 @@ export default class Experience
 
         if (this.debug.active)
         {
-            this.debug.ui.destroy()
-        }
-
-        if (this.statistics.active)
-        {
-            this.statistics.destroy()
+            
         }
     }
 }

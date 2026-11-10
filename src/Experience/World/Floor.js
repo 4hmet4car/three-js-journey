@@ -9,9 +9,12 @@ export default class Floor
         this.experience = new Experience()
         this.resources = this.experience.resources
         this.scene = this.experience.scene
+        this.renderer = this.experience.renderer
+        this.camera = this.experience.camera
 
         this.setMaterial()
         this.setMesh()
+        // this.logShaders()
     }
 
     setMaterial()
@@ -24,7 +27,11 @@ export default class Floor
             map: this.floorTexture,
         })
 
-        this.material.opacityNode = smoothstep(0.5, 0.2, distance(uv(), vec2(0.5)))
+        const fade = smoothstep(0.5, 0.2, distance(uv(), vec2(0.5)))
+                        .toVar('fade')
+                        .debug()
+                        .toInspector()
+        this.material.opacityNode = fade
     }
 
     setMesh()
@@ -36,5 +43,12 @@ export default class Floor
         this.mesh.rotation.x = - Math.PI * 0.5
         this.mesh.receiveShadow = true
         this.scene.add(this.mesh)
+    }
+
+    async logShaders()
+    {
+        const program = await this.renderer.instance.debug.getShaderAsync(this.scene, this.camera.instance, this.mesh)
+        console.log(program.vertexShader)
+        console.log(program.fragmentShader)
     }
 }

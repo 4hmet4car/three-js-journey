@@ -18,7 +18,7 @@ export default class Camera
         this.setPerspectiveCameraInstance()
         // this.setOrtographicCameraInstance()
         this.setOrbitControls()
-        this.setDebug()
+        // this.setDebug()
 
         // This is a helper to find the camera position if needed
         // window.addEventListener('mousedown',()=>{

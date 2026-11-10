@@ -19,6 +19,7 @@ export const ORBIT_CONTROLS = {
 export const RENDERER = {
     POWER_PREFERENCE: 'high-performance',
     ANTIALIAS: true,
+    FORCE_WEBGL: false,
     OUTPUT_COLOR_SPACE: THREE.SRGBColorSpace,
     SHADOWMAP: {
         ENABLED: true,

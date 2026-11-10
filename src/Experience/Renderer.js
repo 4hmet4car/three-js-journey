@@ -19,7 +19,7 @@ export default class Renderer
         this.debug = this.experience.debug
 
         this.setRendererInstance()
-        this.setDebug()
+        // this.setDebug()
 
         // console.log(this.instance.info)
         // console.log(this.instance.capabilities)
@@ -33,6 +33,7 @@ export default class Renderer
             canvas: this.canvas,
             powerPreference: RENDERER.POWER_PREFERENCE,
             antialias: RENDERER.ANTIALIAS,
+            forceWebGL: RENDERER.FORCE_WEBGL,
         })
         this.instance.setClearColor(rendererParameters.clearColor)
         this.instance.shadowMap.enabled = RENDERER.SHADOWMAP.ENABLED
@@ -77,6 +78,6 @@ export default class Renderer
 
     update()
     {
-        this.instance.render(this.scene, this.camera.instance)        
+        this.instance.render(this.scene, this.camera.instance)
     }
 }
