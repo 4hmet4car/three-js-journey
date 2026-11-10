@@ -28,77 +28,16 @@ export default class Floor
 
     setMaterial()
     {
-        this.material = new THREE.MeshStandardMaterial()
-
-        // const foo = vec2(1, 0)
-        // this.material.colorNode = vec3(foo, 0)
-
-        // const foo = color(0xff0000)
-        // this.material.colorNode = foo
-
-        // const foo = color('#ff0000')
-        // this.material.colorNode = foo
-
-        // const foo = color(0xff0000)
-        // this.material.colorNode = foo
-
-        // const foo = color(1, 0, 0)
-        // this.material.colorNode = foo
-
-        // const foo = color({ r: 1, g: 0, b: 0 })
-        // this.material.colorNode = foo
-
-        // const foo = color(new THREE.Color('red'))
-        // this.material.colorNode = foo
-
-        // this.material.outputNode = vec4(positionLocal, 1)
-
-        // this.material.outputNode = vec4(positionWorld, 1)
-
-        // this.material.outputNode = vec4(positionGeometry, 1)
-
-        // this.material.outputNode = vec4(uv(), 1 , 1)
-
-        // this.material.outputNode = vec4(normalLocal, 1)
-
-        // const worldNormal = modelWorldMatrix.mul(vec4(normalLocal, 0)).xyz
-        // this.material.outputNode = vec4(worldNormal, 1)
-
-        // this.material.outputNode = vec4(normalWorld, 1)
-
-        // this.material.outputNode = vec4(normalView, 1)
-
-        // this.material.outputNode = vec4(screenUV, 1, 1)
-
-        // const fragCoord = screenCoordinate.div(vec2(this.sizes.width, this.sizes.height))
-        // this.material.outputNode = vec4(fragCoord, 0, 1)
-
-        // this.material.outputNode = vec4(modelPosition, 1)
-
-        // this.material.outputNode = vec4(modelDirection, 1)
-
-        // this.material.outputNode = vec4(modelScale, 1)
-
-        // this.material.colorNode = userData('foo')
-
-        // this.material.outputNode = vec4(attribute('uv'), 1)
-
-        this.material.outputNode = vec4(attribute('position'), 1)
+        this.material = new THREE.MeshStandardMaterial()        
     }
 
     setMesh()
     {
         this.mesh = new THREE.Mesh(this.geometry, this.material)
-        this.mesh.userData.foo = new THREE.Vector3(1, 0, 0)
         this.mesh.castShadow = true
         this.mesh.receiveShadow = true
         this.mesh.position.y = 1
         this.scene.add(this.mesh)
-
-        setTimeout(() =>
-        {
-            this.mesh.userData.foo.set(1, 0.5, 0)
-        }, 2000)
     }
 
     setTransformControls()

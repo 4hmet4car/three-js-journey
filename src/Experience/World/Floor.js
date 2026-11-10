@@ -1,6 +1,6 @@
-import { checker, materialColor, uv, vec3 } from 'three/tsl'
 import * as THREE from 'three/webgpu'
 import Experience from "../Experience.js"
+import { distance, smoothstep, uv, vec2 } from 'three/tsl'
 
 export default class Floor
 {
@@ -20,11 +20,11 @@ export default class Floor
         this.floorTexture.colorSpace = THREE.SRGBColorSpace
 
         this.material = new THREE.MeshStandardNodeMaterial({
+            transparent: true,
             map: this.floorTexture,
         })
 
-        const pattern = vec3(checker(uv().mul(4)))
-        this.material.colorNode = materialColor.mul(pattern)
+        this.material.opacityNode = smoothstep(0.5, 0.2, distance(uv(), vec2(0.5)))
     }
 
     setMesh()
