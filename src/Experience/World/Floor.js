@@ -28,9 +28,9 @@ export default class Floor
         })
 
         const fade = smoothstep(0.5, 0.2, distance(uv(), vec2(0.5)))
-                        .toVar('fade')
-                        .debug()
-                        .toInspector()
+                        // .toVar('fade')
+                        // .debug()
+                        .toInspector('lol')
         this.material.opacityNode = fade
     }
 

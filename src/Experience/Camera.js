@@ -13,12 +13,12 @@ export default class Camera
         this.sizes = this.experience.sizes
         this.scene = this.experience.scene
         this.canvas = this.experience.canvas
+        this.renderer = this.experience.renderer
         this.debug = this.experience.debug
 
         this.setPerspectiveCameraInstance()
         // this.setOrtographicCameraInstance()
         this.setOrbitControls()
-        // this.setDebug()
 
         // This is a helper to find the camera position if needed
         // window.addEventListener('mousedown',()=>{
@@ -40,7 +40,7 @@ export default class Camera
             CAMERA.POSITION_X / CAMERA.ZOOM,
             CAMERA.POSITION_Y / CAMERA.ZOOM,
             CAMERA.POSITION_Z / CAMERA.ZOOM)
-       
+
         this.scene.add(this.instance)
     }
 
@@ -89,30 +89,30 @@ export default class Camera
         //Debug
         if (this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder("Camera")
+            const gui = this.renderer.instance.inspector.createParameters("Camera")
 
-            this.debugFolder
+            gui
                 .add(cameraParameters, 'enablePan')
                 .onChange(() =>
                 {
                     this.controls.enablePan = cameraParameters.enablePan
                 })
-            
-            this.debugFolder
+
+            gui
                 .add(cameraParameters, 'enableZoom')
                 .onChange(() =>
                 {
                     this.controls.enableZoom = cameraParameters.enableZoom
                 })
-            
-            this.debugFolder
+
+            gui
                 .add(cameraParameters, 'enableRotate')
                 .onChange(() =>
                 {
                     this.controls.enableRotate = cameraParameters.enableRotate
                 })
-            
-            this.debugFolder
+
+            gui
                 .add(cameraParameters, 'enableDamping')
                 .onChange(() =>
                 {

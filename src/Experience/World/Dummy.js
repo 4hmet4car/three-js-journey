@@ -8,8 +8,8 @@ export default class Floor
     constructor()
     {
         this.experience = new Experience()
-        this.resources = this.experience.resources
         this.scene = this.experience.scene
+        this.debug = this.experience.debug
         this.camera = this.experience.camera
         this.canvas = this.experience.canvas
         this.renderer = this.experience.renderer
@@ -18,7 +18,7 @@ export default class Floor
         this.setGeometry()
         this.setMaterial()
         this.setMesh()
-        this.setTransformControls()
+        this.setDebug()
     }
 
     setGeometry()
@@ -28,7 +28,7 @@ export default class Floor
 
     setMaterial()
     {
-        this.material = new THREE.MeshStandardMaterial()        
+        this.material = new THREE.MeshStandardNodeMaterial()
     }
 
     setMesh()
@@ -38,6 +38,22 @@ export default class Floor
         this.mesh.receiveShadow = true
         this.mesh.position.y = 1
         this.scene.add(this.mesh)
+    }
+
+    setDebug()
+    {
+        if (this.debug.active)
+        {
+            this.material.userData.graphId = 'torusKnotMaterial'
+
+            this.setTransformControls()
+
+            const gui = this.renderer.instance.inspector.createParameters('Torus')
+
+            gui.add(this.material, 'roughness', 0, 1)
+            gui.addColor(this.material, 'color')
+            gui.add(this.material, 'wireframe')
+        }
     }
 
     setTransformControls()
