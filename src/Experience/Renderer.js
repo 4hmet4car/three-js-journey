@@ -53,7 +53,7 @@ export default class Renderer
     {
         if (this.debug.active)
         {
-            this.debugFolder = this.debug.ui.addFolder("Renderer")
+            const gui = this.instance.inspector.createParameters('Renderer')
 
             this.debugFolder
                 .addColor(rendererParameters, 'clearColor')

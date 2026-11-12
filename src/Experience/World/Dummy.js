@@ -2,6 +2,7 @@ import * as THREE from 'three/webgpu'
 import Experience from "../Experience.js"
 import { attribute, cameraPosition, color, dot, modelDirection, modelPosition, modelScale, modelViewMatrix, modelWorldMatrix, normalLocal, normalView, normalWorld, positionGeometry, positionLocal, positionViewDirection, positionWorld, screenCoordinate, screenUV, userData, vec2, vec3, vec4 } from 'three/tsl'
 import { TransformControls } from 'three/examples/jsm/controls/TransformControls.js'
+import { torusParameters } from '../parameters.js'
 
 export default class Floor
 {
@@ -50,9 +51,23 @@ export default class Floor
 
             const gui = this.renderer.instance.inspector.createParameters('Torus')
 
-            gui.add(this.material, 'roughness', 0, 1)
-            gui.addColor(this.material, 'color')
-            gui.add(this.material, 'wireframe')
+            gui.add(torusParameters.material, 'roughness', 0, 1)
+                .onChange((value) =>
+                {
+                    this.material.roughness = value
+                })
+
+            gui.addColor(torusParameters.material, 'color')
+                .onChange((value) =>
+                {
+                    this.material.color = new THREE.Color(value)
+                })
+
+            gui.add(torusParameters.material, 'wireframe')
+                .onChange((value) =>
+                {
+                    this.material.wireframe = value
+                })
         }
     }
 

@@ -40,12 +40,10 @@ export const postProcessingParameters = {
     },
 }
 
-export const portalParameters = {
-    uColorStart: {r: 1, g: 0.2, b: 0.15},
-    uColorEnd: {r: 1, g: 1, b: 1},
-}
-
-export const firefliesParameters = {
-    firefliesCount: 30,
-    firefliesSize: 100,
+export const torusParameters = {
+    material: {
+        roughness: 1,
+        color: '#ffffff',
+        wireframe: false,
+    },
 }
