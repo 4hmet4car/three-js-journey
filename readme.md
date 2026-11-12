@@ -86,6 +86,7 @@ Deployment is handled by GitHub Actions.<br>
 02- [Node Materials](https://4hmet4car-69-node-materials.vercel.app/)<br>
 03- [Variables & References](https://4hmet4car-70-variables-and-references.vercel.app/)<br>
 04- [Tools & debug](https://4hmet4car-71-tools-and-debug.vercel.app/)<br>
+05- [Math](https://4hmet4car-72-math.vercel.app/)<br>
 
 ---
 > ⚠️ The deployment workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
