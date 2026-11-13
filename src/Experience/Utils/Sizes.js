@@ -1,5 +1,4 @@
-import { Vector2 } from 'three/webgpu';
-import { EventDispatcher } from 'three/webgpu';
+import { EventDispatcher, Vector2 } from 'three/webgpu';
 
 export default class Sizes extends EventDispatcher {
   constructor() {
