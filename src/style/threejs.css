@@ -1,13 +1,4 @@
-* {
-  margin: 0;
-  padding: 0;
-}
-
-html,
-body {
-  overflow: hidden;
-}
-
+/* This is the threejs canvas */
 .threejs {
   position: fixed;
   top: 0;

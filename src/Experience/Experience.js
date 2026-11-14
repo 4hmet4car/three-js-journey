@@ -18,7 +18,7 @@ export default class Experience {
       return instance;
     }
 
-    // Initial singleton assignment
+    // Singleton assignment
     instance = this;
 
     // Global access
@@ -36,9 +36,7 @@ export default class Experience {
     this.scene = new Scene();
 
     // World
-    this.resources.addEventListener('allItemsLoaded', () => {
-      this.world = new World();
-    });
+    this.world = new World();
 
     // Camera
     this.camera = new Camera();
@@ -46,21 +44,37 @@ export default class Experience {
     // Renderer
     this.renderer = new Renderer();
 
+    // Resources event listener
+    this.resources.addEventListener('allItemsLoaded', () => {
+      this.world.init();
+    });
+
     // Resize event listener
     this.sizes.addEventListener('resize', () => {
       this.resize();
     });
+
+    // Register animation loop
+    this.renderer.register();
+
+    // Load items
+    this.resources.load();
   }
 
-  // Resize prorogates the size change to the affected classes
+  // Resize prorogates the size change to the desired classes
   resize() {
+    this.world.resize();
+    this.camera.resize();
     this.renderer.resize();
   }
 
-  // Update is the animation loop called by the renderer
+  // Update is the animation loop registered by the renderer
   update() {
     this.time.update();
+    this.world.update();
     this.camera.update();
     this.renderer.update();
   }
+
+  destroy() {}
 }

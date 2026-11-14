@@ -23,20 +23,20 @@ export default class Camera {
       CAMERA.FAR,
     );
 
-    this.instance.position.set(
-      CAMERA.POSITION_X / CAMERA.ZOOM,
-      CAMERA.POSITION_Y / CAMERA.ZOOM,
-      CAMERA.POSITION_Z / CAMERA.ZOOM,
-    );
+    this.instance.position
+      .set(CAMERA.POSITION_X, CAMERA.POSITION_Y, CAMERA.POSITION_Z)
+      .divideScalar(CAMERA.ZOOM);
 
     this.scene.add(this.instance);
   }
 
   setOrbitControls() {
     this.controls = new OrbitControls(this.instance, this.canvas);
-    this.controls.target.x = ORBIT_CONTROLS.TARGET_X;
-    this.controls.target.y = ORBIT_CONTROLS.TARGET_Y;
-    this.controls.target.z = ORBIT_CONTROLS.TARGET_Z;
+    this.controls.target.set(
+      ORBIT_CONTROLS.TARGET_X,
+      ORBIT_CONTROLS.TARGET_Y,
+      ORBIT_CONTROLS.TARGET_Z,
+    );
     this.controls.enablePan = cameraParameters.enablePan;
     this.controls.enableZoom = cameraParameters.enableZoom;
     this.controls.enableRotate = cameraParameters.enableRotate;
@@ -44,7 +44,7 @@ export default class Camera {
   }
 
   resize() {
-    this.instance.aspectRatio = this.sizes.aspectRatio;
+    this.instance.aspect = this.sizes.aspectRatio;
     this.instance.updateProjectionMatrix();
   }
 

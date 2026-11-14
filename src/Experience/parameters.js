@@ -6,13 +6,13 @@ export const cameraParameters = {
 };
 
 export const rendererParameters = {
-  clearColor: '#111111',
+  clearColor: 0x111111,
 };
 
 export const torusParameters = {
   material: {
     roughness: 1,
-    color: '#ffffff',
+    color: 0xffffff,
     wireframe: false,
   },
 };

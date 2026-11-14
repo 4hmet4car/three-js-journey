@@ -33,12 +33,18 @@ export default class Renderer {
     this.instance.setPixelRatio(this.sizes.pixelRatio);
   }
 
+  register() {
+    this.instance.setAnimationLoop(() => {
+      this.experience.update();
+    });
+  }
+
   resize() {
     this.instance.setSize(this.sizes.width, this.sizes.height);
     this.instance.setPixelRatio(this.sizes.pixelRatio);
   }
 
   update() {
-    this.instance.render(this.scene, this.camera);
+    this.instance.render(this.scene, this.camera.instance);
   }
 }
