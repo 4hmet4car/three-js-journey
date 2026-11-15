@@ -34,9 +34,7 @@ export default class Renderer {
   }
 
   register() {
-    this.instance.setAnimationLoop(() => {
-      this.experience.update();
-    });
+    this.instance.setAnimationLoop(this.experience.update);
   }
 
   resize() {
@@ -46,5 +44,13 @@ export default class Renderer {
 
   update() {
     this.instance.render(this.scene, this.camera.instance);
+  }
+
+  stop() {
+    this.instance.setAnimationLoop(null);
+  }
+
+  destroy() {
+    this.instance.dispose();
   }
 }

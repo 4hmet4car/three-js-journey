@@ -12,4 +12,10 @@ export default class World {
   resize() {}
 
   update() {}
+
+  destroy() {
+    this.environment.destroy();
+    this.dummy.destroy();
+    this.floor.destroy();
+  }
 }

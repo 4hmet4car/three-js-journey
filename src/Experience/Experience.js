@@ -45,14 +45,10 @@ export default class Experience {
     this.renderer = new Renderer();
 
     // Resources event listener
-    this.resources.addEventListener('allItemsLoaded', () => {
-      this.world.init();
-    });
+    this.resources.addEventListener('allItemsLoaded', this.onAllItemsLoaded);
 
     // Resize event listener
-    this.sizes.addEventListener('resize', () => {
-      this.resize();
-    });
+    this.sizes.addEventListener('resize', this.onResize);
 
     // Register animation loop
     this.renderer.register();
@@ -61,20 +57,43 @@ export default class Experience {
     this.resources.load();
   }
 
+  // This event listener is used only onceso it is removed
+  // after the first call
+  // defined with fat arrows so it retains the context
+  onAllItemsLoaded = () => {
+    this.resources.removeEventListener('allItemsLoaded', this.onAllItemsLoaded);
+    this.world.init();
+  };
+
   // Resize prorogates the size change to the desired classes
-  resize() {
+  // defined with fat arrows so it retains the context
+  onResize = () => {
     this.world.resize();
     this.camera.resize();
     this.renderer.resize();
-  }
+  };
 
   // Update is the animation loop registered by the renderer
-  update() {
+  // defined with fat arrows so it retains the context
+  update = () => {
     this.time.update();
     this.world.update();
     this.camera.update();
     this.renderer.update();
-  }
+  };
 
-  destroy() {}
+  destroy() {
+    // Stop renderer
+    this.renderer.stop();
+
+    // Remove event listeners
+    this.sizes.removeEventListener('resize', this.onResize);
+
+    // Destroy world, camera, and utilities
+    this.world.destroy();
+    this.camera.destroy();
+    this.resources.destroy();
+    this.sizes.destroy();
+    this.time.destroy();
+  }
 }
