@@ -94,6 +94,7 @@ export default class Experience {
 
     // Remove event listeners
     this.sizes.removeEventListener('resize', this.onResize);
+    this.sizes.removeEventListener('allItemsLoaded', this.onAllItemsLoaded);
 
     // Destroy world, camera, and utilities
     this.debug.destroy();

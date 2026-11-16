@@ -31,7 +31,7 @@ export default class Environment {
         ENVIRONMENT.DIRECTIONAL_LIGHT.POSITION_Z,
       )
       .normalize()
-      .multiplyScalar(ENVIRONMENT.DIRECTIONAL_LIGHT.INTENSITY);
+      .multiplyScalar(ENVIRONMENT.DIRECTIONAL_LIGHT.POSITION_MULTIPLIER);
     this.directionalLight.castShadow = ENVIRONMENT.DIRECTIONAL_LIGHT.CAST_SHADOW;
     this.directionalLight.shadow.camera.top = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_TOP;
     this.directionalLight.shadow.camera.right = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_RIGHT;

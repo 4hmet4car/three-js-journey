@@ -1,5 +1,3 @@
-import { Inspector } from 'three/examples/jsm/inspector/Inspector.js';
-import TSLGraphEditor from 'three/examples/jsm/inspector/extensions/tsl-graph/TSLGraphEditor.js';
 import Experience from '../Experience.js';
 
 export default class Debug {
@@ -8,22 +6,26 @@ export default class Debug {
     this.renderer = this.experience.renderer;
 
     this.active = window.location.hash === '#debug';
+  }
 
+  async init() {
     if (this.active) {
-      this.renderer.instance.inspector = new Inspector();
-      this.renderer.instance.inspector.addTab(new TSLGraphEditor());
+      const [{ Inspector }, { default: TSLGraphEditor }] = await Promise.all([
+        import('three/examples/jsm/inspector/Inspector.js'),
+        import('three/examples/jsm/inspector/extensions/tsl-graph/TSLGraphEditor.js'),
+      ]);
+      this.inspector = new Inspector();
+      this.inspector.addTab(new TSLGraphEditor());
+      this.renderer.instance.inspector = this.inspector;
+      this.experience.world.debug(this.inspector);
+      this.experience.camera.debug(this.inspector);
+      this.experience.renderer.debug(this.inspector);
     }
   }
 
-  init() {
-    if (!this.active) return;
-    this.experience.world.debug(this.renderer.instance.inspector);
-    this.experience.camera.debug(this.renderer.instance.inspector);
-    this.experience.renderer.debug(this.renderer.instance.inspector);
-  }
-
   destroy() {
-    if (!this.active) return;
-    this.inspector.dispose();
+    if (this.active) {
+      this.inspector.dispose();
+    }
   }
 }
