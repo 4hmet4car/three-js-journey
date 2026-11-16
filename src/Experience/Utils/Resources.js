@@ -51,7 +51,7 @@ export default class Resources extends EventDispatcher {
 
         case 'texture':
           if (!this.loaders.textureLoader) {
-            const { TextureLoader } = await import('three');
+            const { TextureLoader } = await import('three/webgpu');
             this.loaders.textureLoader = new TextureLoader();
           }
           this.loaders.textureLoader.load(source.path, (file) => {
@@ -61,7 +61,7 @@ export default class Resources extends EventDispatcher {
 
         case 'image':
           if (!this.loaders.imageLoader) {
-            const { ImageLoader } = await import('three');
+            const { ImageLoader } = await import('three/webgpu');
             this.loaders.imageLoader = new ImageLoader();
           }
           this.loaders.imageLoader.load(source.path, (file) => {
@@ -71,7 +71,7 @@ export default class Resources extends EventDispatcher {
 
         case 'cubeTexture':
           if (!this.loaders.cubeTextureLoader) {
-            const { CubeTextureLoader } = await import('three');
+            const { CubeTextureLoader } = await import('three/webgpu');
             this.loaders.cubeTextureLoader = new CubeTextureLoader();
           }
           this.loaders.cubeTextureLoader.load(source.path, (file) => {
@@ -106,7 +106,46 @@ export default class Resources extends EventDispatcher {
     this.dispatchEvent({ type: 'itemLoaded' });
 
     if (this.loaded === this.toLoad) {
+      this.disposeLoaders();
       this.dispatchEvent({ type: 'allItemsLoaded' });
+    }
+  }
+
+  disposeLoaders() {
+    this.loaders.dracoLoader?.dispose();
+    this.loaders.ktx2Loader?.dispose();
+    this.loaders = {};
+  }
+
+  disposeItems(item) {
+    if (typeof item.dispose === 'function') {
+      item.dispose();
+      return;
+    }
+
+    if (item.scene) {
+      item.scene.traverse((child) => {
+        if (child.isMesh) {
+          child.geometry?.dispose();
+          const materials = Array.isArray(child.material) ? child.material : [child.material];
+          for (const material of materials) {
+            if (!material) continue;
+            // Dispose any textures attached to the material
+            for (const value of Object.values(material)) {
+              if (value && typeof value.dispose === 'function') {
+                value.dispose();
+              }
+            }
+            material.dispose();
+          }
+        }
+      });
+    }
+  }
+
+  destroy() {
+    for (const item in this.items) {
+      this.disposeItems(this.items[item]);
     }
   }
 }

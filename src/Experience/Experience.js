@@ -57,7 +57,7 @@ export default class Experience {
     this.resources.load();
   }
 
-  // This event listener is used only onceso it is removed
+  // This event listener is used only once so it is removed
   // after the first call
   // defined with fat arrows so it retains the context
   onAllItemsLoaded = () => {
@@ -82,7 +82,8 @@ export default class Experience {
     this.renderer.update();
   };
 
-  destroy() {
+  // Async recommended for WebGPU renderer disposal
+  async destroy() {
     // Stop renderer
     this.renderer.stop();
 
@@ -91,9 +92,19 @@ export default class Experience {
 
     // Destroy world, camera, and utilities
     this.world.destroy();
+    this.world = null;
     this.camera.destroy();
+    this.camera = null;
     this.resources.destroy();
+    this.resources = null;
     this.sizes.destroy();
-    this.time.destroy();
+    this.sizes = null;
+    this.time = null;
+
+    await this.renderer.destroy();
+    this.renderer = null;
+
+    delete window.experience;
+    instance = null;
   }
 }

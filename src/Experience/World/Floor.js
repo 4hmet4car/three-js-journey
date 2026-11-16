@@ -39,4 +39,10 @@ export default class Floor {
     this.mesh.receiveShadow = FLOOR.MESH.RECEIVE_SHADOW;
     this.scene.add(this.mesh);
   }
+
+  destroy() {
+    this.scene.remove(this.mesh);
+    this.geometry.dispose();
+    this.material.dispose();
+  }
 }

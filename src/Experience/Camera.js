@@ -51,4 +51,10 @@ export default class Camera {
   update() {
     this.controls.update();
   }
+
+  destroy() {
+    this.scene.remove(this.instance);
+    this.instance.dispose();
+    this.controls.dispose();
+  }
 }

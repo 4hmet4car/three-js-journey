@@ -50,7 +50,7 @@ export default class Renderer {
     this.instance.setAnimationLoop(null);
   }
 
-  destroy() {
-    this.instance.dispose();
+  async destroy() {
+    await this.instance.dispose();
   }
 }

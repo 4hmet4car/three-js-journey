@@ -32,4 +32,10 @@ export default class Dummy {
     this.mesh.position.y = TORUS_KNOT.MESH.POSITION_Y;
     this.scene.add(this.mesh);
   }
+
+  destroy() {
+    this.scene.remove(this.mesh);
+    this.geometry.dispose();
+    this.material.dispose();
+  }
 }

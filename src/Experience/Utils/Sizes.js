@@ -13,18 +13,20 @@ export default class Sizes extends EventDispatcher {
     this.aspectRatio = this.width / this.height;
 
     // Handle resize
-    window.addEventListener('resize', () => {
-      this.resize();
-    });
+    window.addEventListener('resize', this.resize);
   }
 
-  resize() {
+  resize = () => {
     this.width = window.innerWidth;
     this.height = window.innerHeight;
     this.pixelRatio = Math.min(window.devicePixelRatio, 2);
-    this.resolution = new Vector2(this.width, this.height).multiplyScalar(this.pixelRatio);
+    this.resolution.set(this.width, this.height).multiplyScalar(this.pixelRatio);
     this.aspectRatio = this.width / this.height;
 
     this.dispatchEvent({ type: 'resize' });
+  };
+
+  destroy() {
+    window.removeEventListener('resize', this.resize);
   }
 }

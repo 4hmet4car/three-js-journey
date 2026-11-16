@@ -7,16 +7,24 @@ export default class Environment {
     this.experience = new Experience();
     this.scene = this.experience.scene;
 
-    this.setDirectionalLight();
     this.setAmbientLight();
+    this.setDirectionalLight();
+  }
+
+  setAmbientLight() {
+    this.ambientLight = new AmbientLight(
+      ENVIRONMENT.AMBIENT_LIGHT.COLOR,
+      ENVIRONMENT.AMBIENT_LIGHT.INTENSITY,
+    );
+    this.scene.add(this.ambientLight);
   }
 
   setDirectionalLight() {
-    const directionalLight = new DirectionalLight(
+    this.directionalLight = new DirectionalLight(
       ENVIRONMENT.DIRECTIONAL_LIGHT.COLOR,
       ENVIRONMENT.DIRECTIONAL_LIGHT.INTENSITY,
     );
-    directionalLight.position
+    this.directionalLight.position
       .set(
         ENVIRONMENT.DIRECTIONAL_LIGHT.POSITION_X,
         ENVIRONMENT.DIRECTIONAL_LIGHT.POSITION_Y,
@@ -24,23 +32,25 @@ export default class Environment {
       )
       .normalize()
       .multiplyScalar(ENVIRONMENT.DIRECTIONAL_LIGHT.INTENSITY);
-    directionalLight.castShadow = ENVIRONMENT.DIRECTIONAL_LIGHT.CAST_SHADOW;
-    directionalLight.shadow.camera.top = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_TOP;
-    directionalLight.shadow.camera.right = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_RIGHT;
-    directionalLight.shadow.camera.bottom = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_BOTTOM;
-    directionalLight.shadow.camera.left = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_LEFT;
-    directionalLight.shadow.camera.near = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_NEAR;
-    directionalLight.shadow.camera.far = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_FAR;
-    directionalLight.shadow.radius = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_RADIUS;
-    directionalLight.shadow.normalBias = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_NORMAL_BIAS;
-    this.scene.add(directionalLight);
+    this.directionalLight.castShadow = ENVIRONMENT.DIRECTIONAL_LIGHT.CAST_SHADOW;
+    this.directionalLight.shadow.camera.top = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_TOP;
+    this.directionalLight.shadow.camera.right = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_RIGHT;
+    this.directionalLight.shadow.camera.bottom = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_BOTTOM;
+    this.directionalLight.shadow.camera.left = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_LEFT;
+    this.directionalLight.shadow.camera.near = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_NEAR;
+    this.directionalLight.shadow.camera.far = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_FAR;
+    this.directionalLight.shadow.radius = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_RADIUS;
+    this.directionalLight.shadow.normalBias = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_NORMAL_BIAS;
+    this.scene.add(this.directionalLight);
   }
 
-  setAmbientLight() {
-    const ambientLight = new AmbientLight(
-      ENVIRONMENT.AMBIENT_LIGHT.COLOR,
-      ENVIRONMENT.AMBIENT_LIGHT.INTENSITY,
-    );
-    this.scene.add(ambientLight);
+  destroy() {
+    this.scene.remove(this.ambientLight);
+    this.ambientLight.dispose();
+
+    this.scene.remove(this.directionalLight);
+    this.scene.remove(this.directionalLight.target); // Potential light target
+    this.directionalLight.shadow.dispose();
+    this.directionalLight.dispose();
   }
 }

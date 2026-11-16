@@ -15,7 +15,12 @@ export default class World {
 
   destroy() {
     this.environment.destroy();
+    this.environment = null; // Set to null for garbage collector
+
     this.dummy.destroy();
+    this.dummy = null; // Set to null for garbage collector
+
     this.floor.destroy();
+    this.floor = null; // Set to null for garbage collector
   }
 }
