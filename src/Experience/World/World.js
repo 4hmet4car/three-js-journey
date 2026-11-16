@@ -13,6 +13,12 @@ export default class World {
 
   update() {}
 
+  debug(inspector) {
+    this.environment.debug(inspector);
+    this.dummy.debug(inspector);
+    this.floor.debug(inspector);
+  }
+
   destroy() {
     this.environment.destroy();
     this.environment = null; // Set to null for garbage collector

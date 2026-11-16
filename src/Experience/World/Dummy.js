@@ -33,6 +33,8 @@ export default class Dummy {
     this.scene.add(this.mesh);
   }
 
+  debug() {}
+
   destroy() {
     this.scene.remove(this.mesh);
     this.geometry.dispose();

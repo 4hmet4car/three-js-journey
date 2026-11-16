@@ -1,6 +1,7 @@
 import { Scene } from 'three/webgpu';
 import Camera from './Camera.js';
 import Renderer from './Renderer.js';
+import Debug from './Utils/Debug.js';
 import Resources from './Utils/Resources.js';
 import Sizes from './Utils/Sizes.js';
 import Time from './Utils/Time.js';
@@ -44,6 +45,9 @@ export default class Experience {
     // Renderer
     this.renderer = new Renderer();
 
+    // Debug
+    this.debug = new Debug();
+
     // Resources event listener
     this.resources.addEventListener('allItemsLoaded', this.onAllItemsLoaded);
 
@@ -63,6 +67,7 @@ export default class Experience {
   onAllItemsLoaded = () => {
     this.resources.removeEventListener('allItemsLoaded', this.onAllItemsLoaded);
     this.world.init();
+    this.debug.init();
   };
 
   // Resize prorogates the size change to the desired classes
@@ -91,6 +96,7 @@ export default class Experience {
     this.sizes.removeEventListener('resize', this.onResize);
 
     // Destroy world, camera, and utilities
+    this.debug.destroy();
     this.world.destroy();
     this.world = null;
     this.camera.destroy();

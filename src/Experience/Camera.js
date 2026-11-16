@@ -52,9 +52,29 @@ export default class Camera {
     this.controls.update();
   }
 
+  debug(inspector) {
+    this.gui = inspector.createParameters('Camera');
+
+    this.gui.add(cameraParameters, 'enablePan').onChange((value) => {
+      this.controls.enablePan = value;
+    });
+
+    this.gui.add(cameraParameters, 'enableZoom').onChange((value) => {
+      this.controls.enableZoom = value;
+    });
+
+    this.gui.add(cameraParameters, 'enableRotate').onChange((value) => {
+      this.controls.enableRotate = value;
+    });
+
+    this.gui.add(cameraParameters, 'enableDamping').onChange((value) => {
+      this.controls.enableDamping = value;
+    });
+  }
+
   destroy() {
     this.scene.remove(this.instance);
-    this.instance.dispose();
     this.controls.dispose();
+    this.instance.dispose();
   }
 }
