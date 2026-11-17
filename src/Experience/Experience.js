@@ -98,6 +98,7 @@ export default class Experience {
 
     // Destroy world, camera, and utilities
     this.debug.destroy();
+    this.debug = null;
     this.world.destroy();
     this.world = null;
     this.camera.destroy();

@@ -1,3 +1,12 @@
+import {
+  mx_noise_float,
+  mx_noise_vec3,
+  positionLocal,
+  positionWorld,
+  rotate,
+  time,
+  vec3,
+} from 'three/tsl';
 import { Mesh, MeshStandardNodeMaterial, TorusKnotGeometry } from 'three/webgpu';
 import Experience from '../Experience.js';
 import { TORUS_KNOT } from '../constants.js';
@@ -23,6 +32,13 @@ export default class Dummy {
 
   setMaterial() {
     this.material = new MeshStandardNodeMaterial();
+
+    const angle = time.add(positionLocal.y).sin();
+    const newXZ = rotate(positionLocal.xz, angle);
+    this.material.positionNode = vec3(newXZ.x, positionLocal.y, newXZ.y);
+
+    const noise = mx_noise_vec3(positionWorld.mul(4));
+    this.material.colorNode = noise;
   }
 
   setMesh() {

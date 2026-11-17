@@ -1,4 +1,4 @@
-import { uv } from 'three/tsl';
+import { hash, rand, time, uv } from 'three/tsl';
 import { Mesh, MeshStandardNodeMaterial, PlaneGeometry, SRGBColorSpace } from 'three/webgpu';
 import { FLOOR } from '../constants.js';
 import Experience from '../Experience.js';
@@ -28,6 +28,16 @@ export default class Floor {
     colorMap.colorSpace = SRGBColorSpace;
 
     this.material = new MeshStandardNodeMaterial({ map: colorMap, transparent: true });
+
+    // this.material.colorNode = time.sin().mul(0.5).add(0.5);
+
+    // this.material.colorNode = time.sin().remap(-1, 1, 0, 1);
+
+    // this.material.colorNode = hash(uv().x.mul(10));
+
+    // this.material.colorNode = rand(uv());
+
+    this.material.colorNode = rand(uv().mul(100).floor());
 
     const fade = uv().sub(0.5).length().smoothstep(0.5, 0.2);
     this.material.opacityNode = fade;
