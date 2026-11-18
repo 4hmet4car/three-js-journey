@@ -13,20 +13,20 @@ export default class World {
 
   update() {}
 
-  debug(inspector) {
-    this.environment.debug(inspector);
-    this.dummy.debug(inspector);
-    this.floor.debug(inspector);
+  async debug(inspector) {
+    await this.environment.debug(inspector);
+    await this.dummy.debug(inspector);
+    await this.floor.debug(inspector);
   }
 
   destroy() {
-    this.environment.destroy();
+    this.environment?.destroy();
     this.environment = null; // Set to null for garbage collector
 
-    this.dummy.destroy();
+    this.dummy?.destroy();
     this.dummy = null; // Set to null for garbage collector
 
-    this.floor.destroy();
+    this.floor?.destroy();
     this.floor = null; // Set to null for garbage collector
   }
 }

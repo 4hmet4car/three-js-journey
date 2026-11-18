@@ -46,7 +46,7 @@ export default class Renderer {
     this.instance.render(this.scene, this.camera.instance);
   }
 
-  debug(inspector) {
+  async debug(inspector) {
     this.gui = inspector.createParameters('Renderer');
 
     this.gui.addColor(rendererParameters, 'clearColor').onChange((value) => {

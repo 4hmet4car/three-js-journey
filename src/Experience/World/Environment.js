@@ -44,7 +44,7 @@ export default class Environment {
     this.scene.add(this.directionalLight);
   }
 
-  debug() {}
+  async debug() {}
 
   destroy() {
     this.scene.remove(this.ambientLight);

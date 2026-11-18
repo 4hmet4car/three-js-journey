@@ -17,9 +17,9 @@ export default class Debug {
       this.inspector = new Inspector();
       this.inspector.addTab(new TSLGraphEditor());
       this.renderer.instance.inspector = this.inspector;
-      this.experience.world.debug(this.inspector);
-      this.experience.camera.debug(this.inspector);
-      this.experience.renderer.debug(this.inspector);
+      await this.experience.world.debug(this.inspector);
+      await this.experience.camera.debug(this.inspector);
+      await this.experience.renderer.debug(this.inspector);
     }
   }
 

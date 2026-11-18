@@ -1,13 +1,11 @@
+import { float, normalLocal, positionLocal, texture, triplanarTexture } from 'three/tsl';
 import {
-  mx_noise_float,
-  mx_noise_vec3,
-  positionLocal,
-  positionWorld,
-  rotate,
-  time,
-  vec3,
-} from 'three/tsl';
-import { Mesh, MeshStandardNodeMaterial, TorusKnotGeometry } from 'three/webgpu';
+  Mesh,
+  MeshStandardNodeMaterial,
+  MirroredRepeatWrapping,
+  SRGBColorSpace,
+  TorusKnotGeometry,
+} from 'three/webgpu';
 import Experience from '../Experience.js';
 import { TORUS_KNOT } from '../constants.js';
 
@@ -15,6 +13,7 @@ export default class Dummy {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
+    this.resources = this.experience.resources;
 
     this.setGeometry();
     this.setMaterial();
@@ -31,7 +30,21 @@ export default class Dummy {
   }
 
   setMaterial() {
+    const colorMap = this.resources.items.uvChecker;
+    colorMap.colorSpace = SRGBColorSpace;
+    colorMap.wrapS = MirroredRepeatWrapping;
+    colorMap.wrapT = MirroredRepeatWrapping;
+
     this.material = new MeshStandardNodeMaterial();
+
+    this.material.colorNode = triplanarTexture(
+      texture(colorMap),
+      null,
+      null,
+      float(1),
+      positionLocal,
+      normalLocal,
+    );
   }
 
   setMesh() {

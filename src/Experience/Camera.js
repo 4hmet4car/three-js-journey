@@ -52,7 +52,7 @@ export default class Camera {
     this.controls.update();
   }
 
-  debug(inspector) {
+  async debug(inspector) {
     this.gui = inspector.createParameters('Camera');
 
     this.gui.add(cameraParameters, 'enablePan').onChange((value) => {

@@ -16,3 +16,9 @@ export const torusParameters = {
     wireframe: false,
   },
 };
+
+export const floorParameters = {
+  material: {
+    color: 0xdc143c,
+  },
+};
