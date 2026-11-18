@@ -32,13 +32,6 @@ export default class Dummy {
 
   setMaterial() {
     this.material = new MeshStandardNodeMaterial();
-
-    const angle = time.add(positionLocal.y).sin();
-    const newXZ = rotate(positionLocal.xz, angle);
-    this.material.positionNode = vec3(newXZ.x, positionLocal.y, newXZ.y);
-
-    const noise = mx_noise_vec3(positionWorld.mul(4));
-    this.material.colorNode = noise;
   }
 
   setMesh() {
@@ -49,9 +42,55 @@ export default class Dummy {
     this.scene.add(this.mesh);
   }
 
-  debug() {}
+  async setTransformControls() {
+    const camera = this.experience.camera;
+    const canvas = this.experience.canvas;
+
+    const { TransformControls } = await import('three/examples/jsm/controls/TransformControls.js');
+
+    this.transformControls = new TransformControls(camera.instance, canvas);
+    this.transformControls.attach(this.mesh);
+
+    const helper = this.transformControls.getHelper();
+    this.scene.add(helper);
+
+    const disableOrbitControls = (event) => {
+      camera.controls.enabled = !event.value;
+    };
+    this.transformControls.addEventListener('dragging-changed', disableOrbitControls);
+
+    const switchTransformMode = (event) => {
+      if (event.key === 'g') this.transformControls.setMode('translate');
+      else if (event.key === 'r') this.transformControls.setMode('rotate');
+      else if (event.key === 's') this.transformControls.setMode('scale');
+    };
+    window.addEventListener('keydown', switchTransformMode);
+
+    this.destroyTransformControls = () => {
+      this.transformControls.removeEventListener('dragging-changed', disableOrbitControls);
+      window.removeEventListener('keydown', switchTransformMode);
+      this.transformControls.detach();
+      this.scene.remove(helper);
+      helper.dispose();
+      this.transformControls.dispose();
+    };
+  }
+
+  async debug(inspector) {
+    await this.setTransformControls();
+
+    this.gui = inspector.createParameters('Dummy');
+
+    this.gui
+      .add(this.transformControls, 'enabled')
+      .name('transformControls')
+      .onChange((event) => {
+        this.transformControls.getHelper().visible = event;
+      });
+  }
 
   destroy() {
+    this.destroyTransformControls?.();
     this.scene.remove(this.mesh);
     this.geometry.dispose();
     this.material.dispose();
