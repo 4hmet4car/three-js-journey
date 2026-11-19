@@ -88,6 +88,7 @@ Deployment is handled by GitHub Actions.<br>
 04- [Tools & debug](https://4hmet4car-71-tools-and-debug.vercel.app/)<br>
 05- [Math](https://4hmet4car-72-math.vercel.app/)<br>
 06- [Textures](https://4hmet4car-73-textures.vercel.app/)<br>
+07- [Uniforms & Attributes](https://4hmet4car-74-uniforms-and-attributes.vercel.app/)<br>
 
 ---
 
