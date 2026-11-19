@@ -1,0 +1,80 @@
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls.js';
+import { PerspectiveCamera } from 'three/webgpu';
+import Experience from './Experience.js';
+import { CAMERA, ORBIT_CONTROLS } from './constants.js';
+import { cameraParameters } from './parameters.js';
+
+export default class Camera {
+  constructor() {
+    this.experience = new Experience();
+    this.sizes = this.experience.sizes;
+    this.scene = this.experience.scene;
+    this.canvas = this.experience.canvas;
+
+    this.setPerspectiveCameraInstance();
+    this.setOrbitControls();
+  }
+
+  setPerspectiveCameraInstance() {
+    this.instance = new PerspectiveCamera(
+      CAMERA.FOV,
+      this.sizes.aspectRatio,
+      CAMERA.NEAR,
+      CAMERA.FAR,
+    );
+
+    this.instance.position
+      .set(CAMERA.POSITION_X, CAMERA.POSITION_Y, CAMERA.POSITION_Z)
+      .divideScalar(CAMERA.ZOOM);
+
+    this.scene.add(this.instance);
+  }
+
+  setOrbitControls() {
+    this.controls = new OrbitControls(this.instance, this.canvas);
+    this.controls.target.set(
+      ORBIT_CONTROLS.TARGET_X,
+      ORBIT_CONTROLS.TARGET_Y,
+      ORBIT_CONTROLS.TARGET_Z,
+    );
+    this.controls.enablePan = cameraParameters.enablePan;
+    this.controls.enableZoom = cameraParameters.enableZoom;
+    this.controls.enableRotate = cameraParameters.enableRotate;
+    this.controls.enableDamping = cameraParameters.enableDamping;
+  }
+
+  resize() {
+    this.instance.aspect = this.sizes.aspectRatio;
+    this.instance.updateProjectionMatrix();
+  }
+
+  update() {
+    this.controls.update();
+  }
+
+  async debug(inspector) {
+    this.gui = inspector.createParameters('Camera');
+
+    this.gui.add(cameraParameters, 'enablePan').onChange((value) => {
+      this.controls.enablePan = value;
+    });
+
+    this.gui.add(cameraParameters, 'enableZoom').onChange((value) => {
+      this.controls.enableZoom = value;
+    });
+
+    this.gui.add(cameraParameters, 'enableRotate').onChange((value) => {
+      this.controls.enableRotate = value;
+    });
+
+    this.gui.add(cameraParameters, 'enableDamping').onChange((value) => {
+      this.controls.enableDamping = value;
+    });
+  }
+
+  destroy() {
+    this.scene.remove(this.instance);
+    this.controls.dispose();
+    this.instance.dispose();
+  }
+}
