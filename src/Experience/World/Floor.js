@@ -1,5 +1,20 @@
-import { uv } from 'three/tsl';
-import { Mesh, MeshStandardNodeMaterial, PlaneGeometry, SRGBColorSpace } from 'three/webgpu';
+import {
+  attribute,
+  bufferAttribute,
+  color,
+  positionLocal,
+  positionWorld,
+  uv,
+  vec3,
+} from 'three/tsl';
+import {
+  Color,
+  Float32BufferAttribute,
+  Mesh,
+  MeshStandardNodeMaterial,
+  PlaneGeometry,
+  SRGBColorSpace,
+} from 'three/webgpu';
 import { FLOOR } from '../constants.js';
 import Experience from '../Experience.js';
 import { floorParameters } from '../parameters.js';
@@ -22,6 +37,14 @@ export default class Floor {
       FLOOR.GEOMETRY.WIDTH_SEGMENTS,
       FLOOR.GEOMETRY.HEIGHT_SEGMENTS,
     );
+
+    const attributeCount = this.geometry.attributes.position.count;
+    const randomBufferArray = new Float32Array(attributeCount);
+    for (let i = 0; i < attributeCount; i++) {
+      randomBufferArray[i] = Math.random() - 1;
+    }
+    this.aRandom = new Float32BufferAttribute(randomBufferArray, 1);
+    // this.geometry.setAttribute('aRandom', this.aRandom);
   }
 
   setMaterial() {
@@ -33,6 +56,9 @@ export default class Floor {
       map: colorMap,
       transparent: true,
     });
+
+    const random = bufferAttribute(this.aRandom, 'float');
+    this.material.positionNode = positionLocal.add(vec3(0, 0, random));
 
     const fade = uv().sub(0.5).length().smoothstep(0.5, 0.2);
     this.material.opacityNode = fade;

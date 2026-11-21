@@ -1,6 +1,8 @@
-import { Mesh, MeshStandardNodeMaterial, TorusKnotGeometry } from 'three/webgpu';
+import { color, positionWorld, time, uniform, uniformArray, vec2, vec3 } from 'three/tsl';
+import { Color, Mesh, MeshStandardNodeMaterial, TorusKnotGeometry } from 'three/webgpu';
 import Experience from '../Experience.js';
 import { TORUS_KNOT } from '../constants.js';
+import { torusParameters } from '../parameters.js';
 
 export default class Dummy {
   constructor() {
@@ -23,6 +25,31 @@ export default class Dummy {
 
   setMaterial() {
     this.material = new MeshStandardNodeMaterial();
+
+    this.uFrequencies = uniform(
+      vec2(
+        torusParameters.material.uFrequencies.repetitions,
+        torusParameters.material.uFrequencies.speed,
+      ),
+    );
+
+    this.uColors = uniformArray([
+      color(torusParameters.material.uColor1).value,
+      color(torusParameters.material.uColor2).value,
+      color(torusParameters.material.uColor3).value,
+      color(torusParameters.material.uColor4).value,
+      color(torusParameters.material.uColor5).value,
+    ]);
+
+    this.pattern = positionWorld.y
+      .mul(this.uFrequencies.x)
+      .sub(time.mul(this.uFrequencies.y))
+      .fract()
+      .mul(this.uColors.array.length)
+      .floor()
+      .toInt();
+
+    this.material.colorNode = this.uColors.element(this.pattern);
   }
 
   setMesh() {
@@ -78,6 +105,27 @@ export default class Dummy {
       .onChange((event) => {
         this.transformControls.getHelper().visible = event;
       });
+
+    this.gui
+      .add(torusParameters.material.uFrequencies, 'repetitions', 0, 10, 0.01)
+      .name('patternFrequency')
+      .onChange((event) => {
+        this.uFrequencies.value.x = event;
+      });
+
+    this.gui
+      .add(torusParameters.material.uFrequencies, 'speed', 0, 10, 0.01)
+      .name('patternSpeed')
+      .onChange((event) => {
+        this.uFrequencies.value.y = event;
+      });
+
+    // this.gui
+    //   .addColor(torusParameters.material, 'uColor')
+    //   .name('color')
+    //   .onChange((event) => {
+    //     this.uColor.value.set(event);
+    //   });
   }
 
   destroy() {
