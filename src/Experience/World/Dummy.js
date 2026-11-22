@@ -41,6 +41,8 @@ export default class Dummy {
       color(torusParameters.material.uColor5).value,
     ]);
 
+    // console.log(this.uColors.array[0]);
+
     this.pattern = positionWorld.y
       .mul(this.uFrequencies.x)
       .sub(time.mul(this.uFrequencies.y))
@@ -120,12 +122,40 @@ export default class Dummy {
         this.uFrequencies.value.y = event;
       });
 
-    // this.gui
-    //   .addColor(torusParameters.material, 'uColor')
-    //   .name('color')
-    //   .onChange((event) => {
-    //     this.uColor.value.set(event);
-    //   });
+    this.gui
+      .addColor(torusParameters.material, 'uColor1')
+      .name('color1')
+      .onChange((event) => {
+        this.uColors.array[0].set(event);
+      });
+
+    this.gui
+      .addColor(torusParameters.material, 'uColor2')
+      .name('color2')
+      .onChange((event) => {
+        this.uColors.array[1].set(event);
+      });
+
+    this.gui
+      .addColor(torusParameters.material, 'uColor3')
+      .name('color3')
+      .onChange((event) => {
+        this.uColors.array[2].set(event);
+      });
+
+    this.gui
+      .addColor(torusParameters.material, 'uColor4')
+      .name('color4')
+      .onChange((event) => {
+        this.uColors.array[3].set(event);
+      });
+
+    this.gui
+      .addColor(torusParameters.material, 'uColor5')
+      .name('color5')
+      .onChange((event) => {
+        this.uColors.array[4].set(event);
+      });
   }
 
   destroy() {
