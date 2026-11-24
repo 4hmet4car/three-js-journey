@@ -32,15 +32,33 @@ export default class Environment {
       )
       .normalize()
       .multiplyScalar(ENVIRONMENT.DIRECTIONAL_LIGHT.POSITION_MULTIPLIER);
-    this.directionalLight.castShadow = ENVIRONMENT.DIRECTIONAL_LIGHT.CAST_SHADOW;
-    this.directionalLight.shadow.camera.top = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_TOP;
-    this.directionalLight.shadow.camera.right = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_RIGHT;
-    this.directionalLight.shadow.camera.bottom = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_BOTTOM;
-    this.directionalLight.shadow.camera.left = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_LEFT;
-    this.directionalLight.shadow.camera.near = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_NEAR;
-    this.directionalLight.shadow.camera.far = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_FAR;
-    this.directionalLight.shadow.radius = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_RADIUS;
-    this.directionalLight.shadow.normalBias = ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_NORMAL_BIAS;
+    this.directionalLight.castShadow =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.CAST_SHADOW;
+
+    this.directionalLight.shadow.camera.top =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_TOP;
+
+    this.directionalLight.shadow.camera.right =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_RIGHT;
+
+    this.directionalLight.shadow.camera.bottom =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_BOTTOM;
+
+    this.directionalLight.shadow.camera.left =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_LEFT;
+
+    this.directionalLight.shadow.camera.near =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_NEAR;
+
+    this.directionalLight.shadow.camera.far =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_CAMERA_FAR;
+
+    this.directionalLight.shadow.radius =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_RADIUS;
+
+    this.directionalLight.shadow.normalBias =
+      ENVIRONMENT.DIRECTIONAL_LIGHT.SHADOW_NORMAL_BIAS;
+
     this.scene.add(this.directionalLight);
   }
 

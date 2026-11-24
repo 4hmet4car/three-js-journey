@@ -1,6 +1,6 @@
 import Dummy from './Dummy.js';
 import Environment from './Environment.js';
-import Floor from './Floor.js';
+import Floor from './Floor/Floor.js';
 
 export default class World {
   init() {

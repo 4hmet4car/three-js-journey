@@ -1,4 +1,9 @@
-import { NoToneMapping, PCFShadowMap, SRGBColorSpace } from 'three/webgpu';
+import {
+  DoubleSide,
+  NoToneMapping,
+  PCFShadowMap,
+  SRGBColorSpace,
+} from 'three/webgpu';
 
 export const CAMERA = {
   FOV: 35,
@@ -53,6 +58,9 @@ export const FLOOR = {
     HEIGHT: 10,
     WIDTH_SEGMENTS: 10,
     HEIGHT_SEGMENTS: 10,
+  },
+  MATERIAL: {
+    SIDE: DoubleSide,
   },
   MESH: {
     RECEIVE_SHADOW: true,

@@ -1,8 +1,15 @@
-import { uv } from 'three/tsl';
-import { Mesh, MeshStandardNodeMaterial, PlaneGeometry, SRGBColorSpace } from 'three/webgpu';
-import { FLOOR } from '../constants.js';
-import Experience from '../Experience.js';
-import { floorParameters } from '../parameters.js';
+import { bool, float, uv, vec3 } from 'three/tsl';
+import {
+  Mesh,
+  MeshStandardNodeMaterial,
+  PlaneGeometry,
+  SRGBColorSpace,
+} from 'three/webgpu';
+import { FLOOR } from '../../constants.js';
+import Experience from '../../Experience.js';
+import { floorParameters } from '../../parameters.js';
+
+import { circles } from './tsl/circles.js';
 
 export default class Floor {
   constructor() {
@@ -32,7 +39,14 @@ export default class Floor {
       color: floorParameters.material.color,
       map: colorMap,
       transparent: true,
+      side: FLOOR.MATERIAL.SIDE,
     });
+
+    this.material.colorNode = vec3(
+      circles({ radius: float(0.075), discarded: bool(true) }).toVar(
+        'circlesOutput',
+      ),
+    );
 
     const fade = uv().sub(0.5).length().smoothstep(0.5, 0.2);
     this.material.opacityNode = fade;
@@ -48,9 +62,20 @@ export default class Floor {
   async debug(inspector) {
     this.gui = inspector.createParameters('Floor');
 
-    this.gui.addColor(floorParameters.material, 'color').onChange((event) => {
-      this.material.color.set(event);
-    });
+    this.gui
+      .addColor(floorParameters.material, 'color')
+      .onChange((event) => {
+        this.material.color.set(event);
+      });
+
+    // const { fragmentShader } =
+    //   await this.experience.renderer.instance.debug.getShaderAsync(
+    //     this.scene,
+    //     this.experience.camera.instance,
+    //     this.mesh,
+    //   );
+
+    // console.log(fragmentShader);
   }
 
   destroy() {
