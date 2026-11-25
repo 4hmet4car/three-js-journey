@@ -59,29 +59,3 @@ export const FLOOR = {
     ROTATION_X: -Math.PI * 0.5,
   },
 };
-
-export const ENVIRONMENT = {
-  DIRECTIONAL_LIGHT: {
-    COLOR: 0xffffff,
-    INTENSITY: 4.5,
-
-    POSITION_X: 2,
-    POSITION_Y: 0.75,
-    POSITION_Z: -1,
-    POSITION_MULTIPLIER: 10,
-
-    CAST_SHADOW: true,
-    SHADOW_CAMERA_TOP: 10,
-    SHADOW_CAMERA_RIGHT: 10,
-    SHADOW_CAMERA_BOTTOM: -10,
-    SHADOW_CAMERA_LEFT: -10,
-    SHADOW_CAMERA_NEAR: 0.01,
-    SHADOW_CAMERA_FAR: 20,
-    SHADOW_RADIUS: 3,
-    SHADOW_NORMAL_BIAS: 0.1,
-  },
-  AMBIENT_LIGHT: {
-    COLOR: 0x859dff,
-    INTENSITY: 1,
-  },
-};

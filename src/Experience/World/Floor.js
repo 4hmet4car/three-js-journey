@@ -1,5 +1,5 @@
 import { uv } from 'three/tsl';
-import { Mesh, MeshStandardNodeMaterial, PlaneGeometry, SRGBColorSpace } from 'three/webgpu';
+import { Mesh, MeshBasicNodeMaterial, PlaneGeometry, SRGBColorSpace } from 'three/webgpu';
 import { FLOOR } from '../constants.js';
 import Experience from '../Experience.js';
 import { floorParameters } from '../parameters.js';
@@ -25,10 +25,10 @@ export default class Floor {
   }
 
   setMaterial() {
-    const colorMap = this.resources.items.uvChecker;
+    const colorMap = this.resources.items.floorColor;
     colorMap.colorSpace = SRGBColorSpace;
 
-    this.material = new MeshStandardNodeMaterial({
+    this.material = new MeshBasicNodeMaterial({
       color: floorParameters.material.color,
       map: colorMap,
       transparent: true,

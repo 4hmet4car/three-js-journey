@@ -1,6 +1,11 @@
-import { Mesh, MeshBasicNodeMaterial, PlaneGeometry } from 'three/webgpu';
+import {
+  Mesh,
+  MeshBasicNodeMaterial,
+  PlaneGeometry,
+} from 'three/webgpu';
 import Experience from '../Experience.js';
 import { BOARD } from '../constants.js';
+import { pattern } from './Patterns.js';
 
 export default class Board {
   constructor() {
@@ -23,12 +28,18 @@ export default class Board {
 
   setMaterial() {
     this.material = new MeshBasicNodeMaterial();
+
+    this.material.colorNode = pattern;
   }
 
   setMesh() {
-    this.mesh = new Mesh(this.geometry, this.material);
+    this.mesh = new Mesh(
+      this.geometry,
+      this.material,
+    );
     this.mesh.castShadow = BOARD.MESH.CAST_SHADOW;
-    this.mesh.receiveShadow = BOARD.MESH.RECEIVE_SHADOW;
+    this.mesh.receiveShadow =
+      BOARD.MESH.RECEIVE_SHADOW;
     this.mesh.position.y = BOARD.MESH.POSITION_Y;
     this.scene.add(this.mesh);
   }
@@ -37,29 +48,52 @@ export default class Board {
     const camera = this.experience.camera;
     const canvas = this.experience.canvas;
 
-    const { TransformControls } = await import('three/examples/jsm/controls/TransformControls.js');
+    const { TransformControls } =
+      await import('three/examples/jsm/controls/TransformControls.js');
 
-    this.transformControls = new TransformControls(camera.instance, canvas);
+    this.transformControls =
+      new TransformControls(
+        camera.instance,
+        canvas,
+      );
     this.transformControls.attach(this.mesh);
 
-    const helper = this.transformControls.getHelper();
+    const helper =
+      this.transformControls.getHelper();
     this.scene.add(helper);
 
     const disableOrbitControls = (event) => {
       camera.controls.enabled = !event.value;
     };
-    this.transformControls.addEventListener('dragging-changed', disableOrbitControls);
+    this.transformControls.addEventListener(
+      'dragging-changed',
+      disableOrbitControls,
+    );
 
     const switchTransformMode = (event) => {
-      if (event.key === 'g') this.transformControls.setMode('translate');
-      else if (event.key === 'r') this.transformControls.setMode('rotate');
-      else if (event.key === 's') this.transformControls.setMode('scale');
+      if (event.key === 'g')
+        this.transformControls.setMode(
+          'translate',
+        );
+      else if (event.key === 'r')
+        this.transformControls.setMode('rotate');
+      else if (event.key === 's')
+        this.transformControls.setMode('scale');
     };
-    window.addEventListener('keydown', switchTransformMode);
+    window.addEventListener(
+      'keydown',
+      switchTransformMode,
+    );
 
     this.destroyTransformControls = () => {
-      this.transformControls.removeEventListener('dragging-changed', disableOrbitControls);
-      window.removeEventListener('keydown', switchTransformMode);
+      this.transformControls.removeEventListener(
+        'dragging-changed',
+        disableOrbitControls,
+      );
+      window.removeEventListener(
+        'keydown',
+        switchTransformMode,
+      );
       this.transformControls.detach();
       this.scene.remove(helper);
       helper.dispose();
@@ -70,13 +104,15 @@ export default class Board {
   async debug(inspector) {
     await this.setTransformControls();
 
-    this.gui = inspector.createParameters('Board');
+    this.gui =
+      inspector.createParameters('Board');
 
     this.gui
       .add(this.transformControls, 'enabled')
       .name('transformControls')
       .onChange((event) => {
-        this.transformControls.getHelper().visible = event;
+        this.transformControls.getHelper().visible =
+          event;
       });
   }
 

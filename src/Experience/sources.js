@@ -52,9 +52,9 @@ export default [
   //     path: 'picture-3.png'
   // },
   {
-    name: 'uvChecker',
+    name: 'floorColor',
     type: 'texture',
-    path: 'uvChecker.png',
+    path: 'floor-color.jpg',
   },
   // {
   //     name: 'portal',
