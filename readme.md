@@ -91,6 +91,10 @@ Deployment is handled by GitHub Actions.<br>
 07- [Uniforms & Attributes](https://4hmet4car-74-uniforms-and-attributes.vercel.app/)<br>
 08- [Node Functions](https://4hmet4car-75-node-functions.vercel.app/)<br>
 
+### Chapter 02 - Anvanced Projects
+
+09- [Patterns](https://4hmet4car-76-patterns.vercel.app/)<br>
+
 ---
 
 > ⚠️ The deployment workflow was created by [Francesco Dammarco](https://github.com/dammafra/threejs-journey/tree/main).
