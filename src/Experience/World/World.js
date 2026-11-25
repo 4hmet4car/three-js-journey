@@ -1,11 +1,11 @@
-import Dummy from './Dummy.js';
+import Board from './Board.js';
 import Environment from './Environment.js';
 import Floor from './Floor.js';
 
 export default class World {
   init() {
     this.environment = new Environment();
-    this.dummy = new Dummy();
+    this.board = new Board();
     this.floor = new Floor();
   }
 
@@ -15,7 +15,7 @@ export default class World {
 
   async debug(inspector) {
     await this.environment.debug(inspector);
-    await this.dummy.debug(inspector);
+    await this.board.debug(inspector);
     await this.floor.debug(inspector);
   }
 
@@ -23,8 +23,8 @@ export default class World {
     this.environment?.destroy();
     this.environment = null; // Set to null for garbage collector
 
-    this.dummy?.destroy();
-    this.dummy = null; // Set to null for garbage collector
+    this.board?.destroy();
+    this.board = null; // Set to null for garbage collector
 
     this.floor?.destroy();
     this.floor = null; // Set to null for garbage collector

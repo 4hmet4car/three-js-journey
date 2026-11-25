@@ -9,7 +9,7 @@ export const rendererParameters = {
   clearColor: 0x111111,
 };
 
-export const torusParameters = {
+export const boardParameters = {
   material: {
     roughness: 1,
     color: 0xffffff,

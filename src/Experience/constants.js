@@ -2,9 +2,9 @@ import { NoToneMapping, PCFShadowMap, SRGBColorSpace } from 'three/webgpu';
 
 export const CAMERA = {
   FOV: 35,
-  POSITION_X: 5,
-  POSITION_Y: 4.5,
-  POSITION_Z: 2.5,
+  POSITION_X: 1.25,
+  POSITION_Y: 2,
+  POSITION_Z: 4,
   NEAR: 0.1,
   FAR: 100,
   ZOOM: 1,
@@ -33,16 +33,16 @@ export const RENDERER = {
   },
 };
 
-export const TORUS_KNOT = {
+export const BOARD = {
   GEOMETRY: {
-    RADIUS: 0.5,
-    TUBE_RADIUS: 0.24,
-    TUBULAR_SEGMENTS: 128,
-    RADIAL_SEGMENTS: 32,
+    WIDTH: 2,
+    HEIGHT: 2,
+    WIDTH_SEGMENTS: 1,
+    HEIGHT_SEGMENTS: 1,
   },
   MESH: {
-    CAST_SHADOW: true,
-    RECEIVE_SHADOW: true,
+    CAST_SHADOW: false,
+    RECEIVE_SHADOW: false,
     POSITION_Y: 1,
   },
 };
@@ -51,8 +51,8 @@ export const FLOOR = {
   GEOMETRY: {
     WIDTH: 10,
     HEIGHT: 10,
-    WIDTH_SEGMENTS: 10,
-    HEIGHT_SEGMENTS: 10,
+    WIDTH_SEGMENTS: 1,
+    HEIGHT_SEGMENTS: 1,
   },
   MESH: {
     RECEIVE_SHADOW: true,

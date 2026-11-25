@@ -1,8 +1,8 @@
-import { Mesh, MeshStandardNodeMaterial, TorusKnotGeometry } from 'three/webgpu';
+import { Mesh, MeshBasicNodeMaterial, PlaneGeometry } from 'three/webgpu';
 import Experience from '../Experience.js';
-import { TORUS_KNOT } from '../constants.js';
+import { BOARD } from '../constants.js';
 
-export default class Dummy {
+export default class Board {
   constructor() {
     this.experience = new Experience();
     this.scene = this.experience.scene;
@@ -13,23 +13,23 @@ export default class Dummy {
   }
 
   setGeometry() {
-    this.geometry = new TorusKnotGeometry(
-      TORUS_KNOT.GEOMETRY.RADIUS,
-      TORUS_KNOT.GEOMETRY.TUBE_RADIUS,
-      TORUS_KNOT.GEOMETRY.TUBULAR_SEGMENTS,
-      TORUS_KNOT.GEOMETRY.RADIAL_SEGMENTS,
+    this.geometry = new PlaneGeometry(
+      BOARD.GEOMETRY.WIDTH,
+      BOARD.GEOMETRY.HEIGHT,
+      BOARD.GEOMETRY.WIDTH_SEGMENTS,
+      BOARD.GEOMETRY.HEIGHT_SEGMENTS,
     );
   }
 
   setMaterial() {
-    this.material = new MeshStandardNodeMaterial();
+    this.material = new MeshBasicNodeMaterial();
   }
 
   setMesh() {
     this.mesh = new Mesh(this.geometry, this.material);
-    this.mesh.castShadow = TORUS_KNOT.MESH.CAST_SHADOW;
-    this.mesh.receiveShadow = TORUS_KNOT.MESH.RECEIVE_SHADOW;
-    this.mesh.position.y = TORUS_KNOT.MESH.POSITION_Y;
+    this.mesh.castShadow = BOARD.MESH.CAST_SHADOW;
+    this.mesh.receiveShadow = BOARD.MESH.RECEIVE_SHADOW;
+    this.mesh.position.y = BOARD.MESH.POSITION_Y;
     this.scene.add(this.mesh);
   }
 
@@ -70,7 +70,7 @@ export default class Dummy {
   async debug(inspector) {
     await this.setTransformControls();
 
-    this.gui = inspector.createParameters('Dummy');
+    this.gui = inspector.createParameters('Board');
 
     this.gui
       .add(this.transformControls, 'enabled')
