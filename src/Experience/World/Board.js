@@ -1,11 +1,7 @@
-import {
-  Mesh,
-  MeshBasicNodeMaterial,
-  PlaneGeometry,
-} from 'three/webgpu';
+import { CircleGeometry, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
 import Experience from '../Experience.js';
 import { BOARD } from '../constants.js';
-import { pattern } from './Patterns.js';
+import { patterns } from './Patterns.js';
 
 export default class Board {
   constructor() {
@@ -18,29 +14,24 @@ export default class Board {
   }
 
   setGeometry() {
-    this.geometry = new PlaneGeometry(
-      BOARD.GEOMETRY.WIDTH,
-      BOARD.GEOMETRY.HEIGHT,
-      BOARD.GEOMETRY.WIDTH_SEGMENTS,
-      BOARD.GEOMETRY.HEIGHT_SEGMENTS,
+    this.geometry = new CircleGeometry(
+      BOARD.GEOMETRY.RADIUS,
+      BOARD.GEOMETRY.SEGMENTS,
     );
   }
 
   setMaterial() {
     this.material = new MeshBasicNodeMaterial();
 
-    this.material.colorNode = pattern;
+    this.material.colorNode = patterns.waterCausticsAndLilyPads;
   }
 
   setMesh() {
-    this.mesh = new Mesh(
-      this.geometry,
-      this.material,
-    );
+    this.mesh = new Mesh(this.geometry, this.material);
     this.mesh.castShadow = BOARD.MESH.CAST_SHADOW;
-    this.mesh.receiveShadow =
-      BOARD.MESH.RECEIVE_SHADOW;
+    this.mesh.receiveShadow = BOARD.MESH.RECEIVE_SHADOW;
     this.mesh.position.y = BOARD.MESH.POSITION_Y;
+    this.mesh.rotation.x = BOARD.MESH.ROTATION_X;
     this.scene.add(this.mesh);
   }
 
@@ -51,15 +42,15 @@ export default class Board {
     const { TransformControls } =
       await import('three/examples/jsm/controls/TransformControls.js');
 
-    this.transformControls =
-      new TransformControls(
-        camera.instance,
-        canvas,
-      );
+    this.transformControls = new TransformControls(
+      camera.instance,
+      canvas,
+    );
+    this.transformControls.enabled = false;
     this.transformControls.attach(this.mesh);
 
-    const helper =
-      this.transformControls.getHelper();
+    const helper = this.transformControls.getHelper();
+    helper.visible = false;
     this.scene.add(helper);
 
     const disableOrbitControls = (event) => {
@@ -71,29 +62,18 @@ export default class Board {
     );
 
     const switchTransformMode = (event) => {
-      if (event.key === 'g')
-        this.transformControls.setMode(
-          'translate',
-        );
-      else if (event.key === 'r')
-        this.transformControls.setMode('rotate');
-      else if (event.key === 's')
-        this.transformControls.setMode('scale');
+      if (event.key === 'g') this.transformControls.setMode('translate');
+      else if (event.key === 'r') this.transformControls.setMode('rotate');
+      else if (event.key === 's') this.transformControls.setMode('scale');
     };
-    window.addEventListener(
-      'keydown',
-      switchTransformMode,
-    );
+    window.addEventListener('keydown', switchTransformMode);
 
     this.destroyTransformControls = () => {
       this.transformControls.removeEventListener(
         'dragging-changed',
         disableOrbitControls,
       );
-      window.removeEventListener(
-        'keydown',
-        switchTransformMode,
-      );
+      window.removeEventListener('keydown', switchTransformMode);
       this.transformControls.detach();
       this.scene.remove(helper);
       helper.dispose();
@@ -104,15 +84,20 @@ export default class Board {
   async debug(inspector) {
     await this.setTransformControls();
 
-    this.gui =
-      inspector.createParameters('Board');
+    this.gui = inspector.createParameters('Board');
+
+    this.gui
+      .add(this.material, 'colorNode', patterns)
+      .name('Pattern')
+      .onChange(() => {
+        this.material.needsUpdate = true;
+      });
 
     this.gui
       .add(this.transformControls, 'enabled')
       .name('transformControls')
       .onChange((event) => {
-        this.transformControls.getHelper().visible =
-          event;
+        this.transformControls.getHelper().visible = event;
       });
   }
 
