@@ -1,4 +1,8 @@
-import { NoToneMapping, PCFShadowMap, SRGBColorSpace } from 'three/webgpu';
+import {
+  LinearSRGBColorSpace,
+  NoToneMapping,
+  PCFShadowMap,
+} from 'three/webgpu';
 
 export const CAMERA = {
   FOV: 35,
@@ -20,9 +24,9 @@ export const RENDERER = {
   POWER_PREFERENCE: 'high-performance',
   ANTIALIAS: true,
   FORCE_WEBGL: false,
-  OUTPUT_COLOR_SPACE: SRGBColorSpace,
+  OUTPUT_COLOR_SPACE: LinearSRGBColorSpace,
   SHADOWMAP: {
-    ENABLED: true,
+    ENABLED: false,
     TYPE: PCFShadowMap,
     AUTO_UPDATE: true,
     NEEDS_UPDATE: true,

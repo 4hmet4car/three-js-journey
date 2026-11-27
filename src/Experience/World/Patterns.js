@@ -6,6 +6,8 @@ import {
   cos,
   Fn,
   hash,
+  max,
+  min,
   mix,
   mul,
   mx_noise_float,
@@ -23,8 +25,18 @@ import {
 export const patterns = {};
 
 {
+  const pattern = vec3(0.5, 0, 1);
+  patterns.purple = pattern;
+}
+
+{
+  const pattern = vec3(uv(), 0);
+  patterns.uvBlack = pattern;
+}
+
+{
   const pattern = vec3(uv(), 1);
-  patterns.uv = pattern;
+  patterns.uvBlue = pattern;
 }
 
 {
@@ -33,8 +45,141 @@ export const patterns = {};
 }
 
 {
-  const pattern = vec3(uv().x.mul(10).fract());
+  const pattern = vec3(uv().y);
+  patterns.horizontalGradient = pattern;
+}
+
+{
+  const pattern = vec3(uv().y.oneMinus());
+  patterns.inverseHorizontalGradient = pattern;
+}
+
+{
+  const pattern = vec3(uv().y.mul(10));
+  patterns.horizontalGradientStripe = pattern;
+}
+
+{
+  const pattern = vec3(uv().y.mul(10).fract());
+  patterns.horizontalGradientStripes = pattern;
+}
+
+{
+  const pattern = vec3(uv().y.mul(10).fract().step(0.5));
   patterns.horizontalStripes = pattern;
+}
+
+{
+  const pattern = vec3(uv().y.mul(10).fract().step(0.8));
+  patterns.thickerHorizontalStripes = pattern;
+}
+
+{
+  const pattern = vec3(uv().x.mul(10).fract());
+  patterns.verticalGradientStripes = pattern;
+}
+
+{
+  const pattern = vec3(uv().x.mul(10).fract().step(0.8));
+  patterns.thickVerticalStripes = pattern;
+}
+
+{
+  const horizontalStripes = vec3(uv().y.mul(10).fract().step(0.8));
+  const verticalStripes = vec3(uv().x.mul(10).fract().step(0.8));
+  const pattern = horizontalStripes.add(verticalStripes);
+  patterns.grill = pattern;
+}
+
+{
+  const horizontalStripes = vec3(uv().y.mul(10).fract().step(0.8));
+  const verticalStripes = vec3(uv().x.mul(10).fract().step(0.8));
+  const pattern = horizontalStripes.mul(verticalStripes);
+  patterns.littleSquares = pattern;
+}
+
+{
+  const horizontalStripes = vec3(uv().y.mul(10).fract().step(0.8));
+  const verticalStripes = vec3(uv().x.mul(10).fract().step(0.4));
+  const pattern = horizontalStripes.mul(verticalStripes);
+  patterns.verticalDashes = pattern;
+}
+
+{
+  const horizontalThinStripes = vec3(uv().y.mul(10).fract().step(0.8));
+  const horizontalThickStripes = vec3(uv().y.mul(10).fract().step(0.4));
+
+  const verticalThinStripes = vec3(uv().x.mul(10).fract().step(0.8));
+  const verticalThickStripes = vec3(uv().x.mul(10).fract().step(0.4));
+
+  const verticalDashes = horizontalThinStripes.mul(verticalThickStripes);
+  const horizontalDashes = horizontalThickStripes.mul(verticalThinStripes);
+
+  const pattern = verticalDashes.add(horizontalDashes);
+  patterns.arrowHeads = pattern;
+}
+
+{
+  const horizontalThinStripes = uv().y.mul(10).fract().step(0.8);
+  const verticalThickStripes = uv().x.mul(10).add(0.8).fract().step(0.4);
+
+  const verticalThinStripes = uv().x.mul(10).fract().step(0.8);
+  const horizontalThickStripes = uv().y.mul(10).add(0.8).fract().step(0.4);
+
+  const horizontalDashes = horizontalThinStripes.mul(verticalThickStripes);
+  const verticalDashes = verticalThinStripes.mul(horizontalThickStripes);
+
+  const pattern = horizontalDashes.add(verticalDashes);
+  patterns.plus = pattern;
+}
+
+{
+  const pattern = uv().x.sub(0.5).pow2();
+  patterns.verticalCenterGradient = pattern;
+}
+
+{
+  const verticalCenterGradient = uv().x.sub(0.5).pow2();
+  const horizontalCenterGradient = uv().y.sub(0.5).pow2();
+
+  const pattern = min(verticalCenterGradient, horizontalCenterGradient);
+  patterns.plusGradient = pattern;
+}
+
+{
+  const verticalCenterGradient = uv().x.sub(0.5).pow2();
+  const horizontalCenterGradient = uv().y.sub(0.5).pow2();
+
+  const pattern = max(verticalCenterGradient, horizontalCenterGradient);
+  patterns.crossGradient = pattern;
+}
+
+{
+  const verticalCenterGradient = uv().x.sub(0.5).abs();
+  const horizontalCenterGradient = uv().y.sub(0.5).abs();
+
+  const pattern = max(
+    verticalCenterGradient,
+    horizontalCenterGradient,
+  ).step(0.2);
+  patterns.bigSquare = pattern;
+}
+
+{
+  const verticalCenterGradient = uv().x.sub(0.5).abs();
+  const horizontalCenterGradient = uv().y.sub(0.5).abs();
+
+  const innerSquare = max(
+    verticalCenterGradient,
+    horizontalCenterGradient,
+  ).step(0.2);
+  const outerSquare = max(
+    verticalCenterGradient,
+    horizontalCenterGradient,
+  ).step(0.25);
+
+  const pattern = innerSquare.sub(outerSquare);
+  patterns.squareFrame = pattern;
 }
 
 {
@@ -76,6 +221,11 @@ export const patterns = {};
   const angle = atan(polarUv.x, polarUv.y);
   const pattern = vec3(angle.remap(PI.negate(), PI, 0, 1));
   patterns.angularGradient = pattern;
+}
+
+{
+  const pattern = vec3(uv().x.mul(10).floor().div(10));
+  patterns.stepGradient = pattern;
 }
 
 {

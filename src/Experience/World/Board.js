@@ -23,7 +23,7 @@ export default class Board {
   setMaterial() {
     this.material = new MeshBasicNodeMaterial();
 
-    this.material.colorNode = patterns.waterCausticsAndLilyPads;
+    this.material.colorNode = patterns.stepGradient;
   }
 
   setMesh() {
@@ -99,6 +99,15 @@ export default class Board {
       .onChange((event) => {
         this.transformControls.getHelper().visible = event;
       });
+
+    const { fragmentShader } =
+      await this.experience.renderer.instance.debug.getShaderAsync(
+        this.scene,
+        this.experience.camera.instance,
+        this.mesh,
+      );
+
+    console.log(fragmentShader);
   }
 
   destroy() {
