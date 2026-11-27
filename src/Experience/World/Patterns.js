@@ -4,6 +4,9 @@ import {
   checker,
   color,
   cos,
+  div,
+  dot,
+  float,
   Fn,
   hash,
   max,
@@ -20,28 +23,29 @@ import {
   vec2,
   vec3,
   xor,
+  sin,
 } from 'three/tsl';
 
 export const patterns = {};
 
 {
   const pattern = vec3(0.5, 0, 1);
-  patterns.purple = pattern;
+  patterns.solidPurple = pattern;
 }
 
 {
   const pattern = vec3(uv(), 0);
-  patterns.uvBlack = pattern;
+  patterns.uvSpectrum = pattern;
 }
 
 {
   const pattern = vec3(uv(), 1);
-  patterns.uvBlue = pattern;
+  patterns.uvSpectrumBlue = pattern;
 }
 
 {
   const pattern = vec3(uv().x);
-  patterns.horizontalGradient = pattern;
+  patterns.verticalGradient = pattern;
 }
 
 {
@@ -51,17 +55,17 @@ export const patterns = {};
 
 {
   const pattern = vec3(uv().y.oneMinus());
-  patterns.inverseHorizontalGradient = pattern;
+  patterns.horizontalGradientInverted = pattern;
 }
 
 {
   const pattern = vec3(uv().y.mul(10));
-  patterns.horizontalGradientStripe = pattern;
+  patterns.horizontalGradientCompressed = pattern;
 }
 
 {
   const pattern = vec3(uv().y.mul(10).fract());
-  patterns.horizontalGradientStripes = pattern;
+  patterns.horizontalGradientRepeated = pattern;
 }
 
 {
@@ -71,38 +75,38 @@ export const patterns = {};
 
 {
   const pattern = vec3(uv().y.mul(10).fract().step(0.8));
-  patterns.thickerHorizontalStripes = pattern;
+  patterns.horizontalStripesThin = pattern;
 }
 
 {
   const pattern = vec3(uv().x.mul(10).fract());
-  patterns.verticalGradientStripes = pattern;
+  patterns.verticalGradientRepeated = pattern;
 }
 
 {
   const pattern = vec3(uv().x.mul(10).fract().step(0.8));
-  patterns.thickVerticalStripes = pattern;
+  patterns.verticalStripesThin = pattern;
 }
 
 {
   const horizontalStripes = vec3(uv().y.mul(10).fract().step(0.8));
   const verticalStripes = vec3(uv().x.mul(10).fract().step(0.8));
   const pattern = horizontalStripes.add(verticalStripes);
-  patterns.grill = pattern;
+  patterns.gridLines = pattern;
 }
 
 {
   const horizontalStripes = vec3(uv().y.mul(10).fract().step(0.8));
   const verticalStripes = vec3(uv().x.mul(10).fract().step(0.8));
   const pattern = horizontalStripes.mul(verticalStripes);
-  patterns.littleSquares = pattern;
+  patterns.gridSquares = pattern;
 }
 
 {
   const horizontalStripes = vec3(uv().y.mul(10).fract().step(0.8));
   const verticalStripes = vec3(uv().x.mul(10).fract().step(0.4));
   const pattern = horizontalStripes.mul(verticalStripes);
-  patterns.verticalDashes = pattern;
+  patterns.gridDashesHorizontal = pattern;
 }
 
 {
@@ -116,7 +120,7 @@ export const patterns = {};
   const horizontalDashes = horizontalThickStripes.mul(verticalThinStripes);
 
   const pattern = verticalDashes.add(horizontalDashes);
-  patterns.arrowHeads = pattern;
+  patterns.gridCorners = pattern;
 }
 
 {
@@ -130,28 +134,28 @@ export const patterns = {};
   const verticalDashes = verticalThinStripes.mul(horizontalThickStripes);
 
   const pattern = horizontalDashes.add(verticalDashes);
-  patterns.plus = pattern;
+  patterns.gridCrosses = pattern;
 }
 
 {
-  const pattern = uv().x.sub(0.5).pow2();
-  patterns.verticalCenterGradient = pattern;
+  const pattern = uv().x.sub(0.5).abs();
+  patterns.verticalGradientMirrored = pattern;
 }
 
 {
-  const verticalCenterGradient = uv().x.sub(0.5).pow2();
-  const horizontalCenterGradient = uv().y.sub(0.5).pow2();
+  const verticalCenterGradient = uv().x.sub(0.5).abs();
+  const horizontalCenterGradient = uv().y.sub(0.5).abs();
 
   const pattern = min(verticalCenterGradient, horizontalCenterGradient);
-  patterns.plusGradient = pattern;
+  patterns.crossGradient = pattern;
 }
 
 {
-  const verticalCenterGradient = uv().x.sub(0.5).pow2();
-  const horizontalCenterGradient = uv().y.sub(0.5).pow2();
+  const verticalCenterGradient = uv().x.sub(0.5).abs();
+  const horizontalCenterGradient = uv().y.sub(0.5).abs();
 
   const pattern = max(verticalCenterGradient, horizontalCenterGradient);
-  patterns.crossGradient = pattern;
+  patterns.squareGradient = pattern;
 }
 
 {
@@ -162,7 +166,7 @@ export const patterns = {};
     verticalCenterGradient,
     horizontalCenterGradient,
   ).step(0.2);
-  patterns.bigSquare = pattern;
+  patterns.squareInverted = pattern;
 }
 
 {
@@ -179,7 +183,7 @@ export const patterns = {};
   ).step(0.25);
 
   const pattern = innerSquare.sub(outerSquare);
-  patterns.squareFrame = pattern;
+  patterns.squareOutline = pattern;
 }
 
 {
@@ -198,22 +202,115 @@ export const patterns = {};
       .sub(1)
       .abs(),
   );
-  patterns.checkerboardDiamond = pattern;
+  patterns.checkerboardArithmetic = pattern;
 }
 
 {
   const pattern = vec3(checker(uv().mul(10)).oneMinus());
-  patterns.checkerboard = pattern;
+  patterns.checkerboardInverted = pattern;
+}
+
+{
+  const pattern = uv().length();
+  patterns.radialGradientCorner = pattern;
 }
 
 {
   const pattern = vec3(uv().distance(vec2(0.5)));
-  patterns.radialDistance = pattern;
+  patterns.radialGradientDistance = pattern;
 }
 
 {
   const pattern = vec3(uv().sub(0.5).length());
-  patterns.radialGradient = pattern;
+  patterns.radialGradientLength = pattern;
+}
+
+{
+  const pattern = vec3(uv().sub(0.5).length().oneMinus());
+  patterns.radialGradientInverted = pattern;
+}
+
+{
+  const pattern = vec3(div(float(0.015), uv().sub(0.5).length()));
+  patterns.radialGlow = pattern;
+}
+
+{
+  const scaledX = uv().x.sub(0.5).abs().div(8);
+  const scaledY = uv().y.sub(0.5).abs().div(2);
+  const scaledUv = vec2(scaledX, scaledY);
+  const pattern = vec3(float(0.015).div(scaledUv.length()));
+  patterns.radialGlowElliptical = pattern;
+}
+
+{
+  const scaledX = uv().x.sub(0.5).abs();
+  const scaledY = uv().y.sub(0.5).abs();
+  const pattern = vec3(float(0.0015).div(scaledX.mul(scaledY)));
+  patterns.crossGlow = pattern;
+}
+
+{
+  const rotate = Fn(
+    ({ coordinates = uv(), rotation = PI.div(4), pivot = vec2(0.5) }) => {
+      return vec2(
+        cos(rotation)
+          .mul(coordinates.x.sub(pivot.x))
+          .add(sin(rotation).mul(coordinates.y.sub(pivot.y)))
+          .add(pivot.x),
+        cos(rotation)
+          .mul(coordinates.y.sub(pivot.y))
+          .sub(sin(rotation).mul(coordinates.x.sub(pivot.x)))
+          .add(pivot.y),
+      );
+    },
+    {
+      coordinates: 'vec2',
+      rotation: 'float',
+      pivot: 'vec2',
+      return: 'vec2',
+    },
+  );
+
+  const rotatedUv = rotate(uv(), PI.div(4), vec2(0.5));
+  const scaledX = rotatedUv.x.sub(0.5).abs();
+  const scaledY = rotatedUv.y.sub(0.5).abs();
+  const pattern = vec3(float(0.0015).div(scaledX.mul(scaledY)));
+  patterns.crossGlowRotated = pattern;
+}
+
+{
+  const pattern = vec3(uv().distance(vec2(0.5)).step(0.25));
+  patterns.circleInverted = pattern;
+}
+
+{
+  const pattern = vec3(uv().distance(vec2(0.5)).sub(0.25).abs());
+  patterns.ringGradient = pattern;
+}
+
+{
+  const pattern = vec3(
+    uv().distance(vec2(0.5)).sub(0.25).abs().step(0.01),
+  );
+  patterns.ringOutline = pattern;
+}
+
+{
+  const pattern = vec3(
+    uv().distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
+  );
+  patterns.ringOutlineInverted = pattern;
+}
+
+{
+  const fuu = uv().x;
+  const bar = uv().y;
+  const fuubar = vec2(fuu, bar);
+  const pattern = vec3(
+    fuubar.distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
+  );
+  patterns.fuubar = pattern;
 }
 
 {
@@ -225,7 +322,58 @@ export const patterns = {};
 
 {
   const pattern = vec3(uv().x.mul(10).floor().div(10));
-  patterns.stepGradient = pattern;
+  patterns.verticalGradientStepped = pattern;
+}
+
+{
+  const subdivisions = 10;
+  const gridUv = uv().mul(subdivisions).floor().div(subdivisions);
+  const pattern = vec3(gridUv.x.mul(gridUv.y));
+  patterns.gridGradient = pattern;
+}
+
+{
+  const pseudoRandomFunction = Fn(
+    ({ coordinates = uv() }) => {
+      return dot(coordinates, vec2(100, 4440)).sin().mul(43758.5).fract();
+    },
+    {
+      coordinates: 'vec2',
+      return: 'float',
+    },
+  );
+
+  const pattern = vec3(pseudoRandomFunction());
+  patterns.noiseWhite = pattern;
+}
+
+{
+  const pseudoRandomFunction = Fn(
+    ({ coordinates = uv() }) => {
+      return dot(coordinates, vec2(100, 4440)).sin().mul(43758.5).fract();
+    },
+    {
+      coordinates: 'vec2',
+      return: 'float',
+    },
+  );
+
+  const subdivision = 10;
+  const horizontalGradientStep = uv()
+    .x.mul(subdivision)
+    .floor()
+    .div(subdivision);
+  const verticalGradientStep = uv()
+    .y.add(uv().x.div(2))
+    .mul(subdivision)
+    .floor()
+    .div(subdivision);
+  const pattern = vec3(
+    pseudoRandomFunction(
+      vec2(horizontalGradientStep, verticalGradientStep),
+    ),
+  );
+  patterns.noiseGridSkewed = pattern;
 }
 
 {
@@ -233,7 +381,7 @@ export const patterns = {};
   const gridUv = uv().mul(subdivision).floor();
   const random = hash(gridUv.x.add(gridUv.y.mul(subdivision)));
   const pattern = vec3(random);
-  patterns.randomHashGrid = pattern;
+  patterns.noiseGridHash = pattern;
 }
 
 {
@@ -241,14 +389,14 @@ export const patterns = {};
   const gridUv = uv().mul(subdivision).floor();
   const random = rand(gridUv);
   const pattern = vec3(random);
-  patterns.randomGrid = pattern;
+  patterns.noiseGridRandom = pattern;
 }
 
 {
   const perlinUV = uv().mul(5);
   const perlinNoise = mx_noise_float(perlinUV);
   const pattern = vec3(perlinNoise.mul(5).add(time).fract().step(0.8));
-  patterns.animatedPerlinNoise = pattern;
+  patterns.noisePerlinContours = pattern;
 }
 
 {
@@ -275,7 +423,7 @@ export const patterns = {};
     vec3(1.0, 1.0, 1.0),
     vec3(0.0, 0.1, 0.2),
   );
-  patterns.animatedWorleyPalette = pattern;
+  patterns.noiseWorleyIridescent = pattern;
 }
 
 {
@@ -302,5 +450,5 @@ export const patterns = {};
   final = mix(final, lilyPadColor, lilyPadMask);
 
   const pattern = vec3(final);
-  patterns.waterCausticsAndLilyPads = pattern;
+  patterns.lilyPond = pattern;
 }

@@ -23,7 +23,7 @@ export default class Board {
   setMaterial() {
     this.material = new MeshBasicNodeMaterial();
 
-    this.material.colorNode = patterns.stepGradient;
+    this.material.colorNode = patterns.fuubar;
   }
 
   setMesh() {
