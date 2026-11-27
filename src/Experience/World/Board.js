@@ -1,4 +1,9 @@
-import { CircleGeometry, Mesh, MeshBasicNodeMaterial } from 'three/webgpu';
+import {
+  CircleGeometry,
+  Mesh,
+  MeshBasicNodeMaterial,
+  PlaneGeometry,
+} from 'three/webgpu';
 import Experience from '../Experience.js';
 import { BOARD } from '../constants.js';
 import { patterns } from './Patterns.js';
@@ -23,7 +28,7 @@ export default class Board {
   setMaterial() {
     this.material = new MeshBasicNodeMaterial();
 
-    this.material.colorNode = patterns.fuubar;
+    this.material.colorNode = patterns.lilyPond;
   }
 
   setMesh() {

@@ -116,10 +116,10 @@ export const patterns = {};
   const verticalThinStripes = vec3(uv().x.mul(10).fract().step(0.8));
   const verticalThickStripes = vec3(uv().x.mul(10).fract().step(0.4));
 
-  const verticalDashes = horizontalThinStripes.mul(verticalThickStripes);
-  const horizontalDashes = horizontalThickStripes.mul(verticalThinStripes);
+  const horizontalDashes = horizontalThinStripes.mul(verticalThickStripes);
+  const verticalDashes = horizontalThickStripes.mul(verticalThinStripes);
 
-  const pattern = verticalDashes.add(horizontalDashes);
+  const pattern = horizontalDashes.add(verticalDashes);
   patterns.gridCorners = pattern;
 }
 
@@ -293,31 +293,117 @@ export const patterns = {};
   const pattern = vec3(
     uv().distance(vec2(0.5)).sub(0.25).abs().step(0.01),
   );
-  patterns.ringOutline = pattern;
+  patterns.ringOutlineInverted = pattern;
 }
 
 {
   const pattern = vec3(
     uv().distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
   );
-  patterns.ringOutlineInverted = pattern;
+  patterns.ringOutline = pattern;
 }
 
 {
-  const fuu = uv().x;
-  const bar = uv().y;
-  const fuubar = vec2(fuu, bar);
+  const waveX = uv().x;
+  const waveY = uv().y.add(sin(waveX.mul(30)).mul(0.1));
+  const distortedUv = vec2(waveX, waveY);
   const pattern = vec3(
-    fuubar.distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
+    distortedUv.distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
   );
-  patterns.fuubar = pattern;
+  patterns.ringOutlineWavy = pattern;
+}
+
+{
+  const rippleX = uv().x.add(sin(uv().y.mul(30)).mul(0.1));
+  const rippleY = uv().y.add(sin(uv().x.mul(30)).mul(0.1));
+  const distortedUv = vec2(rippleX, rippleY);
+  const pattern = vec3(
+    distortedUv.distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
+  );
+  patterns.ringOutlineRippled = pattern;
+}
+
+{
+  const rippleX = uv().x.add(sin(uv().y.mul(100)).mul(0.1));
+  const rippleY = uv().y.add(sin(uv().x.mul(100)).mul(0.1));
+  const distortedUv = vec2(rippleX, rippleY);
+  const pattern = vec3(
+    distortedUv.distance(vec2(0.5)).sub(0.25).abs().step(0.01).oneMinus(),
+  );
+  patterns.ringOutlineRippledDense = pattern;
+}
+
+{
+  const pattern = vec3(atan(uv().x, uv().y));
+  patterns.angularGradientCorner = pattern;
+}
+
+{
+  const centeredUv = uv().sub(0.5);
+  const pattern = vec3(atan(centeredUv.x, centeredUv.y));
+  patterns.angularGradientCentered = pattern;
 }
 
 {
   const polarUv = uv().sub(0.5);
   const angle = atan(polarUv.x, polarUv.y);
   const pattern = vec3(angle.remap(PI.negate(), PI, 0, 1));
-  patterns.angularGradient = pattern;
+  patterns.angularGradientRemapped = pattern;
+}
+
+{
+  const polarUv = uv().sub(0.5);
+  const angle = atan(polarUv.x, polarUv.y);
+  const pattern = vec3(angle.remap(PI.negate(), PI, 0, 1).mul(20).fract());
+  patterns.angularGradientRepeated = pattern;
+}
+
+{
+  const polarUv = uv().sub(0.5);
+  const angle = atan(polarUv.x, polarUv.y);
+  const pattern = vec3(angle.remap(PI.negate(), PI, 0, 1).mul(100).sin());
+  patterns.angularGradientSinusoidal = pattern;
+}
+
+{
+  const polarUv = uv().sub(0.5);
+  const angle = atan(polarUv.x, polarUv.y);
+  const sinusoid = angle.remap(PI.negate(), PI, 0, 1).mul(100).sin();
+  const radius = float(0.25).add(sinusoid.mul(0.02));
+  const pattern = vec3(
+    uv().distance(vec2(0.5)).sub(radius).abs().step(0.01).oneMinus(),
+  );
+  patterns.ringOutlineAngularSinusoidal = pattern;
+}
+
+{
+  const perlinUV = uv().mul(10);
+  const perlinNoise = mx_noise_float(perlinUV);
+  const pattern = vec3(perlinNoise);
+  patterns.noisePerlin = pattern;
+}
+
+{
+  const perlinUV = uv().mul(10);
+  const perlinNoise = mx_noise_float(perlinUV);
+  const pattern = vec3(perlinNoise.step(0));
+  patterns.noisePerlinThresholded = pattern;
+}
+
+{
+  const perlinUV = uv().mul(10);
+  const perlinNoise = mx_noise_float(perlinUV);
+  const pattern = vec3(perlinNoise.mul(20).sin());
+  patterns.noisePerlinSinusoidal = pattern;
+}
+
+{
+  const perlinUV = uv().mul(10);
+  const perlinNoise = mx_noise_float(perlinUV);
+  const pattern = vec3(
+    mix(vec3(0), vec3(uv(), 1), perlinNoise.mul(20).sin().step(0.9)),
+  );
+  patterns.noisePerlinContoursColored = pattern;
 }
 
 {
@@ -359,20 +445,13 @@ export const patterns = {};
   );
 
   const subdivision = 10;
-  const horizontalGradientStep = uv()
-    .x.mul(subdivision)
-    .floor()
-    .div(subdivision);
-  const verticalGradientStep = uv()
+  const gridX = uv().x.mul(subdivision).floor().div(subdivision);
+  const gridY = uv()
     .y.add(uv().x.div(2))
     .mul(subdivision)
     .floor()
     .div(subdivision);
-  const pattern = vec3(
-    pseudoRandomFunction(
-      vec2(horizontalGradientStep, verticalGradientStep),
-    ),
-  );
+  const pattern = vec3(pseudoRandomFunction(vec2(gridX, gridY)));
   patterns.noiseGridSkewed = pattern;
 }
 
@@ -396,7 +475,7 @@ export const patterns = {};
   const perlinUV = uv().mul(5);
   const perlinNoise = mx_noise_float(perlinUV);
   const pattern = vec3(perlinNoise.mul(5).add(time).fract().step(0.8));
-  patterns.noisePerlinContours = pattern;
+  patterns.noisePerlinContoursAnimated = pattern;
 }
 
 {
@@ -423,7 +502,7 @@ export const patterns = {};
     vec3(1.0, 1.0, 1.0),
     vec3(0.0, 0.1, 0.2),
   );
-  patterns.noiseWorleyIridescent = pattern;
+  patterns.noiseWorleyIridescentAnimated = pattern;
 }
 
 {
